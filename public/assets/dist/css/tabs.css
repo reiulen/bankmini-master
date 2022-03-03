@@ -1,0 +1,43 @@
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+.a-head {
+  margin-left: 8px;
+  border: none;
+  border-radius: 100%;
+}
+
+.b-head {
+  background-color: rgb(207, 207, 207);
+  padding-top: 100px;
+}
+
+/* Style tab links */
+.tablink {
+  position: absolute;
+  background-color: #7295c4;
+  color: white;
+  float: left;
+  border: none;
+  border-radius: 5%;
+  outline: none;
+  cursor: pointer;
+  padding: 8px 10px;
+  font-size: 17px;
+}
+
+.tablink:hover {
+  background-color: #87a1c4;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  display: none;
+  padding: 20px;
+  height: 100%;
+}

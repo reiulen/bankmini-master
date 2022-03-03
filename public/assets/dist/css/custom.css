@@ -1,0 +1,241 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px; /* Ukuran scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #343a40;
+  border-radius: 12px;
+}
+
+.card-outline {
+  border-top: 3px solid #6091ba !important;
+}
+
+.card-header a.h1:hover {
+  color: #6091ba !important;
+}
+
+.bg-blue {
+  background-color: #6091ba !important;
+  color: white;
+}
+
+.bg-blue:hover {
+  color: white !important;
+}
+
+.nav-link.active {
+  background-color: #6091ba !important;
+}
+
+.nav-link.active-sub {
+  background-color: rgba(216, 216, 216, 0.212);
+}
+
+.nav-link.active a:hover {
+  color: #6091ba !important;
+}
+
+.btn-masuk {
+  border: 0 !important;
+}
+
+.btn-masuk:focus {
+  background-color: #4d90c7 !important;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #4d90c7;
+  border-color: #4d90c7;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #6492b8;
+  border-color: #6492b8;
+}
+
+button.btn.btn-primary:focus {
+  color: #fff;
+  background-color: #6492b8;
+  border-color: #6492b8;
+}
+
+.breadcrumb {
+  font-size: 13px;
+}
+
+table {
+  font-size: 15px;
+}
+
+.card-header .btn.btn-primary {
+  font-size: 14px;
+}
+
+.small-box > .inner {
+  padding: 20px;
+}
+
+.small-box .icon > i {
+  left: 15px;
+}
+
+.small-box h3 {
+  font-weight: 400;
+  margin: 5px 0px 0px;
+  font-size: 1.8rem !important;
+}
+
+.small-box .icon > i {
+  font-size: 90px !important;
+}
+
+span.badge {
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+.dropdown a.dropdown-item:focus {
+  background-color: #6492b8;
+  color: white;
+}
+
+.dropdown a.dropdown-item:hover {
+  background-color: #6492b8c4;
+  color: white;
+}
+
+.paginate_button.page-item.active .page-link {
+  background-color: #6492b8;
+  border-color: #6492b8;
+}
+
+.user-nama p {
+  margin: 0px 10px;
+  color: white;
+}
+
+.user-nama p.level {
+  font-size: 14px;
+}
+
+.user-panel,
+.user-panel .info {
+  overflow: visible;
+}
+
+.dropdown-divider {
+  border-top: 1px solid rgba(196, 196, 196, 0.384) !important;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected],
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected]:hover {
+  background-color: #6492b8;
+}
+
+.dt-buttons button {
+  background-color: #6492b8;
+  border: none;
+}
+
+.dt-buttons button:hover {
+  background-color: #6492b8da;
+  border: none;
+}
+
+.card-header form.row label {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+label {
+  font-weight: 500 !important;
+}
+
+.card-header form.row .my-auto .btn-primary {
+  margin-top: 29px;
+}
+
+.content-header .btn.btn-outline-primary {
+  border-color: #6492b8;
+  color: #6492b8;
+}
+
+.content-header .btn.btn-outline-primary:hover {
+  color: white;
+  background-color: #6492b8;
+}
+
+.form-group label {
+  font-weight: 500 !important;
+  font-size: 14px;
+}
+
+.table .table-active {
+  font-weight: 600;
+}
+
+.aktifitas-card .title-notification p {
+  font-size: 17px;
+  margin-bottom: 0;
+}
+.aktifitas-card .title-notification span {
+  font-size: 13px;
+}
+
+.aktifitas-card .icon-notification .icon {
+  height: 50px;
+  width: 50px;
+  line-height: 48px;
+  text-align: center;
+}
+.aktifitas-card .icon-notification .icon i {
+  align-items: center;
+  justify-content: center;
+}
+
+table#example1 {
+  border: 1px solid lightgray;
+  width: 100%;
+}
+table#example1 th {
+  background-color: lightgray;
+  text-align: center;
+
+  border: none;
+}
+table#example1 tr td {
+  border: 0;
+  padding: 5px;
+  padding-left: 20px;
+}
+
+@media (max-width: 767.98px) {
+  .card-header form.row .my-auto .btn-primary {
+    margin-top: 10px;
+  }
+  .small-box {
+    text-align: left;
+  }
+  .small-box .icon {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .small-box p > small {
+    margin-top: 1px !important;
+  }
+}

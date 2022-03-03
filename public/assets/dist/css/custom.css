@@ -23,6 +23,18 @@ body {
   color: #6091ba !important;
 }
 
+.btn.btn-primary{
+    background-color: #6091ba !important;
+}
+
+.btn.btn-primary:focus{
+    border: #6091ba !important;
+}
+
+.brand-link{
+    text-decoration: none !important;
+}
+
 .bg-blue {
   background-color: #6091ba !important;
   color: white;

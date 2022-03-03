@@ -40,7 +40,7 @@
               <a class="nav-link" href="#">Kontak</a>
             </li>
           </ul>
-          <a href="login.html" class="btn btn-primary px-4 py-2 btn-masuk bg-blue">Masuk</a>
+          <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2 btn-masuk bg-blue">Masuk</a>
         </div>
       </div>
     </nav>
@@ -49,7 +49,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 rounded-3">
-            <img src="assets/gambar/banner.jpg" class="d-block w-70" style="border-radius: 15px" />
+            <img src="{{ asset('assets/gambar/banner.jpg') }}" class="d-block w-70" style="border-radius: 15px" />
           </div>
         </div>
       </div>
@@ -84,7 +84,7 @@
               <a href="" class="text-white"><li class="mt-3">Tentang Kami</li></a>
               <a href="" class="text-white"><li class="mt-3">Hubungi Kami</li></a>
               <a href="" class="text-white"><li class="mt-3">FAQ</li></a>
-              <a href="login.html" class="text-white"><li class="mt-3">Masuk - Login</li></a>
+              <a href="{{ route('login') }}" class="text-white"><li class="mt-3">Masuk - Login</li></a>
             </ul>
           </div>
         </div>

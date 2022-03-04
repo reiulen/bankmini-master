@@ -91,8 +91,6 @@
     <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    @push('script')
-
-    @endpush
+   
 
 </x-layout>

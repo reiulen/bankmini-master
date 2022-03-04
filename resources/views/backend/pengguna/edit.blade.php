@@ -7,8 +7,8 @@
             <a href="/pengguna" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li> 
-            <li class="breadcrumb-item"><a href="{{ route('pengguna') }}">{{ __('Pengguna') }}</a></li> 
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
             {{-- <li class="breadcrumb-item active">{{ __('Penguna') }}</li> --}}
             <li class="breadcrumb-item active">{{ __('Edit Penguna') }}</li>
         </x-breadcumb>
@@ -75,7 +75,7 @@
                                 <div class="col-md-4"></div>
                             </div>
                         </form>
-                        
+
                     </div>
                 <!-- /.card-body -->
                 </div>

@@ -51,6 +51,15 @@
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
+    {{-- <script>
+        const navlink = $('.nav-link');
+        navlink.each(function(){
+            const href = $(this).attr('href');
+            if(href == window.location){
+                $(this).addClass('active');
+            }
+        });
+    </script> --}}
     @if (session('pesan'))
         <script>
           Swal.fire(

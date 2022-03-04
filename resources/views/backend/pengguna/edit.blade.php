@@ -89,9 +89,6 @@
     </section>
     <!-- /.content -->
 
-    @push('script')
-        
-    @endpush
 
 
 </x-layout>

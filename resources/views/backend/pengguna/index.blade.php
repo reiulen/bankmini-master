@@ -4,7 +4,7 @@
             <h1> Data Pengguna</h1>
         </div>
         <x-breadcumb>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li> 
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Penguna') }}</li>
         </x-breadcumb>
     </x-content-header>
@@ -64,11 +64,11 @@
             <!-- /.col -->
             </div>
             <!-- /.row -->
-            
+
         </div>
     <!-- /.container-fluid -->
     </section>
-    
+
     <!-- Modal View -->
 <div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -112,10 +112,10 @@
     </div>
   </div>
 
-    <x-datatable></x-datatable>
+    @include('backend.lib.datatable')
     @push('script')
     <!-- DataTables  & Plugins -->
-   
+
     <script>
         $(function () {
           $("#example1").DataTable({

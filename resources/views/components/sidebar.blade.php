@@ -2,7 +2,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link">
-                <img src="../assets/gambar/logo.png" alt="SMKN 1 Ciamis Logo" class="brand-image shadow-lg" />
+                <img src="{{ asset('assets/gambar/logo.png') }}" alt="SMKN 1 Ciamis Logo" class="brand-image shadow-lg" />
                 <span class="brand-text h4">BankMini</span>
             </a>
 
@@ -11,7 +11,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
+                        <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
                     </div>
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

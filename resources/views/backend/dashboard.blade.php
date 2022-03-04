@@ -1,4 +1,4 @@
-<x-layout title="Tambah Pengguna">
+<x-layout title="Dashboard">
 
         <x-content-header>
             <div class="col-sm-6">

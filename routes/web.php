@@ -23,5 +23,10 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
+Route::get('/tambah', [PenggunaController::class, 'create'])->name('pengguna');
+Route::get('/edit', [PenggunaController::class, 'edit'])->name('pengguna');
+// Route::resource('/tahunakademik, ');
 
 include_once 'pages/pengguna.php';
+include_once 'pages/laporanmasuk.php';

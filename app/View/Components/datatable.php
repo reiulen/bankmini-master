@@ -4,17 +4,16 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class layout extends Component
+class datatable extends Component
 {
-    public $title;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title = '')
+    public function __construct()
     {
-        $this->title = $title;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class layout extends Component
      */
     public function render()
     {
-        return view('components.layout');
+        return view('components.datatable');
     }
 }

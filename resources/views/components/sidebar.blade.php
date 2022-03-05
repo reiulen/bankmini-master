@@ -44,14 +44,14 @@
                     with font-awesome or any other icon font library -->
                     <li class="nav-header">MENU UTAMA</li>
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link active">
+                        <a href="{{ route('dashboard') }}" class="nav-link {{ set_active(['dashboard']) }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>{{ __('Dashboard') }}</p>
                         </a>
                     </li>
                     <li class="nav-header">PILIHAN MENU</li>
                     <li class="nav-item">
-                      <a href="{{ route('pengguna.index') }}" class="nav-link">
+                      <a href="{{ route('pengguna.index') }}" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit']) }}">
                           <i class="nav-icon fas fa-user"></i>
                           <p>{{ __('Pengguna') }}</p>
                       </a>
@@ -63,13 +63,13 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="kelas.html" class="nav-link">
+                      <a href="{{ route('kelas.index') }}" class="nav-link">
                           <i class="nav-icon fas fa-home"></i>
                           <p>{{ __('Kelas') }}</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                        <a href="siswa.html" class="nav-link">
+                        <a href="{{ route('siswa.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-graduate"></i>
                             <p>{{ __('Siswa') }}</p>
                         </a>

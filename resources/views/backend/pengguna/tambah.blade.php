@@ -9,6 +9,8 @@
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
             {{-- <li class="breadcrumb-item active">{{ __('Penguna') }}</li> --}}
             <li class="breadcrumb-item active">{{ __('Tambah Penguna') }}</li>
         </x-breadcumb>
@@ -36,7 +38,7 @@
                                         <label for="">Nama</label>
                                     </div>
                                 </div>
-                                 <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="form-floating mt-3">
                                         <input class="form-control" type="text" name="" id="" placeholder="Email" value="">
                                         <label for="">Email</label>

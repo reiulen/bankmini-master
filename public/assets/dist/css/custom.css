@@ -250,6 +250,22 @@ table#example1 tr td {
     -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
 }
 
+.content-header .btn-laporan .btn.btn-none{
+    color: #6091ba !important;
+}
+
+.content-header .btn-laporan .btn.btn-none:hover{
+    box-shadow: 0px 4px 26px 0px #6091babd;
+   -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+   -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+}
+
+.content-header .btn-laporan .btn.btn-primary{
+    box-shadow: 0px 4px 26px 0px #6091babd;
+   -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+   -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

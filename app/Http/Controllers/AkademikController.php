@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
 
-class TAkademikController extends Controller
+class AkademikController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,8 @@ class TAkademikController extends Controller
      */
     public function index()
     {
-        //
+        $akademik = TahunAkademik::get();
+        return view('backend.tahunakademik.index', compact('akademik'));
     }
 
     /**
@@ -34,7 +36,19 @@ class TAkademikController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = [
+            'required' => 'tidak boleh kosong',
+        ];
+        $request->validate([
+            'tanggal_awal' => 'required',
+            'tanggal_akhir' => 'required',
+        ], $message);
+
+        TahunAkademik::create([
+            'tanggal_awal' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+        ]);
+        return redirect(route('tahunakademik.index'));
     }
 
     /**
@@ -56,7 +70,8 @@ class TAkademikController extends Controller
      */
     public function edit($id)
     {
-        //
+        $akademik = TahunAkademik::findorfail($id);
+        return view('backend.tahunakademik.index', compact('akademik'));
     }
 
     /**
@@ -68,7 +83,22 @@ class TAkademikController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $message = [
+            'required' => 'tidak boleh kosong',
+        ];
+        $request->validate([
+            'tanggal_awal' => 'required',
+            'tanggal_akhir' => 'required',
+        ], $message);
+
+
+        $user = TahunAkademik::find($id);
+
+        $user->update([
+            'tanggal_awal' => $request->tanggal_awal,
+            'tanggal_akhir' => $request->tanggal_akhir,
+        ]);
+        return redirect(route('tahunakademik.index'));
     }
 
     /**

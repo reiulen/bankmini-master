@@ -9,6 +9,8 @@
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
             {{-- <li class="breadcrumb-item active">{{ __('Penguna') }}</li> --}}
             <li class="breadcrumb-item active">{{ __('Edit Penguna') }}</li>
         </x-breadcumb>

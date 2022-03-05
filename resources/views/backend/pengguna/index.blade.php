@@ -5,6 +5,8 @@
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('Pengguna') }}</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Penguna') }}</li>
         </x-breadcumb>
     </x-content-header>

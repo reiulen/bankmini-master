@@ -37,7 +37,7 @@
     </div>
 
     <footer class="main-footer" style="font-size: 14px;">
-        Copyright &copy;community {{ date('Y') }}
+        Copyright &copy; Community {{ date('Y') }}
       </footer>
     </div>
     <!-- ./wrapper -->

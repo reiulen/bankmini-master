@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @php 
+                                @php
                                     $no = 1;
                                 @endphp
                                 @foreach ($akademik as $row)
@@ -106,7 +106,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Modal Edit -->
       @foreach($akademik as $row)
       <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -148,9 +148,9 @@
       @include('backend.lib.datatable')
       @push('script')
       <!-- DataTables  & Plugins -->
-        
-  
-      
+
+
+
       <script>
         $(function () {
           $("#example1").DataTable({

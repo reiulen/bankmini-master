@@ -7,16 +7,10 @@
             <a href="/pengguna" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
-<<<<<<< HEAD
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li> 
-            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li> 
-<<<<<<< HEAD
-=======
-=======
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
->>>>>>> 79069cd1dfceea29e1ab29e86f5b43ce47615191
->>>>>>> 2e84a3ce2e01a6a20344b9b4f9bebd8ee819bd23
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
             {{-- <li class="breadcrumb-item active">{{ __('Penguna') }}</li> --}}
             <li class="breadcrumb-item active">{{ __('Tambah Penguna') }}</li>
         </x-breadcumb>

@@ -4,13 +4,10 @@
             <h1> Data Pengguna</h1>
         </div>
         <x-breadcumb>
-<<<<<<< HEAD
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li> 
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Pengguna') }}</li>
-=======
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Penguna') }}</li>
->>>>>>> 79069cd1dfceea29e1ab29e86f5b43ce47615191
         </x-breadcumb>
     </x-content-header>
 

@@ -24,6 +24,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+<<<<<<< HEAD
 
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
 
@@ -39,3 +40,8 @@ include_once 'pages/tabungan.php';
 include_once 'pages/kelas.php';
 include_once 'pages/siswa.php';
 include_once 'pages/laporanmasuk.php';
+=======
+
+include_once 'pages/pengguna.php';
+include_once 'pages/laporantunggakan.php';
+>>>>>>> 79069cd1dfceea29e1ab29e86f5b43ce47615191

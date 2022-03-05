@@ -30,12 +30,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php 
+                                    $no = 1;
+                                @endphp
+                                @foreach ($akademik as $row)
                                 <tr>
-                                    <td>1</td>
-                                    <td>
-                                        15 Juni 2021
-                                    </td>
-                                    <td>15 Juni 2021</td>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{$row->tanggal_awal}}</td>
+                                    <td>{{$row->tanggal_akhir}}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -48,42 +50,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        15 Juni 2022
-                                    </td>
-                                    <td>15 Juni 2023</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                <a class="dropdown-item tahunAkademik" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>
-                                        15 Juni 2023
-                                    </td>
-                                    <td>15 Juni 2024</td>
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                <a class="dropdown-item tahunAkademik" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -109,31 +76,39 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
-              <form action="#" method="post">
-                  <div class="form-group mb-4">
-                      <div class="form-floating">
-                          <input type="date" class="form-control">
-                          <label>Tanggal Awal</label>
-                  </div>
-                  </div>
-                  <div class="form-group mb-4">
-                      <div class="form-floating">
-                          <input type="date" class="form-control">
-                          <label>Tanggal Akhir</label>
-                  </div>
-                  </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-              <button type="button" class="btn btn-primary">Tambah</button>
-            </div>
+            <form action="{{ route('tahunakademik.store')}}" method="post">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group mb-4">
+                        <div class="form-floating">
+                            <input type="date" name="tanggal_awal" class="form-control @error('tanggal_awal') is-invalid @enderror">
+                            <label>Tanggal Awal</label>
+                            @error('tanggal_awal')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="form-floating">
+                            <input type="date" name="tanggal_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror">
+                            <label>Tanggal Akhir</label>
+                            @error('tanggal_akhir')
+                            {{ $message }}
+                        @enderror
+                    </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                <button  class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
           </div>
         </div>
       </div>
       
       <!-- Modal Edit -->
+      @foreach($akademik as $row)
       <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -144,29 +119,32 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="#" method="post">
+                <form action="{{ route('tahunakademik.update', $row->id)}}" method="post">
+                    @csrf
+                    @method('put')
                   <div class="form-group mb-4">
                       <div class="form-floating">
-                          <input type="date" class="form-control">
+                          <input type="date" class="form-control" name="tanggal_awal">
                           <label>Tanggal Awal</label>
                       </div>
                   </div>
                   <div class="form-group mb-4">
                       <div class="form-floating">
-                          <input type="date" class="form-control">
+                          <input type="date" class="form-control" name="tanggal_akhir">
                           <label>Tanggal Akhir</label>
                       </div>
                   </div>
-              </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-              <button type="button" class="btn btn-primary">Simpan</button>
+              <button class="btn btn-primary">Simpan</button>
             </div>
+        </form>
           </div>
         </div>
       </div>
-
+      @endforeach
+      @include('backend.lib.bootstrap5')
       @include('backend.lib.datatable')
       @push('script')
       <!-- DataTables  & Plugins -->

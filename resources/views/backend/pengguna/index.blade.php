@@ -5,7 +5,7 @@
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li> 
-            <li class="breadcrumb-item active">{{ __('Penguna') }}</li>
+            <li class="breadcrumb-item active">{{ __('Pengguna') }}</li>
         </x-breadcumb>
     </x-content-header>
 
@@ -112,7 +112,7 @@
     </div>
   </div>
 
-    <x-datatable></x-datatable>
+    @include('backend.lib.datatable')
     @push('script')
     <!-- DataTables  & Plugins -->
    

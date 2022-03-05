@@ -63,13 +63,13 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="kelas.html" class="nav-link">
+                      <a href="{{ route('kelas.index') }}" class="nav-link">
                           <i class="nav-icon fas fa-home"></i>
                           <p>{{ __('Kelas') }}</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                        <a href="siswa.html" class="nav-link">
+                        <a href="{{ route('siswa.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-user-graduate"></i>
                             <p>{{ __('Siswa') }}</p>
                         </a>

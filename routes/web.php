@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,10 +24,18 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna');
-Route::get('/tambah', [PenggunaController::class, 'create'])->name('pengguna');
-Route::get('/edit', [PenggunaController::class, 'edit'])->name('pengguna');
-// Route::resource('/tahunakademik, ');
+
+Route::get('/kelas', [KelasController::class, 'index'])->name('kelas');
+
+Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa');
+
+// Route::get('/siswa/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
 
 include_once 'pages/pengguna.php';
+include_once 'pages/pembayaran.php';
+include_once 'pages/tabungan.php';
+include_once 'pages/kelas.php';
+include_once 'pages/siswa.php';
 include_once 'pages/laporanmasuk.php';

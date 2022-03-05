@@ -57,7 +57,7 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="tahun-akademik.html" class="nav-link">
+                      <a href="{{ route('tahunakademik.index')}}" class="nav-link">
                           <i class="nav-icon fas fa-calendar"></i>
                           <p>{{ __('Tahun Akademik') }}</p>
                       </a>
@@ -75,9 +75,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="transaksi.html" class="nav-link">
+                        <a href="{{ route('danaawal.index')}}" class="nav-link">
                           <i class="nav-icon fas fa-money-check-alt"></i>
-                        <p>{{ __('Transaksi') }}</p>
+                        <p>{{ __('Dana Awal Tahun') }}</p>
                         </a>
                     </li>
                     <li class="nav-item nav-item">

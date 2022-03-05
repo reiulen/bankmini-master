@@ -36,7 +36,7 @@
                                         <label for="">Nama</label>
                                     </div>
                                 </div>
-                                 <div class="col-md-4">
+                                <div class="col-md-4">
                                     <div class="form-floating mt-3">
                                         <input class="form-control" type="text" name="" id="" placeholder="Email" value="">
                                         <label for="">Email</label>

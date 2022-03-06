@@ -1,4 +1,4 @@
-<x-layout tittle="Edit Pengguna">
+<x-layout title="Edit Pengguna">
     @push('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     @endpush
@@ -9,9 +9,6 @@
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('pengguna.index') }}">{{ __('Pengguna') }}</a></li>
-            {{-- <li class="breadcrumb-item active">{{ __('Penguna') }}</li> --}}
             <li class="breadcrumb-item active">{{ __('Edit Penguna') }}</li>
         </x-breadcumb>
     </x-content-header>
@@ -26,46 +23,63 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="{{ route('pengguna.update', $user->id) }}" method="post">
+                            @csrf
+                            @method('put')
                                 <div class="form-group mb-4 row justify-content-center">
                                         <div class="col-md-4">
                                             <div class="form-floating mt-3">
-                                                <input class="form-control" type="text" name="" id="" value="Entuyy" placeholder="nama">
+                                                <input class="form-control @error('nama') is-invalid @enderror" value="{{ $user->nama }}" type="text" name="nama" id=""  placeholder="nama">
                                                 <label for="">Nama</label>
+                                                @error('nama')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                          <div class="col-md-4">
                                             <div class="form-floating mt-3">
-                                                <input class="form-control" type="text" name="" id="" value="entuy@gmail.com" placeholder="Email" value="">
+                                                <input class="form-control @error('email') is-invalid @enderror" value="{{ $user->email }}" type="text" name="email" placeholder="Email">
                                                 <label for="">Email</label>
+                                                @error('emali')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group mb-4 row justify-content-center">
                                         <div class="col-md-4">
                                             <div class="form-floating mt-3">
-                                                <input class="form-control" type="password" name="" id="" value="dasdqw" placeholder="Password" value="">
+                                                <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="" placeholder="Password" value="">
                                                 <label for="">Password</label>
+                                                @error('password')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                          <div class="col-md-4">
                                             <div class="form-floating mt-3">
-                                                <input class="form-control" type="password" name="" id="" value="pqhdsa" placeholder="Konfirmasi Password" value="">
+                                                <input class="form-control @error('password2') is-invalid @enderror" type="password" name="password2" id="" placeholder="Konfirmasi Password">
                                                 <label for="">Konfirmasi Password</label>
+                                                @error('password2')
+                                                    {{ $message }}
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group mb-4 row justify-content-center">
                                         <div class="col-md-4" >
                                             <div class="form-floating">
-                                            <select class="form-control" style="height: 55px;" name="level">
-                                                <option selected disabled> Operator </option>
+                                            <select class="form-control @error('level') is-invalid @enderror" style="height: 55px;" name="level">
+                                                <option selected value="{{ $user->level }}">- {{ $user->level }} -</option>
                                                 <option value="Operator">Operator</option>
                                                 <option value="Admin Bank">Admin Bank</option>
                                                 <option value="Kepala Bank">Kepala Bank</option>
                                                 <option value="Komite">Komite</option>
                                             </select>
                                             <label for="">Level</label>
+                                            @error('level')
+                                                {{ $message }}
+                                            @enderror
                                         </div>
                                         </div>
                                         <div class="col-md-4"></div>

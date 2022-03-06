@@ -33,3 +33,4 @@ include_once 'pages/kelas.php';
 include_once 'pages/siswa.php';
 include_once 'pages/pengguna.php';
 include_once 'pages/laporantunggakan.php';
+include_once 'pages/laporanmasuk.php';

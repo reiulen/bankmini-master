@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DanaAwal;
 
 class DanaAwalController extends Controller
 {
@@ -12,8 +13,9 @@ class DanaAwalController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('backend.danaawal.index');
+    {  
+        $d_awal = DanaAwal::get();
+        return view('backend.danaawal.index', compact('d_awal'));
     }
 
     /**

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Kelas">
     
     @push('css')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -36,26 +36,30 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                      $no = 1;
+                                    @endphp
+                                    @foreach ($kelas as $row)
                                     <tr>
-                                        <td>1</td>
-                                        <td>
-                                            12
-                                        </td>
-                                        <td>Rekayasa Perangkat Lunak</td>
-                                        <td>RPL</td>
-                                        <td>
+                                      <td>{{ $no++ }}</td>
+                                      <td>
+                                          {{ $row->kelas }}
+                                      </td>
+                                      <td>{{ $row->nama }}</td>
+                                      <td>{{ $row->nama_kelas }} {{ $row->urut_kelas }}</td>
+                                      <td>
                                             <div class="dropdown">
                                                 <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEdit"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
+                                                    <a class="dropdown-item" href="{{ route('kelas.edit', $row->id) }}" data-toggle="modal" data-target="#modalEdit"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
                                                     <a class="dropdown-item hapusPengguna" href=""><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
-                                    
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -82,34 +86,44 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="#" method="post">
+          <form action="{{ route('kelas.store') }}" method="post">
+            @csrf
               <div class="form-group mb-4">
                   <div class="form-floating">
-                      <select class="form-control" name="kelas">
+                      <select class="form-control @error('kelas') is-invalid  @enderror" name="kelas">
                           <option selected disabled>- Pilih Kelas -</option>
                           <option value="10">10</option>
                           <option value="11">11</option>
                           <option value="12">12</option>
                       </select>
                       <label>Kelas</label>
+                      @error('kelas')
+                        {{ $message }}
+                      @enderror
               </div>
               </div>
               <div class="form-group mb-4">
                       <div class="form-floating mt-3">
-                              <input class="form-control" type="text" name="" id="" value="">
+                              <input class="form-control @error('nama') is-invalid  @enderror" type="text" name="nama" id="" value="">
                               <label for="">Nama</label>
-                          </div>
+                              @error('nama')
+                                {{ $message }}
+                              @enderror
+                      </div>
               </div>
               <div class="row">
                   <div class="form-group mb-4 col-md-6">
                       <div class="form-floating">
-                          <input type="text" name="jurusan" class="form-control">
+                          <input type="text @error('nama_kelas') is-invalid  @enderror" name="nama_kelas" class="form-control">
                           <label>Nama Kelas</label>
+                          @error('nama_kelas')
+                            {{ $message }}
+                          @enderror
                       </div>
                       </div>
                   <div class="form-group mb-4 col-md-6">
                       <div class="form-floating">
-                          <select class="form-control" name="kelas">
+                          <select class="form-control @error('urut_kelas') is-invalid  @enderror" name="urut_kelas">
                               <option selected disabled>- Urutan -</option>
                               <option value="1">1 </option>
                               <option value="2">2</option>
@@ -117,15 +131,17 @@
                               <option value="4">4</option>
                           </select>
                           <label>Urut Kelas</label>
+                          @error('ururt_kelas')
+                            {{ $message }}
+                          @enderror
                   </div>
                   </div>
               </div> 
-              
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
+              </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-          <button type="button" class="btn btn-primary">Tambah</button>
         </div>
       </div>
     </div>
@@ -142,7 +158,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="#" method="post">
+              <form action="" method="post">
                 <div class="form-group mb-4">
                   <div class="form-floating">
                     <select class="form-control" name="kelas">

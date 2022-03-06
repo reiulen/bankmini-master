@@ -34,8 +34,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1
+                                    @endphp
+                                    @foreach ($d_awal as $row)
                                     <tr>
-                                        <td>2</td>
+                                        <td>{{ $no++ }}</td>
                                         <td>2022-2023</td>
                                         <td>11</td>
                                         <td>Rp. 2.000.000</td>
@@ -54,6 +58,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

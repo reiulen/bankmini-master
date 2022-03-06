@@ -7,6 +7,7 @@ Route::group(['prefix' => 'pengguna', 'as' => 'pengguna.'], function() {
     Route::get('/tambahpengguna', [PenggunaController::class, 'create'])->name('create');
     Route::post('/tambahpengguna', [PenggunaController::class, 'store'])->name('store');
     Route::get('/{pengguna:id}/editpengguna', [PenggunaController::class, 'edit'])->name('edit');
+    Route::get('/{pengguna:id}', [PenggunaController::class, 'show'])->name('show');
     Route::put('/{pengguna:id}/editpengguna', [PenggunaController::class, 'update'])->name('update');
     Route::delete('/{pengguna:id}/pengguna', [PenggunaController::class, 'delete'])->name('delete');
 });

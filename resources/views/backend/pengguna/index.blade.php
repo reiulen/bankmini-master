@@ -6,8 +6,6 @@
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Pengguna') }}</li>
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-            <li class="breadcrumb-item active">{{ __('Penguna') }}</li>
         </x-breadcumb>
     </x-content-header>
 
@@ -34,14 +32,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1
+                                @endphp
+                                @foreach ($user as $row)
                                 <tr>
-                                    <td>4</td>
-                                    <td class="text-center"><img src="../assets/dist/img/user2-160x160.jpg" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
+                                    <td>{{ $no++ }}</td>
+                                    <td class="text-center"><img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
                                     <td>
-                                        Komite Sekolah
+                                        {{ $row->nama }}
                                     </td>
-                                    <td>komite@gmail.com</td>
-                                    <td><span class="badge badge-success rounded- py-2 px-3">Komite</span></td>
+                                    <td>{{ $row->email }}</td>
+                                    <td><span class="badge badge-success rounded- py-2 px-3">{{ $row->level }}</span></td>
                                     <td>Logout 3 menit yang lalu</td>
                                     <td>
                                         <div class="dropdown">
@@ -49,13 +51,15 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="{{ route('pengguna.edit', '4') }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalView" href="#"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
+                                                <a class="dropdown-item" href="{{ route('pengguna.edit', $row->id) }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
+                                       
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalView" href="{{ route('pengguna.show', $row->id) }}"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
                                                 <a class="dropdown-item hapusPengguna" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -83,31 +87,31 @@
         </div>
         <div class="modal-body">
           <div class="image-user text-center mb-2">
-              <img class="img-thumbnail rounded-circle" style="height: 120px;" src="../assets/dist/img/user2-160x160.jpg">
+              <img class="img-thumbnail rounded-circle" style="height: 120px;" src="{{ asset('assets/dist/img/user2-160x160.jpg') }}">
           </div>
           <table class="table">
               <tbody>
                   <tr>
                       <th class="table-active">Nama</th>
-                      <td>Reihan Andika AM</td>
-                  </tr>
-                  <tr>
-                      <th class="table-active">Email</th>
-                      <td>reiandika10@gmail.com</td>
-                  </tr>
-                  <tr>
-                      <th class="table-active">Level</th>
-                      <td><span class="badge badge-info rounded- py-2 px-3">Operator</span></td>
-                  </tr>
-                  <tr>
-                      <th class="table-active">Aktifitas</th>
-                      <td>Logout 3 menit yang lalu</td>
-                  </tr>
-                  <tr>
-                      <th class="table-active">Bergabung Sejak</th>
-                      <td>12 Januari 2022</td>
-                  </tr>
-              </tbody>
+                    <td>{{ $row->nama }}</td>
+                </tr>
+                <tr>
+                    <th class="table-active">Email</th>
+                    <td>reiandika10@gmail.com</td>
+                </tr>
+                <tr>
+                    <th class="table-active">Level</th>
+                    <td><span class="badge badge-info rounded- py-2 px-3">Operator</span></td>
+                </tr>
+                <tr>
+                    <th class="table-active">Aktifitas</th>
+                    <td>Logout 3 menit yang lalu</td>
+                </tr>
+                <tr>
+                    <th class="table-active">Bergabung Sejak</th>
+                    <td>12 Januari 2022</td>
+                </tr>
+            </tbody>
           </table>
         </div>
       </div>

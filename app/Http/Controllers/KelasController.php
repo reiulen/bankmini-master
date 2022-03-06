@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
 use Illuminate\Http\Request;
 
 class KelasController extends Controller
@@ -13,7 +14,8 @@ class KelasController extends Controller
      */
     public function index()
     {
-        return view('backend.kelas.index');
+        $kelas = Kelas::get();
+        return view('backend.kelas.index', compact('kelas'));
     }
 
     /**
@@ -34,7 +36,23 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $message = [
+            'required' => 'tidak boleh kosong',
+        ];
+        $request->validate([
+            'kelas' => 'required',
+            'nama' => 'required',
+            'nama_kelas' => 'required',
+            'urut_kelas' => 'required',
+        ], $message);
+
+        Kelas::create([
+            'kelas' => $request->kelas,
+            'nama' => $request->nama,
+            'nama_kelas' => $request->nama_kelas,
+            'urut_kelas' => $request->urut_kelas,
+        ]);
+        return redirect(route('kelas.index'));
     }
 
     /**
@@ -45,7 +63,7 @@ class KelasController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -56,7 +74,8 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        //
+        $kls = Kelas::findorfail($id);
+        return view('backend.kelas.index', compact('kls'));
     }
 
     /**
@@ -68,7 +87,25 @@ class KelasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $message = [
+            'required' => 'tidak boleh kosong',
+        ];
+        $request->validate([
+            'kelas' => 'required',
+            'nama' => 'required',
+            'nama_kelas' => 'required',
+            'urut_kelas' => 'required',
+        ], $message);
+
+        $kelas = Kelas::find($id);
+
+        $kelas->update([
+            'kelas' => $request->kelas,
+            'nama' => $request->nama,
+            'nama_kelas' => $request->nama_kelas,
+            'urut_kelas' => $request->urut_kelas,
+        ]);
+        return redirect(route('kelas.index'));
     }
 
     /**

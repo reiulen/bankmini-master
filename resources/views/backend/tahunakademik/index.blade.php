@@ -44,7 +44,7 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit{{ $row->id }}"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
                                                 <a class="dropdown-item tahunAkademik" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
                                             </div>
                                         </div>
@@ -109,7 +109,7 @@
 
       <!-- Modal Edit -->
       @foreach($akademik as $row)
-      <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="modalEdit{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -124,13 +124,13 @@
                     @method('put')
                   <div class="form-group mb-4">
                       <div class="form-floating">
-                          <input type="date" class="form-control" name="tanggal_awal">
+                          <input type="date" class="form-control" value="{{ $row->tanggal_awal }}" name="tanggal_awal">
                           <label>Tanggal Awal</label>
                       </div>
                   </div>
                   <div class="form-group mb-4">
                       <div class="form-floating">
-                          <input type="date" class="form-control" name="tanggal_akhir">
+                          <input type="date" class="form-control" value="{{ $row->tanggal_akhir }}" name="tanggal_akhir">
                           <label>Tanggal Akhir</label>
                       </div>
                   </div>

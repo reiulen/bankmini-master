@@ -74,8 +74,7 @@ class KelasController extends Controller
      */
     public function edit($id)
     {
-        $kls = Kelas::findorfail($id);
-        return view('backend.kelas.index', compact('kls'));
+        
     }
 
     /**

@@ -73,9 +73,4 @@ class PenggunaController extends Controller
         return redirect(route('pengguna.index'));
     }
     
-
-    public function show($id){
-        $user = User::find($id);
-        return redirect(route('pengguna.index', compact('user')));
-    }
 }

@@ -74,46 +74,81 @@
                             </div>
                           </div>
                           <div class="form-outer">
-                            <form action="#">
+                            <form action="{{ route('siswa.store') }}" method="post">
+                              @csrf
                               <!-- page 1 -->
                               <div class="page slide-page">
                                 <div class="field-1">
                                   <div class="row">
-                                    <div class="col-md-6">  <div class="text-center">
+                                    <div class="col-md-6">  
+                                      <div class="text-center">
                                       <img src="{{ asset('assets/dist/img/jeni2.jpeg') }}" class="rounded-circle" style="height: 130px;" data-toggle="modal" data-target="#updateFoto">  
                                       <div>
                                   </div>
                                   <div class="form-floating mt-3">
-                                <input class="form-control" type="text" name="" id="" >
-                                <label for="">Nama</label></div>
+                                <input class="form-control" type="text" name="nama" id="" >
+                                <label for="">Nama</label>
+                                @error('nama')
+                                    {{ $message }}
+                                @enderror
+                              </div>
                                 
                                 <div class="form-floating mt-3">
-                                  <input class="form-control" type="text" name="" id="">
-                                  <label for="">NISN</label></div>
+                                  <input class="form-control" type="text" name="nisn" id="">
+                                  <label for="">NISN</label>
+                                  @error('nisn')
+                                    {{ $message }}
+                                @enderror
+                                </div>
                                 </div>
                                     </div>
                                     <div class="col-md-6">
                                     <div class="form-floating mt-3">
-                                      <input class="form-control" type="text" name="" id="">
-                                      <label for="">NIS</label></div>
+                                      <input class="form-control" type="text" name="nis" id="">
+                                      <label for="">NIS</label>
+                                      @error('nis')
+                                        {{ $message }}
+                                    @enderror
+                                    </div>
                                     <div class="form-floating mt-3">
-                                      <input class="form-control" type="text" name="" id="">
-                                      <label for="">Tahun Masuk</label></div>
+                                      <input class="form-control" type="text" name="tahun_masuk" id="">
+                                      <label for="">Tahun Masuk</label>
+                                        @error('tahun_masuk')
+                                          {{ $message }}
+                                      @enderror
+                                    </div>
                                    <div class="form-floating mt-3">
-                              <select class="form-select" name="" id="">
-                              <option value="">X</option>
-                              <option value="">XI</option>
-                              <option value="">XII</option>
+                              <select class="form-select" name="tingkat_kelas" id="">
+                              <option value="X">X</option>
+                              <option value="XI">XI</option>
+                              <option value="XII">XII</option>
                             </select>
                             <label for="">Kelas</label>
+                                @error('tingkat_kelas')
+                                    {{ $message }}
+                                @enderror
                           </div>
                           <div class="form-floating mt-3">
-                        <select class="form-select" name="" id="">
+                        <select class="form-select" name="jenis_kelamin" id="">
                         <option value="Laki-Laki" selected>Laki-Laki</option>
-                        <option value="Laki-Laki">Laki-Laki</option>
                           <option value="Perempuan">Perempuan</option>
                         </select>
                         <label for="">Jenis Kelamin</label>
+                        @error('jenis_kelamin')
+                        {{ $message }}
+                        @enderror
+                      </div>
+                          <div class="form-floating mt-3">
+                        <select class="form-select" name="kelas_id" id="">
+                        <option value="Laki-Laki" selected>- Pilih Jurusan -</option>
+                        @foreach ($kelas as $row)
+                        <option value="{{ $row->id }}">{{ $row->nama_kelas }} {{ $row->urut_kelas }}</option>
+                        @endforeach
+                        </select>
+                        <label for="">Jurusan</label>
+                                @error('kelas_id')
+                                    {{ $message }}
+                                @enderror
                       </div>
                       <div class="col-12 d-flex justify-content-md-end mb-5  ">
                         <button class="firstNext btn btn-primary">Selanjutnya</button>
@@ -128,48 +163,66 @@
                                   <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                        <input class="form-control" type="text" name="" id="">
+                                        <input class="form-control" type="text" name="tempat_lahir" id="">
                                         <label for="">Tempat Lahir</label>
+                                        @error('tempat_lahir')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                        <input class="form-control" type="date" name="" id=""> 
+                                        <input class="form-control" type="date" name="tgl_lahir" id=""> 
                                         <label for="">Tanggal Lahir</label>
+                                        @error('tgl_lahir')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                        <textarea class="form-control" name="" id="" cols="3"></textarea>
+                                        <textarea class="form-control" name="alamat" id="" cols="3"></textarea>
                                         <label for="">Alamat</label>
+                                        @error('alamat')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                        <input class="form-control" type="text" name="">
+                                        <input class="form-control" type="text" name="anak_ke">
                                         <label for="">Anak ke</label>
+                                        @error('anak_ke')
+                                            {{ $message }}
+                                        @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                        <select class="form-select" name="" id="">
-                                            <option value="">WNI</option>
-                                            <option value="">WNA</option>
+                                        <select class="form-select" name="warga_negara" id="">
+                                            <option value="WNI">WNI</option>
+                                            <option value="WNA">WNA</option>
                                           </select>
                                           <label for="">Warga Negara</label>
+                                          @error('warga_negara')
+                                              {{ $message }}
+                                          @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                        <select class="form-select" name="" id="">
-                                            <option value="">Islam</option>
-                                            <option value="">Kristen Protestan</option>
-                                            <option value="">Kristen Katholik</option>
-                                            <option value="">Hindu</option>
-                                            <option value="">Buddha</option>
-                                            <option value="">Konghucu</option>
+                                        <select class="form-select" name="agama" id="">
+                                            <option value="Islam">Islam</option>
+                                            <option value="Kristen Protestan">Kristen Protestan</option>
+                                            <option value="Kristen Katholik">Kristen Katholik</option>
+                                            <option value="Hindu">Hindu</option>
+                                            <option value="Buddha">Buddha</option>
+                                            <option value="Konghucu">Konghucu</option>
                                           </select>
                                           <label for="">Agama</label>
+                                          @error('agama')
+                                              {{ $message }}
+                                          @enderror
                                         </div>
                                     </div>
                                   </div>
@@ -189,32 +242,47 @@
                                   <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="asal_sekolah" id="">
                                       <label for="">Asal Sekolah</label>
+                                      @error('asal_sekolah')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="no_ijazah" id="">
                                       <label for="">No. Ijazah</label>
+                                      @error('no_ijazah')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="tahun_lulus" id="">
                                       <label for="">Tahun Lulus</label>
+                                      @error('tahun_lulus')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                      <textarea class="form-control" name="" id="" cols="30"></textarea>
+                                      <textarea class="form-control" name="alamat_sekolah" id="" cols="30"></textarea>
                                       <label for="">Alamat Sekolah</label>
+                                      @error('alamat_sekolah')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="">
+                                      <input class="form-control" type="text" name="nilai_un">
                                       <label for="">Jumlah Nilai UN</label>
+                                      @error('nilai_un')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                   </div>
@@ -234,56 +302,83 @@
                                   <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="ayah" id="">
                                       <label for="">Nama Ayah</label>
+                                      @error('ayah')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="ibu" id="">
                                       <label for="">Nama Ibu</label>
+                                      @error('ibu')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <textarea class="form-control" name="" id="" cols="30"></textarea>
+                                      <textarea class="form-control" name="alamat_ortu" id="" cols="30"></textarea>
                                       <label for="">Alamat Orang Tua</label>
+                                      @error('alamat_ortu')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="kerja_ayah" id="">
                                       <label for="">Pekerjaan Ayah</label>
+                                      @error('kerja_ayah')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="kerja_ibu" id="">
                                       <label for="">Pekerjaan Ibu</label>
+                                      @error('kerja_ibu')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="nama_wali" id="">
                                       <label for="">Nama Wali</label>
+                                      @error('nama_wali')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <textarea class="form-control" name="" id="" cols="30"></textarea>
+                                      <textarea class="form-control" name="alamat_wali" id="" cols="30"></textarea>
                                       <label for="">Alamat Wali</label>
+                                      @error('alamat_wali')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="kerja_wali" id="">
                                       <label for="">Pekerjaan Wali</label>
+                                      @error('kerja_wali')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="hubungan_wali" id="">
                                       <label for="">Hubungan dengan Wali</label>
+                                      @error('hubungan_wali')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                   </div>
@@ -303,44 +398,65 @@
                                   <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="status" id="">
                                       <label for="">Status</label>
+                                      @error('status')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_dsp" id="">
                                       <label for="">Sisa DSP</label>
+                                      @error('sisa_dsp')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_infaq" id="">
                                       <label for="">Sisa Infaq</label>
+                                      @error('sisa_infaq')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_ki" id="">
                                       <label for="">Sisa Kunjungan Industri</label>
+                                      @error('sisa_ki')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_pkl" id="">
                                       <label for="">Sisa Prakerin</label>
+                                      @error('sisa_pkl')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_kelas_10" id="">
                                       <label for="">Sisa Kelas 10</label>
+                                      @error('sisa_kelas_10')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                      <input class="form-control" type="text" name="" id="">
+                                      <input class="form-control" type="text" name="sisa_kelas_11" id="">
                                       <label for="">Sisa Kelas 11</label>
+                                      @error('sisa_kelas_11')
+                                          {{ $message }}
+                                      @enderror
                                     </div>
                                     </div>
                                   </div>
@@ -349,7 +465,7 @@
                                       <button class="prev-4 prev btn btn-primary">Sebelumnya</button>
                                     </div>
                                     <div class="col-md-6">
-                                      <button class="submit simpan btn btn-primary">Simpan</button>
+                                      <button type="submit" class="simpan btn btn-primary">Simpan</button>
                                     </div>
                                   </div>
                                 </div>

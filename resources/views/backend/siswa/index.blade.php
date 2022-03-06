@@ -46,12 +46,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $no = 1
+                                @endphp
+                                @foreach ($siswa as $row)
                                 <tr>
-                                    <td>1</td>
-                                    <td>192010568</td>
-                                    <td>Reihan Andika Abdipraja Makmur</td>
-                                    <td>Laki-laki</td>
-                                    <td>12 RPL</td>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $row->nis }}</td>
+                                    <td>{{ $row->nama }}</td>
+                                    <td>{{ $row->jenis_kelamin }}</td>
+                                    <td>{{ $row->tingkat_kelas }} {{ $row->kelas->nama }} {{ $row->kelas->urut_kelas }}</td>
                                     <td>2021 - 2022</td>
                                     <td>
                                         <div class="dropdown">
@@ -68,6 +72,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

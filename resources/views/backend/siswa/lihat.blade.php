@@ -27,43 +27,43 @@
                                         <div class="col-lg-6 text-center">
                                             <img src="{{ asset('assets/dist/img/jeni2.jpeg') }}" class="rounded-circle img-thumbnail" width="200px"> 
                                             
-                                            <div class="text-center mt-3 mb-2" style="font-size: 20px;">Jeni Adi Hidayat</div>
+                                            <div class="text-center mt-3 mb-2" style="font-size: 20px;">{{ $siswa->nama }}</div>
                                         </div>   
                                         <div class="col-lg-6">  
                                             <label class="text-primary">NISN</label>  
-                                            <div class="mb-2 isi">192010556</div> 
+                                            <div class="mb-2 isi">{{ $siswa->nisn }}</div> 
                                             <label class="text-primary">NIS</label>  
-                                            <div class="mb-2 isi">192010556</div> 
+                                            <div class="mb-2 isi">{{ $siswa->nis }}</div> 
                                             <label class="text-primary">Tempat Lahir</label>  
-                                            <div class="mb-2 isi">Ciamis</div> 
+                                            <div class="mb-2 isi">{{ $siswa->tempat_lahir }}</div> 
                                             <label class="text-primary">Tanggal Lahir</label>  
-                                            <div class="mb-2 isi">12</div>  
+                                            <div class="mb-2 isi">{{ $siswa->tgl_lahir }}</div>  
                                             <label class="text-primary">Jenis Kelamin</label>  
-                                            <div class="mb-2 isi">Laki Laki</div> 
+                                            <div class="mb-2 isi">{{ $siswa->jenis_kelamin }}</div> 
                                         </div>
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Kelas</label>  
-                                            <div class="isi mb-2">12 RPL</div> 
+                                            <div class="isi mb-2">{{ $siswa->tingkat_kelas }} {{ $siswa->kelas->nama_kelas }} {{ $siswa->kelas->urut_kelas }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Warga Negara</label>  
-                                            <div class="isi mb-2">Malaysia</div> 
+                                            <div class="isi mb-2">{{ $siswa->warga_negara }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Agama</label>  
-                                            <div class="isi mb-2">Islam</div> 
+                                            <div class="isi mb-2">{{ $siswa->agama }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Tempat lahir</label>  
-                                            <div class="isi mb-2">Rahim ibu</div> 
+                                            <div class="isi mb-2">{{ $siswa->tempat_lahir }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Tanggal Lahir</label>  
-                                            <div class="isi mb-2">12 Juni 2003</div> 
+                                            <div class="isi mb-2">{{ $siswa->tgl_lahir }}</div> 
                                         </div> 
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Anak Ke</label>  
-                                            <div class="isi mb-2">12</div> 
+                                            <div class="isi mb-2">{{ $siswa->anak_ke }}</div> 
                                         </div>
                                     </div> 
                                 </div>
@@ -79,19 +79,19 @@
                                     <div class="form-row">  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Asal Sekolah</label>  
-                                            <div class="isi mb-2">SMP 1 Cisaga</div> 
+                                            <div class="isi mb-2">{{ $siswa->asal_sekolah }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Alamat Sekolah</label>  
-                                            <div class="isi mb-2">Cisaga</div> 
+                                            <div class="isi mb-2">{{ $siswa->alamat_sekolah }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">No Ijazah</label>  
-                                            <div class="isi mb-2">392383</div> 
+                                            <div class="isi mb-2">{{ $siswa->no_ijazah }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Tahun Lulus</label>  
-                                            <div class="isi mb-2">2022</div> 
+                                            <div class="isi mb-2">{{ $siswa->tahun_lulus }}</div> 
                                         </div>
                                     </div> 
                                 </div>
@@ -108,35 +108,35 @@
                                     <div class="form-row">  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Nama Ayah</label>  
-                                            <div class="isi mb-2">Javascript</div> 
+                                            <div class="isi mb-2">{{ $siswa->ayah }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Nama Ibu</label>  
-                                            <div class="isi mb-2">Laravel</div> 
+                                            <div class="isi mb-2">{{ $siswa->ibu }}</div> 
                                         </div> 
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Pekerjaan Ayah</label>  
-                                            <div class="isi mb-2">Ngoding</div> 
+                                            <div class="isi mb-2">{{ $siswa->pekerjaan_ayah }}</div> 
                                         </div>    
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Pekerjaan Ibu</label>  
-                                            <div class="isi mb-2">Problem Solving</div> 
+                                            <div class="isi mb-2">{{ $siswa->pekerjaan_ibu }}</div> 
                                         </div>
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Alamat Orangtua</label>  
-                                            <div class="isi mb-2">Banung</div> 
+                                            <div class="isi mb-2">{{ $siswa->alamat_ortu }}</div> 
                                         </div>
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Nama Wali</label>  
-                                            <div class="isi mb-2">Hatedok</div> 
+                                            <div class="isi mb-2">{{ $siswa->wali }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Pekerjaan Wali</label>  
-                                            <div class="isi mb-2">Membuat Masalah</div> 
+                                            <div class="isi mb-2">{{ $siswa->kerja_wali }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Hubungan Dengan Wali</label>  
-                                            <div class="isi mb-2">Pacaran</div> 
+                                            <div class="isi mb-2">{{ $siswa->hubungan_wali }}</div> 
                                         </div>
                                     </div> 
                                 </div>
@@ -152,31 +152,31 @@
                                     <div class="form-row">  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Status</label>  
-                                            <div class="isi mb-2">Digosting</div> 
+                                            <div class="isi mb-2">{{ $siswa->status }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa DSP</label>  
-                                            <div class="isi mb-2">Rp.500.000</div> 
+                                            <div class="isi mb-2">{{ $siswa->sisa_dsp }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa Infaq</label>  
-                                            <div class="isi mb-2">Rp.200.000</div> 
+                                            <div class="isi mb-2">{{ $siswa->sisa_infaq }}</div> 
                                         </div>  
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa Kunjungan Industri</label>  
-                                            <div class="isi mb-2">Rp.200.000</div> 
+                                            <div class="isi mb-2">{{ $siswa->sisa_ki }}</div> 
                                         </div> 
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa Prakerin</label>  
-                                            <div class="isi mb-2">Rp.200.000</div> 
+                                            <div class="isi mb-2">{{ $siswa->sisa_pkl }}</div> 
                                         </div> 
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa Kelas 10</label>  
-                                            <div class="isi mb-2">Rp.200.000</div> 
+                                            <div class="isi mb-2">{{ $siswa->sisa_kelas_10 }}</div> 
                                         </div> 
                                         <div class="col-lg-6">  
                                             <label class="text-primary">Sisa Kelas 11</label>  
-                                            <div class="isi">Rp.200.000</div> 
+                                            <div class="isi">{{ $siswa->sisa_kelas_11 }}</div> 
                                         </div>
                                     </div> 
                                 </div>

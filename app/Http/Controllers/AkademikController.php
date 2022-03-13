@@ -45,10 +45,13 @@ class AkademikController extends Controller
         ], $message);
 
         TahunAkademik::create([
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
+            'awal' => $request->tanggal_awal,
+            'akhir' => $request->tanggal_akhir,
         ]);
-        return redirect(route('tahunakademik.index'));
+        return redirect(route('tahunakademik.index'))->with([
+            'pesan' => 'Data berhasil ditambahkan',
+            'pesan1' => 'Data ' . bulan($request->tanggal_awal). ' sampai ' . bulan($request->tanggal_akhir) . ' berhasil ditambahkan',
+        ]);
     }
 
     /**
@@ -95,10 +98,13 @@ class AkademikController extends Controller
         $user = TahunAkademik::find($id);
 
         $user->update([
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
+            'awal' => $request->tanggal_awal,
+            'akhir' => $request->tanggal_akhir,
         ]);
-        return redirect(route('tahunakademik.index'));
+        return redirect(route('tahunakademik.index'))->with([
+            'pesan' => 'Data berhasil diedit',
+            'pesan1' => 'Data ' . bulan($request->tanggal_awal). ' sampai ' . bulan($request->tanggal_akhir) . ' berhasil diedit',
+        ]);
     }
 
     /**
@@ -109,6 +115,11 @@ class AkademikController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ta = TahunAkademik::findorfail($id);
+        $ta->delete($id);
+        return back()->with([
+            'pesan' => 'Data berhasil dihapus',
+            'pesan1' => 'Data ' . bulan($ta->tanggal_awal). ' sampai ' . bulan($ta->tanggal_akhir) . ' berhasil dihapus',
+        ]);
     }
 }

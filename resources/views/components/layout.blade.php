@@ -18,7 +18,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom.css') }}" />
     <script src="https://kit.fontawesome.com/d04c18bbdb.js" crossorigin="anonymous"></script>
-    <meta name="csrf-field" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   </head>
   <body class="sidebar-mini layout-fixed layout-navbar-fixed">
@@ -46,11 +46,15 @@
     <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script>
+      const url = '{{ url('') }}';
+    </script>
     @stack('script')
     <!-- SweetAlert2 -->
     <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/pages/global.js') }}"></script>
     {{-- <script>
         const navlink = $('.nav-link');
         navlink.each(function(){

@@ -25,69 +25,49 @@
                     <div class="card-body">
                         <form action="{{ route('pengguna.store') }}" method="post">
                             @csrf
-                            <!-- <div class="form-group mb-4 d-flex justify-content-center">
-                                <img src="../assets/dist/img/user2-160x160.jpg" class="img-thumbnail img-preview rounded-circle" style="height: 130px">
-                                <input type="file" onchange="gambarpreview()" class="form-control col-md-4 mx-2 gambar-file" name="foto"  id="customFile">
-                            </div> -->
-                            <div class="form-group mb-4 row justify-content-center">
+                            <div class="form-group  row justify-content-center">
                                 <div class="col-md-4">
-                                    <div class="form-floating mt-3">
-                                        <input class="form-control @error('nama') is-invalid @enderror" type="text" name="nama" placeholder="nama">
-                                        <label for="">Nama</label>
-                                        @error('nama')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
+                                    <label>Nama</label>
+                                    <input class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" type="text" name="nama" required>
+                                    <x-session-error name="nama"></x-session-error>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-floating mt-3">
-                                        <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="" placeholder="Email" >
-                                        <label for="">Email</label>
-                                        @error('email')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
+                                    <label>Email</label>
+                                    <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" value="{{ old('email') }}" required>
+                                    <x-session-error name="email"></x-session-error>
                                 </div>
                             </div>
-                            <div class="form-group mb-4 row justify-content-center">
+                            <div class="form-group  row justify-content-center">
                                 <div class="col-md-4">
-                                    <div class="form-floating mt-3">
-                                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" id="" placeholder="Password" >
-                                        <label for="">Password</label>
-                                        @error('password')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
+                                    <label>Password</label>
+                                    <input class="form-control @error('password') is-invalid @enderror" type="password" value="{{ old('password') }}" name="password" required>
+                                    <x-session-error name="password"></x-session-error>
                                 </div>
                                  <div class="col-md-4">
-                                    <div class="form-floating mt-3">
-                                        <input class="form-control @error('password2') is-invalid @enderror" type="password" name="password2" id="" placeholder="Konfirmasi Password" >
-                                        <label for="">Konfirmasi Password</label>
-                                        @error('password2')
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
+                                    <label>Konfirmasi Password</label>
+                                     <input class="form-control @error('password2') is-invalid @enderror" type="password" value="{{ old('password2') }}" name="password2" required>
+                                     <x-session-error name="password2"></x-session-error>
                                 </div>
                             </div>
-                            <div class="form-group mb-4 row justify-content-center">
+                            <div class="form-group row mb-4 justify-content-center">
                                 <div class="col-md-4" >
-                                    <div class="form-floating">
-                                    <select class="form-control @error('level') is-invalid @enderror" style="height: 55px;" name="level">
+                                    <label>Level</label>
+                                    <select class="form-control @error('level') is-invalid @enderror" name="level" required>
+                                        @if (old('level'))
+                                        <option value="{{ old('level') }}" selected>{{ old('level') }}</option>
+                                        @else
                                         <option selected disabled>- Pilih Level -</option>
+                                        @endif
                                         <option value="Operator">Operator</option>
                                         <option value="Admin Bank">Admin Bank</option>
                                         <option value="Kepala Bank">Kepala Bank</option>
                                         <option value="Komite">Komite</option>
                                     </select>
-                                    <label for="">Level</label>
-                                    @error('level')
-                                        {{ $message }}
-                                    @enderror
-                                </div>
+                                    <x-session-error name="level"></x-session-error>
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>
-                            <div class="form-group mb-4 row justify-content-center">
+                            <div class="form-group row justify-content-center">
                                 <div class="col-md-4">
                                     <button class="btn btn-primary">Tambah</button>
                                 </div>

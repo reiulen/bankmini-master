@@ -40,7 +40,7 @@
                                       $no = 1;
                                     @endphp
                                     @foreach ($kelas as $row)
-                                    <tr>
+                                    <tr class="text-center">
                                       <td>{{ $no++ }}</td>
                                       <td>
                                           {{ $row->kelas }}
@@ -54,7 +54,11 @@
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
                                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalEdit{{ $row->id }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                    <a class="dropdown-item hapusPengguna" href=""><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                    <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ $row->kelas }} {{ $row->nama }} {{ $row->urut_kelas }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                    <form action="{{ route('kelas.destroy', $row->id) }}" method="POST" id="form-hapus{{ $row->id }}">
+                                                        @csrf
+                                                        @method('delete')
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>
@@ -76,7 +80,7 @@
         <!-- /.content -->
 
         <!-- Modal Tambah -->
-<div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -89,52 +93,36 @@
           <form action="{{ route('kelas.store') }}" method="post">
             @csrf
               <div class="form-group mb-4">
-                  <div class="form-floating">
-                      <select class="form-control @error('kelas') is-invalid  @enderror" name="kelas">
-                          <option selected disabled>- Pilih Kelas -</option>
-                          <option value="10">10</option>
-                          <option value="11">11</option>
-                          <option value="12">12</option>
-                      </select>
-                      <label>Kelas</label>
-                      @error('kelas')
-                        {{ $message }}
-                      @enderror
-              </div>
+                <label>Kelas</label>
+                  <select class="form-control @error('kelas') is-invalid  @enderror" name="kelas">
+                      <option selected disabled>- Pilih Kelas -</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                  </select>
+                  <x-session-error name="kelas"></x-session-error>
               </div>
               <div class="form-group mb-4">
-                      <div class="form-floating mt-3">
-                              <input class="form-control @error('nama') is-invalid  @enderror" type="text" name="nama" id="" value="">
-                              <label for="">Nama</label>
-                              @error('nama')
-                                {{ $message }}
-                              @enderror
-                      </div>
+                <label>Jurusan</label>
+                <input class="form-control @error('nama') is-invalid  @enderror" type="text" name="nama" id="" value="">
+                <x-session-error name="nama"></x-session-error>
               </div>
               <div class="row">
                   <div class="form-group mb-4 col-md-6">
-                      <div class="form-floating">
-                          <input type="text @error('nama_kelas') is-invalid  @enderror" name="nama_kelas" class="form-control">
-                          <label>Nama Kelas</label>
-                          @error('nama_kelas')
-                            {{ $message }}
-                          @enderror
-                      </div>
-                      </div>
-                  <div class="form-group mb-4 col-md-6">
-                      <div class="form-floating">
-                          <select class="form-control @error('urut_kelas') is-invalid  @enderror" name="urut_kelas">
-                              <option selected disabled>- Urutan -</option>
-                              <option value="1">1 </option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                          </select>
-                          <label>Urut Kelas</label>
-                          @error('ururt_kelas')
-                            {{ $message }}
-                          @enderror
+                    <label>Nama Kelas</label>
+                    <input type="text @error('nama_kelas') is-invalid  @enderror" name="nama_kelas" class="form-control">
+                    <x-session-error name="nama_kelas"></x-session-error>
                   </div>
+                  <div class="form-group mb-4 col-md-6">
+                    <label>Urut Kelas</label>
+                    <select class="form-control @error('urut_kelas') is-invalid  @enderror" name="urut_kelas">
+                        <option selected disabled>- Urutan -</option>
+                        <option value="1">1 </option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                    <x-session-error name="urut_kelas"></x-session-error>
                   </div>
               </div> 
               <div class="modal-footer">
@@ -163,52 +151,36 @@
               @csrf
               @method('put')
               <div class="form-group mb-4">
-                <div class="form-floating">
-                  <select class="form-control @error('kelas') is-invalid @enderror" name="kelas">
-                    <option selected value="{{ $row->kelas }}">- {{ $row->kelas }} -</option>
+                <label>Kelas</label>
+                <select class="form-control @error('kelas') is-invalid @enderror" name="kelas">
+                    <option selected value="{{ $row->kelas }}">{{ $row->kelas }}</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
                     <option value="12">12</option>
-                  </select>
-                  <label>Kelas</label>
-                    @error('kelas')
-                      {{ $message }}
-                    @enderror
-                </div>
+                </select>
+                <x-session-error name="kelas"></x-session-error>
               </div>
               <div class="form-group mb-4">
-                <div class="form-floating">
-                  <input type="text" name="nama" value="{{ $row->nama }}" class="@error('nama') is-invalid @enderror form-control" />
-                  <label>Jurusan</label>
-                    @error('nama')
-                      {{ $message }}
-                    @enderror
-                </div>
+                <label>Jurusan</label>
+                <input type="text" name="nama" value="{{ $row->nama }}" class="@error('nama') is-invalid @enderror form-control" />
+                <x-session-error name="nama"></x-session-error>
               </div>
               <div class="row">
                 <div class="form-group mb-4 col-md-6">
-                  <div class="form-floating">
-                    <input type="text" name="nama_kelas" value="{{ $row->nama_kelas }}" class="form-control @error('nama_kelas') is-invalid @enderror" />
-                    <label>Nama Kelas</label>
-                    @error('nama_kelas')
-                      {{ $message }}
-                    @enderror
-                  </div>
+                  <label>Nama Kelas</label>
+                  <input type="text" name="nama_kelas" value="{{ $row->nama_kelas }}" class="form-control @error('nama_kelas') is-invalid @enderror" />
+                  <x-session-error name="nama_kelas"></x-session-error>
                 </div>
                 <div class="form-group mb-4 col-md-6">
-                  <div class="form-floating">
-                    <select class="form-control @error('urut_kelas') is-invalid @enderror" name="urut_kelas">
-                      <option selected value="{{ $row->urut_kelas }}">- {{ $row->urut_kelas }} -</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
-                    <label>Urut Kelas</label>
-                    @error('urut_kelas')
-                      {{ $message }}
-                    @enderror
-                  </div>
+                  <label>Urut Kelas</label>
+                  <select class="form-control @error('urut_kelas') is-invalid @enderror" name="urut_kelas">
+                    <option selected value="{{ $row->urut_kelas }}">{{ $row->urut_kelas }}</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+                  <x-session-error name="urut_kelas"></x-session-error>
                 </div>
               </div>
               <div class="modal-footer">
@@ -224,38 +196,15 @@
 
       @include('backend.lib.datatable')
 
-        @push('script')
-
-        <script>
-            $(function () {
-              $("#example1").DataTable({
-                "responsive": true, "lengthChange": true, "autoWidth": false,
-              }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      @push('script')
+      <script>
+          $(function () {
+            $("#example1").DataTable({
+              "responsive": true, "lengthChange": true, "autoWidth": false,
             });
-            $('.hapusPengguna').click(function(){
-              Swal.fire({
-                  title: 'Apakah yakin?',
-                  text: "Data Reihan Andika AM akan dihapus",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#6492b8da',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Hapus',
-                  cancelButtonText: 'Batal'
-                  }).then((result) => {
-                  if (result.isConfirmed) {
-                      Swal.fire(
-                      'Berhasil dihapus!',
-                      'Data Reihan Andika AM berhasil dihapus',
-                      'success'
-                      )
-                  }
-              });
-            });
-            </script>
-
-       
-        @endpush
+          });
+      </script>
+      @endpush
 
 
 </x-layout>

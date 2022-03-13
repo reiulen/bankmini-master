@@ -38,12 +38,12 @@
                                 @foreach ($user as $row)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center"><img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
+                                    <td class="text-center"><img src="{{ asset($row->avatar) }}" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
                                     <td>
                                         {{ $row->nama }}
                                     </td>
                                     <td>{{ $row->email }}</td>
-                                    <td><span class="badge badge-success rounded- py-2 px-3">{{ $row->level }}</span></td>
+                                    <td><span class="badge {{ badge_level($row->level) }} rounded- py-2 px-3">{{ $row->level }}</span></td>
                                     <td>Logout 3 menit yang lalu</td>
                                     <td>
                                         <div class="dropdown">
@@ -53,7 +53,11 @@
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" href="{{ route('pengguna.edit', $row->id) }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalView{{ $row->id }}" href="#"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
-                                                <a class="dropdown-item hapusPengguna" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ $row->nama }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                <form action="{{ route('pengguna.delete', $row->id) }}" method="POST" id="form-hapus{{ $row->id }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
@@ -87,7 +91,7 @@
             </div>
             <div class="modal-body">
               <div class="image-user text-center mb-2">
-                  <img class="img-thumbnail rounded-circle" style="height: 120px;" src="{{ asset('assets/dist/img/user2-160x160.jpg') }}">
+                  <img class="img-thumbnail rounded-circle" style="height: 120px;" src="{{ asset($row->avatar)  }}">
               </div>
               <table class="table">
                   <tbody>
@@ -101,7 +105,7 @@
                     </tr>
                     <tr>
                         <th class="table-active">Level</th>
-                        <td><span class="badge badge-info rounded- py-2 px-3">{{ $row->level }}</span></td>
+                        <td><span class="badge {{ badge_level($row->level) }} rounded- py-2 px-3">{{ $row->level }}</span></td>
                     </tr>
                     <tr>
                         <th class="table-active">Aktifitas</th>
@@ -121,33 +125,11 @@
 
     @include('backend.lib.datatable')
     @push('script')
-    <!-- DataTables  & Plugins -->
-
     <script>
         $(function () {
           $("#example1").DataTable({
-            "responsive": true, "lengthChange": true, "autoWidth": false,
-          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-        $('.hapusPengguna').click(function(){
-          Swal.fire({
-              title: 'Apakah yakin?',
-              text: "Data Reihan Andika AM akan dihapus",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#6492b8da',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Hapus',
-              cancelButtonText: 'Batal'
-              }).then((result) => {
-              if (result.isConfirmed) {
-                  Swal.fire(
-                  'Berhasil dihapus!',
-                  'Data Reihan Andika AM berhasil dihapus',
-                  'success'
-                  )
-              }
-          });
+                "responsive": true, "lengthChange": true, "autoWidth": false,
+            })
         });
         </script>
     @endpush

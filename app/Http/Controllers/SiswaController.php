@@ -2,32 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Image;
 
 class SiswaController extends Controller
 {
     public function index(){
-        $siswa = Siswa::with('kelas')->get();
+        $siswa = Siswa::with(['kelas'])->latest()->get();
         return view('backend.siswa.index', compact('siswa'));
     }
 
     public function create(){
         $kelas = Kelas::get();
-        return view('backend.siswa.tambah', compact('kelas'));
+        $pekerjaan = Pekerjaan::get();
+        return view('backend.siswa.tambah', compact('pekerjaan', 'kelas'));
     }
 
     public function store(Request $request){
         $message = [
-            'required' => 'tidak boleh kosong',
+            'required' => 'Tidak boleh kosong',
+            'unique' => 'Sudah ada!',
+            'max' => 'Terlalu panjang!',
+            'min' => 'Terlalu pendek!'
         ];
         $request->validate([
             'nama' => 'required',
-            'nisn' => 'required',
-            'nis' => 'required',
+            'nisn' => 'required|max:10|min:10|unique:siswa',
+            'nis' => 'required|max:9|min:9|unique:siswa',
             'tahun_masuk' => 'required',
-            'tingkat_kelas' => 'required',
             'jenis_kelamin' => 'required',
             'kelas_id' => 'required',
             'tempat_lahir' => 'required',
@@ -40,31 +46,34 @@ class SiswaController extends Controller
             'no_ijazah' => 'required',
             'tahun_lulus' => 'required',
             'alamat_sekolah' => 'required',
-            'nilai_un' => 'required',
-            'ayah' => 'required',
-            'ibu' => 'required',
-            'alamat_ortu' => 'required',
-            'kerja_ayah' => 'required',
-            'kerja_ibu' => 'required',
-            'wali' => 'required',
-            'alamat_wali' => 'required',
-            'kerja_wali' => 'required',
-            'hubungan_wali' => 'required',
-            'status' => 'required',
-            'sisa_dsp' => 'required',
-            'sisa_infaq' => 'required',
-            'sisa_ki' => 'required',
-            'sisa_pkl' => 'required',
-            'sisa_kelas_10' => 'required',
-            'sisa_kelas_11' => 'required',
         ], $message);
 
+        $kelas = Kelas::find($request->kelas_id);
+
+        if($request->hasFile('foto')){
+            $tujuan = 'upload/foto/siswa/' .$kelas->kelas. ' ' . $kelas->nama_kelas . ' ' . $kelas->urut_kelas ;
+            if(!File::isDirectory($tujuan)){
+                File::makeDirectory($tujuan);
+            }
+
+            $file = $request->file('foto');
+            $rename = $request->nama . '_300x300_.webp';
+            $image  = Image::make($file);
+            $image->fit(300, 300, function($contraint){
+                $contraint->aspectRatio();
+            });
+            $image->save($tujuan . '/' . $rename);
+            $foto = $tujuan . '/' . $rename;
+        }else{
+            $foto = 'upload/foto/siswa/siswa.png';
+        }
+
         Siswa::create([
+            'foto' => $foto,
             'nama' => $request->nama,
             'nisn' => $request->nisn,
             'nis' => $request->nis,
             'tahun_masuk' => $request->tahun_masuk,
-            'tingkat_kelas' => $request->tingkat_kelas,
             'jenis_kelamin' => $request->jenis_kelamin,
             'kelas_id' => $request->kelas_id,
             'tempat_lahir' => $request->tempat_lahir,
@@ -77,41 +86,130 @@ class SiswaController extends Controller
             'no_ijazah' => $request->no_ijazah,
             'tahun_lulus' => $request->tahun_lulus,
             'alamat_sekolah' => $request->alamat_sekolah,
-            'nilai_un' => $request->nilai_un,
             'ayah' => $request->ayah,
             'ibu' => $request->ibu,
             'alamat_ortu' => $request->alamat_ortu,
-            'kerja_ayah' => $request->kerja_ayah,
-            'kerja_ibu' => $request->kerja_ibu,
-            'wali' => $request->wali,
+            'pekerjaan_ayah' => $request->kerja_ayah,
+            'pekerjaan_ibu' => $request->kerja_ibu,
+            'wali' => $request->nama_wali,
             'alamat_wali' => $request->alamat_wali,
             'kerja_wali' => $request->kerja_wali,
             'hubungan_wali' => $request->hubungan_wali,
-            'status' => $request->status,
-            'sisa_dsp' => $request->sisa_dsp,
-            'sisa_infaq' => $request->sisa_infaq,
-            'sisa_ki' => $request->sisa_infaq,
-            'sisa_pkl' => $request->sisa_pkl,
-            'sisa_kelas_10' => $request->sisa_kelas_10,
-            'sisa_kelas_11' => $request->sisa_kelas_11,
         ]);
-        return redirect(route('pengguna.index'));
+        return redirect(route('siswa.index'))->with([
+            'pesan' => 'Data berhasil ditambahkan',
+            'pesan1' => 'Data ' . $request->nama . ' berhasil ditambahkan'
+        ]);
     }
 
-    public function edit(){
-        return view('backend.siswa.edit');
+    public function edit($nis){
+        $kelas = Kelas::get();
+        $pekerjaan = Pekerjaan::get();
+        $siswa = Siswa::where('nis', $nis)->with(['kelas', 'pekerjaan'])->firstorfail();
+        return view('backend.siswa.edit', compact('siswa', 'kelas', 'pekerjaan'));
     }
 
-    public function show(){
-        return view('backend.siswa.lihat');
+    public function update(Request $request, $nis){
+
+        $siswa = Siswa::where('nis', $nis)->firstorfail();
+
+        $message = [
+            'required' => 'Tidak boleh kosong',
+            'unique' => 'Sudah ada!',
+            'max' => 'Terlalu panjang!',
+            'min' => 'Terlalu pendek!'
+        ];
+        $request->validate([
+            'nama' => 'required',
+            'nisn' => 'required|max:10|min:10|unique:siswa,nisn,' . $siswa->id,
+            'nis' => 'required|max:9|min:9|unique:siswa,nis,' . $siswa->id,
+            'tahun_masuk' => 'required',
+            'jenis_kelamin' => 'required',
+            'kelas_id' => 'required',
+            'tempat_lahir' => 'required',
+            'tgl_lahir' => 'required',
+            'alamat' => 'required',
+            'anak_ke' => 'required',
+            'warga_negara' => 'required',
+            'agama' => 'required',
+            'asal_sekolah' => 'required',
+            'no_ijazah' => 'required',
+            'tahun_lulus' => 'required',
+            'alamat_sekolah' => 'required',
+        ], $message);
+
+        $kelas = Kelas::find($request->kelas_id);
+
+        if($request->hasFile('foto')){
+            $tujuan = 'upload/foto/siswa/' .$kelas->kelas. ' ' . $kelas->nama_kelas . ' ' . $kelas->urut_kelas ;
+            if(!File::isDirectory($tujuan)){
+                File::makeDirectory($tujuan);
+            }
+
+            $file = $request->file('foto');
+            $rename = $request->nama . '_300x300_.webp';
+            $image  = Image::make($file);
+            $image->fit(300, 300, function($contraint){
+                $contraint->aspectRatio();
+            });
+            $image->save($tujuan . '/' . $rename);
+            $foto = $tujuan . '/' . $rename;
+            File::delete($siswa->foto);
+        }else{
+            $foto = $siswa->foto;
+        }
+
+        $siswa->update([
+            'foto' => $foto,
+            'nama' => $request->nama,
+            'nisn' => $request->nisn,
+            'nis' => $request->nis,
+            'tahun_masuk' => $request->tahun_masuk,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'kelas_id' => $request->kelas_id,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tgl_lahir' => $request->tgl_lahir,
+            'alamat' => $request->alamat,
+            'anak_ke' => $request->anak_ke,
+            'warga_negara' => $request->warga_negara,
+            'agama' => $request->agama,
+            'asal_sekolah' => $request->asal_sekolah,
+            'no_ijazah' => $request->no_ijazah,
+            'tahun_lulus' => $request->tahun_lulus,
+            'alamat_sekolah' => $request->alamat_sekolah,
+            'ayah' => $request->ayah,
+            'ibu' => $request->ibu,
+            'alamat_ortu' => $request->alamat_ortu,
+            'pekerjaan_ayah' => $request->kerja_ayah,
+            'pekerjaan_ibu' => $request->kerja_ibu,
+            'wali' => $request->nama_wali,
+            'alamat_wali' => $request->alamat_wali,
+            'kerja_wali' => $request->kerja_wali,
+            'hubungan_wali' => $request->hubungan_wali,
+        ]);
+        return redirect(route('siswa.index'))->with([
+            'pesan' => 'Data berhasil diedit',
+            'pesan1' => 'Data ' . $request->nama . ' berhasil diedit'
+        ]);
+    }
+
+    public function show($nis){
+        $siswa = Siswa::where('nis', $nis)->firstorfail();
+        return view('backend.siswa.lihat', compact('siswa'));
+    }
+
+    public function delete($nis)
+    {
+        $siswa = Siswa::where('nis', $nis)->firstorfail();
+        $siswa->delete($nis);
+        return redirect(route('siswa.index'))->with([
+            'pesan' => 'Data berhasil dihapus',
+            'pesan1' => 'Data ' . $siswa->nama . ' berhasil dihapus'
+        ]);
     }
 
     public function eksport(){
         return view('backend.siswa.eksport');
-    }
-
-    public function pembayaran(){
-        return view('backend.siswa.pembayaran');
     }
 
 }

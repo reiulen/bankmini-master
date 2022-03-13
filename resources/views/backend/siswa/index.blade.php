@@ -14,7 +14,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
+          <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header card-outline">
@@ -50,12 +50,12 @@
                                     $no = 1
                                 @endphp
                                 @foreach ($siswa as $row)
-                                <tr>
+                                <tr class="table-center">
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $row->nis }}</td>
                                     <td>{{ $row->nama }}</td>
                                     <td>{{ $row->jenis_kelamin }}</td>
-                                    <td>{{ $row->tingkat_kelas }} {{ $row->kelas->nama }} {{ $row->kelas->urut_kelas }}</td>
+                                    <td>{{ $row->kelas->kelas }} {{ $row->kelas->nama_kelas }} {{ $row->kelas->urut_kelas }}</td>
                                     <td>2021 - 2022</td>
                                     <td>
                                         <div class="dropdown">
@@ -63,11 +63,15 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="{{ route('siswa.edit', '4') }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                <a class="dropdown-item" href="{{ route('siswa.show', '4') }}"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
-                                                <a class="dropdown-item hapusSiswa" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                                <a class="dropdown-item" href="{{ route('pembayaran.index') }}"><i class="fas fa-coins text-warning pr-1"></i> Pembayaran</a>
-                                                <a class="dropdown-item" href="{{ route('tabungan.index') }}"><i class="fas fa-book text-secondary pr-1"></i> Tabungan</a>
+                                                <a class="dropdown-item" href="{{ route('siswa.edit', $row->nis) }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
+                                                <a class="dropdown-item" href="{{ route('siswa.show', $row->nis) }}"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
+                                                <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ $row->nama }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                <form action="{{ route('siswa.delete', $row->nis) }}" method="POST" id="form-hapus{{ $row->id }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
+                                                <a class="dropdown-item" href="{{ route('pembayaran.index', $row->nis) }}"><i class="fas fa-coins text-warning pr-1"></i> Pembayaran</a>
+                                                <a class="dropdown-item" href="{{ route('tabungan.index', $row->nis) }}"><i class="fas fa-book text-secondary pr-1"></i> Tabungan</a>
                                             </div>
                                         </div>
                                     </td>
@@ -101,27 +105,7 @@
             $(function () {
               $("#example1").DataTable({
                 "responsive": true, "lengthChange": true, "autoWidth": false,
-              }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            });
-            $('.hapusSiswa').click(function(){
-              Swal.fire({
-                  title: 'Apakah yakin?',
-                  text: "Data Reihan Andika AM akan dihapus",
-                  icon: 'warning',
-                  showCancelButton: true,
-                  confirmButtonColor: '#6492b8da',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Hapus',
-                  cancelButtonText: 'Batal'
-                  }).then((result) => {
-                  if (result.isConfirmed) {
-                      Swal.fire(
-                      'Berhasil dihapus!',
-                      'Data Reihan Andika AM berhasil dihapus',
-                      'success'
-                      )
-                  }
-              });
+              })
             });
           </script>
     @endpush

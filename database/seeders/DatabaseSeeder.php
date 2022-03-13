@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use App\Models\Pekerjaan;
 use Illuminate\Database\Seeder;
+use Database\Seeders\PekerjaanSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call(PekerjaanSeeder::class);
+        User::create([
+            'avatar' => 'upload/avatar/user.png',
+            'nama' => 'Reihan Andika AM',
+            'email' => 'reiandika10@gmail.com',
+            'avatar' => 'upload/avatar/user.png',
+            'password' => bcrypt('admin'),
+            'level' => 'Operator'
+        ]);
     }
 }

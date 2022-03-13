@@ -2,12 +2,12 @@
 
     <x-content-header>
         <div class="col-sm-6">
-            <a href="/siswa/pembayaran" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            <a href="{{ route('pembayaran.index', $siswa->nis) }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('siswa.index') }}">{{ __('Siswa') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('pembayaran.index') }}">{{ __('Pembayaran') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pembayaran.index', $siswa->nis) }}">{{ __('Pembayaran') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Tambah Pembayaran') }}</li>
         </x-breadcumb>
 
@@ -27,34 +27,31 @@
                         <form action="#" method="post">
                             <div class="form-group mb-4 row">
                                 <div class="col-md-4">
+                                    <label>Tanggal</label>
+                                    <input type="date" value="{{ date('Y-m-d') }}" name="tanggal" class="form-control">
+                                </div>
+                                <div class="col-md-4">
                                     <label>Kode Pembayaran</label>
-                                    <input type="text"  class="form-control">
+                                    <input type="text" name="kode" class="form-control">
                                 </div>
                                 <div class="col-md-4">
                                     <label>Pembayaran</label>
                                     <select class="form-control pembayaran" name="pembayaran">
-                                        <option selected disabled>- Untuk Pembayaran -</option>
-                                        <option value="dsp">DSP</option>
-                                        <option value="infaq">Infaq Kelas 10</option>
-                                        <option value="infaq">Infaq Kelas 11</option>
-                                        <option value="infaq">Infaq Kelas 12</option>
-                                        <option value="ki">Kunjungan Industri</option>
-                                        <option value="pkl">Prakerin</option>
+                                        <option selected disabled>- Pilih Pembayaran -</option>
+                                       @foreach ($dana_awal as $row)
+                                        <option value="{{ $row->id }}">{{ $row->dana_awal_tahun }}</option>
+                                       @endforeach
                                     </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>Tanggal Pembayaran</label>
-                                    <input type="date" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group mb-0 row">
                                 <div class="col-md-6">
                                     <label>Keterangan</label>
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="keterangan"></textarea>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Nominal</label>
-                                    <input type="text" id="nominal" class="form-control text-right bg-info border-0" style="font-size: 60px; height: 80px;">
+                                    <input type="text" id="nominal" name="nominal" class="form-control text-right bg-info border-0" style="font-size: 60px; height: 80px;">
                                 </div>
                                 <div class="col-md-6 mt-2">
                                     <button class="btn btn-primary">Tambah</button>
@@ -65,7 +62,7 @@
                             </div>
                             <br>
                             <div>
-                                <label>Draf Pembayaran</label>
+                                <label>Riwayat Pembayaran</label>
                                 <table id="example1" class="table table-bordered  table-hover">
                                     <thead>
                                         <tr>

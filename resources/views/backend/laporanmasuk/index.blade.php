@@ -237,19 +237,19 @@
                     "buttons": ["copy", "csv", "excel", "pdf", "print"]
                     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
                     const keseluruhan = $('#keseluruhan');
-            const perkelas = $('#perkelas');
-            perkelas.click(function(){
-                keseluruhan.removeClass('btn-primary');
-                perkelas.addClass('btn-primary');
-                perkelas.removeClass('btn-none');
-                keseluruhan.addClass('btn-none');
-            });
-            keseluruhan.click(function(){
-                keseluruhan.addClass('btn-primary');
-                keseluruhan.removeClass('btn-none');
-                perkelas.removeClass('btn-primary');
-                perkelas.addClass('btn-none');
-            });
+                    const perkelas = $('#perkelas');
+                    perkelas.click(function(){
+                        keseluruhan.removeClass('btn-primary');
+                        perkelas.addClass('btn-primary');
+                        perkelas.removeClass('btn-none');
+                        keseluruhan.addClass('btn-none');
+                    });
+                    keseluruhan.click(function(){
+                        keseluruhan.addClass('btn-primary');
+                        keseluruhan.removeClass('btn-none');
+                        perkelas.removeClass('btn-primary');
+                        perkelas.addClass('btn-none');
+                    });
                 });
             
                 $(function () {

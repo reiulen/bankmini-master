@@ -34,10 +34,10 @@
                                     $no = 1;
                                 @endphp
                                 @foreach ($akademik as $row)
-                                <tr>
+                                <tr class="text-center">
                                     <td>{{ $no++ }}</td>
-                                    <td>{{$row->tanggal_awal}}</td>
-                                    <td>{{$row->tanggal_akhir}}</td>
+                                    <td>{{ bulan($row->awal) }}</td>
+                                    <td>{{ bulan($row->akhir) }}</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +45,11 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalEdit{{ $row->id }}"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
-                                                <a class="dropdown-item tahunAkademik" href="#"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ tanggal($row->tanggal_awal) }} sampai {{ tanggal($row->tanggal_akhir) }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                <form action="{{ route('tahunakademik.destroy', $row->id) }}" method="POST" id="form-hapus{{ $row->id }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                </form>
                                             </div>
                                         </div>
                                     </td>
@@ -67,7 +71,7 @@
 
     <!-- Modal View -->
 
-    <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -79,23 +83,15 @@
             <form action="{{ route('tahunakademik.store')}}" method="post">
                 <div class="modal-body">
                     @csrf
-                    <div class="form-group mb-4">
-                        <div class="form-floating">
-                            <input type="date" name="tanggal_awal" class="form-control @error('tanggal_awal') is-invalid @enderror">
-                            <label>Tanggal Awal</label>
-                            @error('tanggal_awal')
-                            {{ $message }}
-                        @enderror
+                    <div class="form-group mb-4 form-floating">
+                        <label>Tanggal Awal</label>
+                        <input type="month" name="tanggal_awal" onchange="tanggal(this.value)" class="form-control @error('tanggal_awal') is-invalid @enderror">
+                        <x-session-error name="tanggal_awal"></x-session-error>
                     </div>
-                    </div>
-                    <div class="form-group mb-4">
-                        <div class="form-floating">
-                            <input type="date" name="tanggal_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror">
-                            <label>Tanggal Akhir</label>
-                            @error('tanggal_akhir')
-                            {{ $message }}
-                        @enderror
-                    </div>
+                    <div class="form-group mb-4 form-floating">
+                        <label>Tanggal Akhir</label>
+                        <input type="month" name="tanggal_akhir" id="tgl_akhir" class="form-control @error('tanggal_akhir') is-invalid @enderror">
+                        <x-session-error name="tanggal_akhir"></x-session-error>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -122,62 +118,28 @@
                 <form action="{{ route('tahunakademik.update', $row->id)}}" method="post">
                     @csrf
                     @method('put')
-                  <div class="form-group mb-4">
-                      <div class="form-floating">
-                          <input type="date" class="form-control" value="{{ $row->tanggal_awal }}" name="tanggal_awal">
-                          <label>Tanggal Awal</label>
+                    <div class="form-group mb-4 form-floating">
+                        <label>Tanggal Awal</label>
+                        <input type="month" class="form-control" onchange="tanggal(this.value)" value="{{ $row->awal }}" name="tanggal_awal">
+                    </div>
+                    <div class="form-group mb-4 form-floating">
+                        <label>Tanggal Akhir</label>
+                        <input type="month"class="form-control" id="tgl_akhir" value="{{ $row->akhir }}" name="tanggal_akhir">
                       </div>
-                  </div>
-                  <div class="form-group mb-4">
-                      <div class="form-floating">
-                          <input type="date" class="form-control" value="{{ $row->tanggal_akhir }}" name="tanggal_akhir">
-                          <label>Tanggal Akhir</label>
-                      </div>
-                  </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+                      <button class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-              <button class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
           </div>
-        </div>
       </div>
       @endforeach
-      @include('backend.lib.bootstrap5')
+
       @include('backend.lib.datatable')
       @push('script')
-      <!-- DataTables  & Plugins -->
-
-
-
-      <script>
-        $(function () {
-          $("#example1").DataTable({
-            "responsive": true, "lengthChange": true, "autoWidth": false,
-          }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        });
-        $('.tahunAkademik').click(function(){
-          Swal.fire({
-              title: 'Apakah yakin?',
-              text: "Tahun Akademik 15 Juni 2021 - 15 Juni 2022 akan dihapus",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#6492b8da',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Hapus',
-              cancelButtonText: 'Batal'
-              }).then((result) => {
-              if (result.isConfirmed) {
-                  Swal.fire(
-                  'Berhasil dihapus!',
-                  "Tahun Akademik 15 Juni 2021 - 15 Juni 2022 berhasil dihapus",
-                  'success',
-                  )
-              }
-          });
-        });
-      </script>
+      <script src="{{ asset('assets/dist/js/pages/tahunakademik/index.js') }}"></script>
     @endpush
 
 </x-layout>

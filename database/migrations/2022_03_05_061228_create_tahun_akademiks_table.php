@@ -15,9 +15,9 @@ class CreateTahunAkademiksTable extends Migration
     {
         Schema::create('tahun_akademiks', function (Blueprint $table) {
             $table->id();
+            $table->string('awal');
+            $table->string('akhir');
             $table->timestamps();
-            $table->date('tanggal_awal');
-            $table->date('tanggal_akhir');
         });
     }
 

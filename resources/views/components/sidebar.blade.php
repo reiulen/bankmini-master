@@ -11,18 +11,18 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
+                        <img src="{{ asset(Auth::user()->avatar) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
                     </div>
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <p>Reihan Andika AM</p>
-                            <p class="level text-muted">Operator</p>
+                            <p>{{ auth::user()->nama }}</p>
+                            <p class="level text-muted">{{ Auth::user()->level }}</p>
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"><i class="fa fa-user text-primary pr-1"></i> Profil</a>
                             <a class="dropdown-item" href="#"><i class="fa fa-lock text-success pr-1"></i> Ubah Password</a>
                             <div class="dropdown-divider"></div>
-                            <a href="" class="dropdown-item"><i class="fa fa-sign-out-alt text-danger pr-1"></i> Keluar</a>
+                            <a role="button" class="dropdown-item logout"><i class="fa fa-sign-out-alt text-danger pr-1"></i> Keluar</a>
                         </div>
                     </div>
                 </div>
@@ -57,25 +57,25 @@
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{ route('tahunakademik.index')}}" class="nav-link">
+                      <a href="{{ route('tahunakademik.index')}}" class="nav-link {{ set_active(['tahunakademik.index', 'tahunakademik.create', 'tahunakademik.edit']) }}">
                           <i class="nav-icon fas fa-calendar"></i>
                           <p>{{ __('Tahun Akademik') }}</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a href="{{ route('kelas.index') }}" class="nav-link">
+                      <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active(['kelas.index']) }}">
                           <i class="nav-icon fas fa-home"></i>
                           <p>{{ __('Kelas') }}</p>
                       </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('siswa.index') }}" class="nav-link">
+                        <a href="{{ route('siswa.index') }}" class="nav-link ">
                             <i class="nav-icon fas fa-user-graduate"></i>
                             <p>{{ __('Siswa') }}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('danaawal.index')}}" class="nav-link">
+                        <a href="{{ route('danaawal.index')}}" class="nav-link {{ set_active(['danaawal.index']) }}">
                           <i class="nav-icon fas fa-money-check-alt"></i>
                         <p>{{ __('Dana Awal Tahun') }}</p>
                         </a>
@@ -91,15 +91,15 @@
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
                           <a href="{{ route('pemasukan.index') }}" class="nav-link">
-                            <i class="nav-icon fa-solid fa-book"></i>
+                            <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Pemasukan') }}</p>
                           </a>
                         </li>
                       </ul>
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="lap_tunggakan.html" class="nav-link">
-                            <i class="nav-icon fa-solid fa-book"></i>
+                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tunggakan') }}</p>
                           </a>
                         </li>

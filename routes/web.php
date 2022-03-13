@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,19 +19,21 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::group(['middleware' => 'auth'], function(){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    include_once 'pages/pengguna.php';
+    include_once 'pages/tahunakademik.php';
+    include_once 'pages/danaawal.php';
+    include_once 'pages/pembayaran.php';
+    include_once 'pages/tabungan.php';
+    include_once 'pages/kelas.php';
+    include_once 'pages/siswa.php';
+    include_once 'pages/pengguna.php';
+    include_once 'pages/laporantunggakan.php';
+    include_once 'pages/laporanmasuk.php';
+});
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-include_once 'pages/pengguna.php';
-include_once 'pages/tahunakademik.php';
-include_once 'pages/danaawal.php';
-include_once 'pages/pembayaran.php';
-include_once 'pages/tabungan.php';
-include_once 'pages/kelas.php';
-include_once 'pages/siswa.php';
-include_once 'pages/pengguna.php';
-include_once 'pages/laporantunggakan.php';
-include_once 'pages/laporanmasuk.php';
+Route::group(['middleware' => 'guest'], function(){
+    include_once 'pages/login.php';
+});

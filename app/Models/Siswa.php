@@ -14,4 +14,8 @@ class Siswa extends Model
     public function Kelas(){
         return $this->belongsTo(Kelas::class);
     }
+
+    public function Pekerjaan(){
+        return $this->belongsTo(Pekerjaan::class);
+    }
 }

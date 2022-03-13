@@ -52,7 +52,10 @@ class KelasController extends Controller
             'nama_kelas' => $request->nama_kelas,
             'urut_kelas' => $request->urut_kelas,
         ]);
-        return redirect(route('kelas.index'));
+        return redirect(route('kelas.index'))->with([
+            'pesan' => 'Data berhasil ditambahkan',
+            'pesan1' => 'Data ' .  $request->kelas . ' ' . $request->nama . ' ' .  $request->urut_kelas  . ' berhasil ditambahkan'
+        ]);
     }
 
     /**
@@ -104,7 +107,10 @@ class KelasController extends Controller
             'nama_kelas' => $request->nama_kelas,
             'urut_kelas' => $request->urut_kelas,
         ]);
-        return redirect(route('kelas.index'));
+        return redirect(route('kelas.index'))->with([
+            'pesan' => 'Data berhasil diedit',
+            'pesan1' => 'Data ' .  $request->kelas . ' ' . $request->nama . ' ' .  $request->urut_kelas  . ' berhasil diedit'
+        ]);
     }
 
     /**
@@ -115,6 +121,11 @@ class KelasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kelas = Kelas::find($id);
+        $kelas->delete($id);
+        return redirect(route('kelas.index'))->with([
+            'pesan' => 'Data berhasil dihapus',
+            'pesan1' => 'Data ' .  $kelas->kelas . ' ' . $kelas->nama . ' ' .  $kelas->urut_kelas  .  ' berhasil dihapus'
+        ]);
     }
 }

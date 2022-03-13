@@ -2,12 +2,12 @@
 
     <x-content-header>
         <div class="col-sm-6">
-            <a href="{{ route('pembayaran.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            <a href="{{ route('pembayaran.index', '6') }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
             <li class="breadcrumb-item"><a href="{{ route('siswa.index') }}">{{ __('Siswa') }}</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('pembayaran.index') }}">{{ __('Pembayaran') }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('pembayaran.index', '5') }}">{{ __('Pembayaran') }}</a></li>
             <li class="breadcrumb-item active">{{ __('Sisa Tagihan') }}</li>
         </x-breadcumb>
     </x-content-header>

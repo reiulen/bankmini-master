@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
 {
     public function index(){
-        $user = User::get();
+        $user = User::where('id', '!=', Auth::user()->id)->get();
         return view('backend.pengguna.index', compact('user'));
     }
 
@@ -20,25 +21,31 @@ class PenggunaController extends Controller
     public function store(Request $request){
         
         $message = [
-            'required' => 'tidak boleh kosong',
-            'email' => 'harus bertipe email',
-            'same' => 'password tidak sama',
+            'required' => 'Tidak boleh kosong',
+            'email' => 'Email tidak valid',
+            'same' => 'Password tidak sama',
+            'max' => 'Terlalu panjang',
+            'min' => 'Terlalu pendek',
+            'unique' => 'Sudah digunakan'
         ];
         $request->validate([
             'nama' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'password2' => 'required|same:password',
+            'email' => 'required|email|unique:users',
+            'password' => 'required_with:password2|same:password2|max:14|min:6',
+            'password2' => 'max:14|min:6',
             'level' => 'required',
         ], $message);
-
         User::create([
+            'avatar' => 'upload/avatar/user.png',
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'level' => $request->level,
         ]);
-        return redirect(route('pengguna.index'));
+        return redirect(route('pengguna.index'))->with([
+            'pesan' => 'Data berhasil ditambahkan',
+            'pesan1' => 'Data ' . $request->nama . ' berhasil ditambahkan'
+        ]);
     }
 
 
@@ -50,27 +57,50 @@ class PenggunaController extends Controller
     public function update(Request $request, $id)
     {
         $message = [
-            'required' => 'tidak boleh kosong',
-            'email' => 'harus bertipe email',
-            'same' => 'password tidak sama',
+            'required' => 'Tidak boleh kosong',
+            'email' => 'Email tidak valid',
+            'same' => 'Password tidak sama',
+            'max' => 'Terlalu panjang',
+            'min' => 'Terlalu pendek'
         ];
         $request->validate([
             'nama' => 'required',
-            'email' => 'required|email',
-            'password' => 'required',
-            'password2' => 'required|same:password',
+            'email' => 'required|email|unique:users,email,' .$id,
             'level' => 'required',
         ], $message);
-
+        
         $user = User::find($id);
+
+        if($request->password) { 
+            $request->validate([
+                'password' => 'same:password2|max:14|min:6',
+                'password2' => 'max:14|min:6',
+            ], $message);
+            $password = $request->password;
+        }else{
+            $password = $user->password;
+        }
 
         $user->update([
             'nama' => $request->nama,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($password),
             'level' => $request->level,
         ]);
-        return redirect(route('pengguna.index'));
+        return redirect(route('pengguna.index'))->with([
+            'pesan' => 'Data berhasil diedit',
+            'pesan1' => 'Data ' . $request->nama . ' berhasil diedit'
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $user = User::find($id);
+        $user->delete($id);
+        return back()->with([
+            'pesan' => 'Data berhasil dihapus',
+            'pesan1' => 'Data ' . $user->nama . ' berhasil dihapus'
+        ]);
     }
     
 }

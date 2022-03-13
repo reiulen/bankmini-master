@@ -21,7 +21,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="assets/gambar/logo-motto.png" class="d-inline-block align-top logo-smk" /></a>
+        <a class="navbar-brand" href="#"><img src="{{ asset('assets/gambar/logo-motto.png') }}" class="d-inline-block align-top logo-smk" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,7 +40,7 @@
               <a class="nav-link" href="#">Kontak</a>
             </li>
           </ul>
-          <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2 btn-masuk bg-blue">Masuk</a>
+          <a href="{{ route('login.index') }}" class="btn btn-primary px-4 py-2 btn-masuk bg-blue">Masuk</a>
         </div>
       </div>
     </nav>
@@ -59,7 +59,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-1 d-none d-md-block">
-            <img src="assets/gambar/logo.png" class="img-fluid" />
+            <img src="{{ asset('assets/gambar/logo.png') }}" class="img-fluid" />
           </div>
           <div class="col-md-5">
             <p class="footer-nama">Bank Mini SMK Negeri 1 Ciamis</p>
@@ -84,7 +84,7 @@
               <a href="" class="text-white"><li class="mt-3">Tentang Kami</li></a>
               <a href="" class="text-white"><li class="mt-3">Hubungi Kami</li></a>
               <a href="" class="text-white"><li class="mt-3">FAQ</li></a>
-              <a href="{{ route('login') }}" class="text-white"><li class="mt-3">Masuk - Login</li></a>
+              <a href="{{ route('login.index') }}" class="text-white"><li class="mt-3">Masuk - Login</li></a>
             </ul>
           </div>
         </div>

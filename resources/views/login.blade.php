@@ -24,12 +24,21 @@
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
         <p class="text-center"><img src="{{ asset('assets/gambar/logo.png') }}" alt="Logo SMK" style="height: 80px;" /></p>
-      <a href="" class="h1"><b>Bank</b>Mini</a>
+      <a href="{{ route('login.index') }}" class="h1"><b>Bank</b>Mini</a>
     </div>
     <div class="card-body">
-      <form action="backend/dashbord.html">
+      @if (session('pesan'))
+      <div class="alert bg-blue" role="alert"> 
+        {{ session('pesan') }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      @endif
+      <form action="{{ route('login.proses') }}" method="POST">
+        @csrf
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" class="form-control" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -37,7 +46,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Kata sandi">
+          <input type="password" name="password" class="form-control" placeholder="Kata sandi">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -47,7 +56,7 @@
         <div class="row">
           <div class="col-8">
             <div class="icheck-primary">
-              <input type="checkbox" id="remember">
+              <input type="checkbox" name="remember" id="remember">
               <label for="remember">
                 Ingat Saya
               </label>
@@ -62,7 +71,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="forgot-password.html">Lupa kata sandi</a>
+        <a href="">Lupa kata sandi</a>
       </p>
     </div>
     <!-- /.card-body -->

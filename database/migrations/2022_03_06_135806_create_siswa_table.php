@@ -15,11 +15,12 @@ class CreateSiswaTable extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->id();
+            $table->string('foto');
             $table->string('nama');
             $table->string('nisn');
             $table->string('nis');
             $table->string('tahun_masuk');
-            $table->string('kelas');
+            $table->string('kelas_id');
             $table->string('jenis_kelamin');
             $table->string('tempat_lahir');
             $table->date('tgl_lahir');
@@ -31,23 +32,16 @@ class CreateSiswaTable extends Migration
             $table->string('no_ijazah');
             $table->string('tahun_lulus');
             $table->string('alamat_sekolah');
-            $table->string('nilai_un');
-            $table->string('ayah');
-            $table->string('ibu');
-            $table->string('alamat_ortu');
-            $table->string('kerja_ayah');
-            $table->string('kerja_ibu');
-            $table->string('wali');
-            $table->string('alamat_wali');
-            $table->string('kerja_wali');
-            $table->string('hubungan_wali');
-            $table->string('status');
-            $table->string('sisa_dsp');
-            $table->string('sisa_infaq');
-            $table->string('sisa_ki');
-            $table->string('sisa_pkl');
-            $table->string('sisa_kelas_10');
-            $table->string('sisa_kelas_11');
+            $table->string('ayah')->nullable()->default('-');
+            $table->string('ibu')->nullable()->default('-');
+            $table->string('alamat_ortu')->nullable()->default('-');
+            $table->string('pekerjaan_ayah')->nullable()->default('-');
+            $table->string('pekerjaan_ibu')->nullable()->default('-');
+            $table->string('wali')->nullable()->default('-');
+            $table->string('alamat_wali')->nullable()->default('-');
+            $table->string('kerja_wali')->nullable()->default('-');
+            $table->string('hubungan_wali')->nullable()->default('-');
+            $table->string('status')->nullable()->default('Aktif');
             $table->timestamps();
         });
     }

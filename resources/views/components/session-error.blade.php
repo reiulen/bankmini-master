@@ -1,3 +1,3 @@
 @error($name)
-    <p class="text-danger" style="font-size:15px;">{{ $message }}</p>
+    <span class="text-danger" style="font-size:12px;">{{ $message }}</span>
 @enderror

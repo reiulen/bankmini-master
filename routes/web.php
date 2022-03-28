@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-    include_once 'pages/pengguna.php';
+    include_once 'pages/jurusan.php';
     include_once 'pages/tahunakademik.php';
     include_once 'pages/danaawal.php';
     include_once 'pages/pembayaran.php';
@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     include_once 'pages/pengguna.php';
     include_once 'pages/laporantunggakan.php';
     include_once 'pages/laporanmasuk.php';
+    include_once 'pages/role.php';
 });
 
 Route::group(['middleware' => 'guest'], function(){

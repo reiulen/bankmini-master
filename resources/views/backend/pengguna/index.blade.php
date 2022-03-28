@@ -13,10 +13,12 @@
         <div class="container-fluid">
             <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header card-outline">
+                <div class="card card-outline">
+                    @can('pengguna.create')
+                    <div class="card-header">
                         <a href="{{ route('pengguna.create') }}" class="btn btn-primary border-0"><i class="fa fa-plus px-1"></i> Tambah Pengguna</a>
                     </div>
+                    @endcan
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered  table-hover">
@@ -43,7 +45,7 @@
                                         {{ $row->nama }}
                                     </td>
                                     <td>{{ $row->email }}</td>
-                                    <td><span class="badge {{ badge_level($row->level) }} rounded- py-2 px-3">{{ $row->level }}</span></td>
+                                    <td><span class="badge {{ badge_level($row->roles[0]->name) }} rounded- py-2 px-3">{{ $row->roles ? $row->roles[0]->name : '' }}</span></td>
                                     <td>Logout 3 menit yang lalu</td>
                                     <td>
                                         <div class="dropdown">
@@ -51,13 +53,17 @@
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                                @can('pengguna.edit')
                                                 <a class="dropdown-item" href="{{ route('pengguna.edit', $row->id) }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
+                                                @endcan
                                                 <a class="dropdown-item" data-toggle="modal" data-target="#modalView{{ $row->id }}" href="#"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
+                                                @can('pengguna.delete')
                                                 <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ $row->nama }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
                                                 <form action="{{ route('pengguna.delete', $row->id) }}" method="POST" id="form-hapus{{ $row->id }}">
                                                     @csrf
                                                     @method('delete')
                                                 </form>
+                                                @endcan
                                             </div>
                                         </div>
                                     </td>

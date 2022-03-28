@@ -20,7 +20,7 @@ function hapus(id) {
     data = $(`#hapus${id}`).attr("data");
     Swal.fire({
         title: "Apakah yakin?",
-        text: `Data ${data} Akan Dihapus`,
+        text: `Data ${data} akan Dihapus`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#6492b8da",

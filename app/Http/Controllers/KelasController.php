@@ -3,129 +3,94 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kelas;
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getData($id)
+    {
+        $kelas = Kelas::with(['jurusan'])->findorfail($id);
+        return response()->json($kelas);
+    }
+
     public function index()
     {
-        $kelas = Kelas::get();
-        return view('backend.kelas.index', compact('kelas'));
+        $jurusan = Jurusan::latest()->get();
+        return view('backend.kelas.index', compact('jurusan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $message = [
-            'required' => 'tidak boleh kosong',
-        ];
-        $request->validate([
+        $validasi = Validator::make($request->all(),[
             'kelas' => 'required',
-            'nama' => 'required',
-            'nama_kelas' => 'required',
+            'jurusan' => 'required',
             'urut_kelas' => 'required',
-        ], $message);
-
-        Kelas::create([
-            'kelas' => $request->kelas,
-            'nama' => $request->nama,
-            'nama_kelas' => $request->nama_kelas,
-            'urut_kelas' => $request->urut_kelas,
         ]);
-        return redirect(route('kelas.index'))->with([
-            'pesan' => 'Data berhasil ditambahkan',
-            'pesan1' => 'Data ' .  $request->kelas . ' ' . $request->nama . ' ' .  $request->urut_kelas  . ' berhasil ditambahkan'
-        ]);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-    }
+        if($validasi->fails()){
+            return response()->json([
+                'error' => $validasi->errors(),
+            ]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        
-    }
+        $kelas = Kelas::find($request->id);
+        $jurusan = Jurusan::find($request->jurusan);
+        if($kelas){
+            $kelas->update([
+                'kelas' => $request->kelas,
+                'jurusan_id' => $jurusan->id,
+                'urut_kelas' => $request->urut_kelas,
+            ]);
+        }else{
+            Kelas::create([
+                'kelas' => $request->kelas,
+                'jurusan_id' => $jurusan->id,
+                'urut_kelas' => $request->urut_kelas,
+            ]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $message = [
-            'required' => 'tidak boleh kosong',
-        ];
-        $request->validate([
-            'kelas' => 'required',
-            'nama' => 'required',
-            'nama_kelas' => 'required',
-            'urut_kelas' => 'required',
-        ], $message);
-
-        $kelas = Kelas::find($id);
-
-        $kelas->update([
-            'kelas' => $request->kelas,
-            'nama' => $request->nama,
-            'nama_kelas' => $request->nama_kelas,
-            'urut_kelas' => $request->urut_kelas,
-        ]);
-        return redirect(route('kelas.index'))->with([
-            'pesan' => 'Data berhasil diedit',
-            'pesan1' => 'Data ' .  $request->kelas . ' ' . $request->nama . ' ' .  $request->urut_kelas  . ' berhasil diedit'
+        return response()->json([
+            'success' => 'Data ' .  $request->kelas . ' ' . $jurusan->jurusan . ' ' .  $request->urut_kelas  . ' berhasil disimpan'
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        $kelas = Kelas::find($id);
+        $kelas = Kelas::with(['jurusan'])->find($id);
         $kelas->delete($id);
-        return redirect(route('kelas.index'))->with([
-            'pesan' => 'Data berhasil dihapus',
-            'pesan1' => 'Data ' .  $kelas->kelas . ' ' . $kelas->nama . ' ' .  $kelas->urut_kelas  .  ' berhasil dihapus'
+        return response()->json([
+            'success' => 'Data ' .  $kelas->kelas . ' ' . $kelas->jurusan->jurusan . ' ' .  $kelas->urut_kelas  . ' berhasil dihapus'
         ]);
+    }
+
+    public function data()
+    {
+        $data = Kelas::with(['jurusan'])->orderBy('kelas', 'DESC')->get();
+        return DataTables::of($data)
+                           ->addindexColumn()
+                           ->addColumn('jurusan', function($data){
+                                return $data->jurusan->jurusan . ' ' . $data->urut_kelas;
+                           })
+                           ->addColumn('nama_kelas', function($data){
+                                return $data->jurusan->nama . ' ' . $data->urut_kelas;
+                           })
+                           ->addColumn('aksi', function($data){
+                              return '<div class="dropdown">
+                                            <button class="btn btn-none" id="edit'.$data->id.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="edit'.$data->id .'">
+                                                <a class="dropdown-item btn-edit" data-id="'.$data->id.'"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
+                                                <a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'.$data->kelas.' '.$data->jurusan->jurusan . ' ' .$data->urut_kelas . '"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                            </div>
+                                        </div>
+                                    ';
+                           })
+                           ->rawColumns(['aksi','jurusan', 'nama_kelas'])
+                           ->make(true);
     }
 }

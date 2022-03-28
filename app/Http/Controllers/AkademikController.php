@@ -2,124 +2,81 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TahunAkademik;
 use Illuminate\Http\Request;
+use App\Models\TahunAkademik;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class AkademikController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $akademik = TahunAkademik::get();
         return view('backend.tahunakademik.index', compact('akademik'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $message = [
-            'required' => 'tidak boleh kosong',
-        ];
-        $request->validate([
+        $validasi = Validator::make($request->all(),[
             'tanggal_awal' => 'required',
             'tanggal_akhir' => 'required',
-        ], $message);
-
-        TahunAkademik::create([
-            'awal' => $request->tanggal_awal,
-            'akhir' => $request->tanggal_akhir,
+            'id' => 'required'
         ]);
-        return redirect(route('tahunakademik.index'))->with([
-            'pesan' => 'Data berhasil ditambahkan',
-            'pesan1' => 'Data ' . bulan($request->tanggal_awal). ' sampai ' . bulan($request->tanggal_akhir) . ' berhasil ditambahkan',
-        ]);
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        if($validasi->fails()){
+            return response()->json([
+                'error' => $validasi->errors(),
+            ]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $akademik = TahunAkademik::findorfail($id);
-        return view('backend.tahunakademik.index', compact('akademik'));
-    }
+        $akademik = TahunAkademik::find($request->id);
+        if($akademik){
+            $akademik->update([
+                'awal' => $request->tanggal_awal,
+                'akhir' => $request->tanggal_akhir,
+            ]);
+        }else{
+            TahunAkademik::create([
+                'awal' => $request->tanggal_awal,
+                'akhir' => $request->tanggal_akhir,
+            ]);
+        };
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $message = [
-            'required' => 'tidak boleh kosong',
-        ];
-        $request->validate([
-            'tanggal_awal' => 'required',
-            'tanggal_akhir' => 'required',
-        ], $message);
-
-
-        $user = TahunAkademik::find($id);
-
-        $user->update([
-            'awal' => $request->tanggal_awal,
-            'akhir' => $request->tanggal_akhir,
-        ]);
-        return redirect(route('tahunakademik.index'))->with([
-            'pesan' => 'Data berhasil diedit',
-            'pesan1' => 'Data ' . bulan($request->tanggal_awal). ' sampai ' . bulan($request->tanggal_akhir) . ' berhasil diedit',
+        return response()->json([
+            'success' => 'Tahun akademik'. bulan($request->tanggal_awal). ' sampai ' . bulan($request->tanggal_akhir) . ' berhasil disimpan',
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $ta = TahunAkademik::findorfail($id);
         $ta->delete($id);
-        return back()->with([
-            'pesan' => 'Data berhasil dihapus',
-            'pesan1' => 'Data ' . bulan($ta->tanggal_awal). ' sampai ' . bulan($ta->tanggal_akhir) . ' berhasil dihapus',
+         return response()->json([
+            'success' => 'Tahun akademik'. bulan($ta->awal). ' sampai ' . bulan($ta->akhir) . ' berhasil dihapus',
         ]);
+    }
+
+    public function data(){
+        $data = TahunAkademik::latest()->get();
+        return DataTables::of($data)
+                           ->addindexColumn()
+                           ->addColumn('tgl_awal', function($data){
+                                return bulan($data->awal);
+                           })
+                           ->addColumn('tgl_akhir', function($data){
+                                return bulan($data->akhir);
+                           })
+                           ->addColumn('aksi', function($data){
+                               return '<div class="dropdown">
+                                            <button class="btn btn-none" id="edit'.$data->id.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="edit'.$data->id.'">
+                                                <a class="dropdown-item btn-edit" data-id="'.$data->id.'" data-awal="'.$data->awal.'" data-akhir="'.$data->akhir.'"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
+                                                <a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'.bulan($data->awal).' sampai '.bulan($data->akhir).'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                            </div>
+                                        </div>';
+                           })
+                           ->rawColumns(['aksi','tgl_awal', 'tgl_akhir'])->make(true);
     }
 }

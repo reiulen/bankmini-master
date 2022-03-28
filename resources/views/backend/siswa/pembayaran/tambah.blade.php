@@ -24,78 +24,82 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="{{ route('pembayaran.store', $siswa->nis) }}" method="post">
+                            @csrf
                             <div class="form-group mb-4 row">
-                                <div class="col-md-4">
-                                    <label>Tanggal</label>
-                                    <input type="date" value="{{ date('Y-m-d') }}" name="tanggal" class="form-control">
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label>Kode Pembayaran</label>
-                                    <input type="text" name="kode" class="form-control">
+                                    @php
+                                        if ($pembayaran) {
+                                            $proses = substr($pembayaran->kode, 8) + 1;
+                                            $bil = sprintf("%05s", $proses);
+                                            $kode = 'PS' . date('mY') . $bil;
+                                        }else {
+                                            $kode = 'PS' . date('mY') . '00001';
+                                        }
+                                    @endphp
+                                    <input type="text" name="kode" value="{{ $kode }}" class="form-control" readonly required>
+                                    <x-session-error name="kode"></x-session-error>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <label>Pembayaran</label>
-                                    <select class="form-control pembayaran" name="pembayaran">
-                                        <option selected disabled>- Pilih Pembayaran -</option>
-                                       @foreach ($dana_awal as $row)
-                                        <option value="{{ $row->id }}">{{ $row->dana_awal_tahun }}</option>
+                                    <select class="form-control pembayaran" name="pembayaran" required>
+                                       <option selected disabled>- Pilih Pembayaran -</option>
+                                       @foreach ($dana as $row)
+                                        <option value="{{ $row->id }}">{{ $row->dana }}</option>
                                        @endforeach
                                     </select>
+                                    <x-session-error name="pembayaran"></x-session-error>
                                 </div>
                             </div>
                             <div class="form-group mb-0 row">
                                 <div class="col-md-6">
                                     <label>Keterangan</label>
-                                    <textarea class="form-control" name="keterangan"></textarea>
+                                    <textarea class="form-control" name="keterangan" required>-</textarea>
+                                    <x-session-error name="keterangan"></x-session-error>
                                 </div>
                                 <div class="col-md-6">
                                     <label>Nominal</label>
-                                    <input type="text" id="nominal" name="nominal" class="form-control text-right bg-info border-0" style="font-size: 60px; height: 80px;">
+                                    <input type="text" id="nominal" name="nominal" class="form-control text-right bg-info border-0 @if(session('error_nominal')) is-invalid @enderror" style="font-size: 60px; height: 80px;" required>
+                                    @if(session('error_nominal'))
+                                    <span class="text-danger">{{ session('error_nominal') }}</span>
+                                    @endif
+                                    <x-session-error name="nominal"></x-session-error>
                                 </div>
                                 <div class="col-md-6 mt-2">
                                     <button class="btn btn-primary">Tambah</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <h5 class="bg-danger py-2 pl-2 mt-2">Sisa tagihan : Rp. 250.000</h5>
+                                    <h5 class="bg-danger py-2 pl-2 mt-2">Sisa tagihan : <span class="sisa-tagihan">Rp. 0</span></h5>
                                 </div>
                             </div>
+                        </form>
                             <br>
                             <div>
-                                <label>Riwayat Pembayaran</label>
+                                <label>Riwayat Pembayaran Terbaru</label>
                                 <table id="example1" class="table table-bordered  table-hover">
                                     <thead>
                                         <tr>
+                                            <th>Tanggal</th>
                                             <th>Kode</th>
                                             <th>Pembayaran</th>
-                                            <th>Tanggal</th>
                                             <th>Keterangan</th>
                                             <th>Nominal</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($historypembayaran as $row)
                                         <tr>
-                                            <td>P001</td>
-                                            <td>Prakerin</td>
-                                            <td>12-02-2023</td>
-                                            <td>-</td>
-                                            <td>Rp. 2.000.000</td>
+                                            <td>{{ tanggal($row->created_at) }}</td>
+                                            <td>{{ $row->kode }}</td>
+                                            <td>{{ $row->danaawal->dana }}</td>
+                                            <td>{{ $row->keterangan }}</td>
+                                            <td>{{ format_rupiah($row->nominal) }}</td>
                                         </tr>
-                                        <tr>
-                                            <td>P002</td>
-                                            <td>KI</td>
-                                            <td>12-02-2023</td>
-                                            <td>-</td>
-                                            <td>Rp. 1.500.000</td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-md-6 mt-2">
-                                <button class="btn btn-primary">Simpan</button>
-                            </div>
-                        </form>
-                        
                     </div>
                 <!-- /.card-body -->
                 </div>
@@ -109,14 +113,12 @@
     </section>
     <!-- /.content -->
 
+    @include('backend.lib.select2')
+    @include('backend.lib.datatable')
     @push('script')
-        <!-- Custom Script -->
-        <script src="{{ asset('assets/dist/js/pages/transaksi.js') }}"></script>
-        <script>
-            $(document).ready(function(){
-                $('.transaksi').select2();
-                $('.nama').select2();
-            });
-        </script>
+    <script>
+        const nis = "{{ $siswa->nis }}";
+    </script>
+    <script src="{{ asset('assets/dist/js/pages/pembayaran/create-update.js') }}"></script>
     @endpush
 </x-layout>

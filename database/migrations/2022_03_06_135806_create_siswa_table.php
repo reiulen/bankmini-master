@@ -19,7 +19,7 @@ class CreateSiswaTable extends Migration
             $table->string('nama');
             $table->string('nisn');
             $table->string('nis');
-            $table->string('tahun_masuk');
+            $table->string('tahun_akademik_id');
             $table->string('kelas_id');
             $table->string('jenis_kelamin');
             $table->string('tempat_lahir');

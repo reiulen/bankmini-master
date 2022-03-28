@@ -1,10 +1,7 @@
 <x-layout title="Tambah Pengguna">
-    @push('css')
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    @endpush
     <x-content-header>
         <div class="col-sm-6">
-            <a href="/pengguna" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            <a href="{{ route('pengguna.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
@@ -52,18 +49,13 @@
                             <div class="form-group row mb-4 justify-content-center">
                                 <div class="col-md-4" >
                                     <label>Level</label>
-                                    <select class="form-control @error('level') is-invalid @enderror" name="level" required>
-                                        @if (old('level'))
-                                        <option value="{{ old('level') }}" selected>{{ old('level') }}</option>
-                                        @else
+                                    <select class="form-control @error('role') is-invalid @enderror" name="role" required>
                                         <option selected disabled>- Pilih Level -</option>
-                                        @endif
-                                        <option value="Operator">Operator</option>
-                                        <option value="Admin Bank">Admin Bank</option>
-                                        <option value="Kepala Bank">Kepala Bank</option>
-                                        <option value="Komite">Komite</option>
+                                        @foreach ($role as $row)
+                                        <option value="{{ $row->id }}" {{ $row->id == old('role') ? 'selected' : '' }}>{{ $row->name }}</option>
+                                        @endforeach
                                     </select>
-                                    <x-session-error name="level"></x-session-error>
+                                    <x-session-error name="role"></x-session-error>
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>

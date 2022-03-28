@@ -41,10 +41,6 @@ submitBtn.addEventListener("click", function () {
     progressCheck[current - 1].classList.add("active");
     progressText[current - 1].classList.add("active");
     current += 1;
-    setTimeout(function () {
-        alert("Your Form Successfully Signed up");
-        location.reload();
-    }, 800);
 });
 
 prevBtnSec.addEventListener("click", function (event) {
@@ -85,22 +81,36 @@ function gambarpreview() {
     };
 }
 
-$(document).ready(function () {
-    $("#submit").click(function () {
-        Swal.fire({
-            title: "Apakah yakin?",
-            text: `Profil akan diubah`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#6492b8da",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Hapus",
-            cancelButtonText: "Batal",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $("#form").submit();
-            }
-        });
+$("#submit").click(function () {
+    Swal.fire({
+        title: "Apakah yakin?",
+        text: `Profil akan diubah`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#6492b8da",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Hapus",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $("#form").submit();
+        }
     });
-    $(".select2").select2();
 });
+$(".select2").select2();
+
+const domStrings = {
+    inputNis: $('input[name="nis"]'),
+    inputNisn: $('input[name="nisn"]'),
+    inputTglLahir: $('input[name="tgl_lahir"]'),
+    inputTahunLulus: $('input[name="tahun_lulus"]'),
+};
+
+Inputmask({ mask: "999999999" }).mask(domStrings.inputNis);
+Inputmask({ mask: "9999999999" }).mask(domStrings.inputNisn);
+Inputmask({ alias: "datetime", inputFormat: "yyyy-mm-dd" }).mask(
+    domStrings.inputTglLahir
+);
+Inputmask({ alias: "datetime", inputFormat: "yyyy" }).mask(
+    domStrings.inputTahunLulus
+);

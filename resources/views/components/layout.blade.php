@@ -8,16 +8,15 @@
 
     <!-- Font Google -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    @stack('css')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}" />
-    @stack('css')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}" />
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/custom.css') }}" />
-    <script src="https://kit.fontawesome.com/d04c18bbdb.js" crossorigin="anonymous"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   </head>

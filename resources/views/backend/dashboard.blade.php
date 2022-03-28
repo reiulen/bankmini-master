@@ -19,7 +19,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner text-right">
-                    <h3>150</h3>
+                    <h3>{{ DB::table('siswa')->where('status', 'Aktif')->count() }}</h3>
                     <p>Jumlah Siswa</p>
                   </div>
                   <div class="icon">
@@ -32,7 +32,23 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                   <div class="inner text-right">
-                    <h3>Rp. 100.350.000</h3>
+                      @php
+                        $pembayaranhari = $pembayaran->whereBetween(
+                                                                'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
+                                                                )->sum('nominal');
+                        $kredithari = $tabungan->whereBetween(
+                                                            'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
+                                                            )
+                                             ->where('tipe', '2')
+                                             ->sum('nominal');
+                        $debithari = $tabungan->whereBetween(
+                                                            'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
+                                                            )
+                                             ->where('tipe', '1')
+                                             ->sum('nominal');
+                        $totalhari = $pembayaranhari + $debithari - $kredithari;
+                      @endphp
+                    <h3>{{ format_rupiah($totalhari) }}</h3>
                     <p>Pemasukan Harian</p>
                   </div>
                   <div class="icon">
@@ -45,7 +61,21 @@
                 <!-- small box -->
                 <div class="small-box bg-secondary">
                   <div class="inner text-right">
-                    <h3>Rp. 350.000.000</h3>
+                    @php
+                        function format_bulan($bulan){
+                            return \Carbon\Carbon::parse($bulan)->isoFormat('MMMM');
+                        }
+
+                        $pembayaranbulan = $pembayaran->where('bulan', format_bulan(date('M')))->sum('nominal');
+                        $kreditbulan = $tabungan->where('bulan', format_bulan(date('M')))
+                                             ->where('tipe', '2')
+                                             ->sum('nominal');
+                        $debitbulan = $tabungan->where('bulan', format_bulan(date('M')))
+                                             ->where('tipe', '1')
+                                             ->sum('nominal');
+                        $totalbulan = $pembayaranbulan + $debitbulan - $kreditbulan;
+                      @endphp
+                    <h3>{{ format_rupiah($totalbulan) }}</h3>
                     <p>Pemasukan Bulanan</p>
                   </div>
                   <div class="icon">
@@ -58,8 +88,15 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner text-right">
-                    <h3>Rp. 100.350.000</h3>
-                    <p>Tabungan Perbulan</p>
+                    @php
+                        $pembayarantotal = $pembayaran->sum('nominal');
+                        $debittotal = $tabungan->where('tipe', '1')->sum('nominal');
+                        $kredittotal = $tabungan->where('tipe', '2')->sum('nominal');
+
+                        $saldo = $pembayarantotal + $debittotal - $kredittotal;
+                    @endphp
+                    <h3>{{ format_rupiah($saldo) }}</h3>
+                    <p>Total Saldo</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-chart-bar"></i>
@@ -88,7 +125,7 @@
                 <!-- BAR CHART -->
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Kredit dan Debit</h3>
+                    <h3 class="card-title">Kredit dan Debit Tabungan</h3>
                   </div>
                   <div class="card-body">
                     <div class="chart">
@@ -102,7 +139,7 @@
             </div>
             <!-- /.row -->
             <div class="row">
-              <div class="col-md-8">
+              {{-- <div class="col-md-8">
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">Pengguna</h3>
@@ -167,7 +204,7 @@
                   <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
-              </div>
+              </div> --}}
               <div class="col-md-4">
                 <div class="card">
                   <div class="card-header">
@@ -217,7 +254,11 @@
               var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                  labels: ["Kiarra Fisher", "Wingit - Sara Wijayanto", "Dee Lestari Rapi Jali", "Selamat Tinggal", "Bukan Buku Nikah", ],
+                  labels: [
+                    @foreach ($pembayaran->groupBy('tanggal') as $row)
+                      "{{ $row->first()->first()->tanggal }}",
+                    @endforeach
+                  ],
                   datasets: [{
                     label: 'Views',
                     data: [244, 174, 154, 111, 33, ],
@@ -262,10 +303,18 @@
               var myChart = new Chart(statistics_chart, {
                 type: 'line',
                 data: {
-                  labels: ["12 Juni 2022", "13 Juni 2022", "14 Juni 2022", "15 Juni 2022", "16 Juni 2022", ],
+                  labels: [
+                    @foreach ($charttabungan as $row)
+                      "{{ $row->first()->first()->tanggal }}",
+                    @endforeach
+                  ],
                   datasets: [{
                     label: 'Kredit',
-                    data: [20, 40, 70, 27, 48],
+                    data: [
+                        @foreach ($charttabungan as $row)
+                        "{{ $row->first()->where('tipe', '2')->count() }}",
+                        @endforeach
+                    ],
                     borderWidth: 5,
                     borderColor: '#6091ba',
                     backgroundColor: 'transparent',
@@ -275,7 +324,10 @@
                   },
                   {
                     label: 'Debit',
-                    data: [50, 32, 30, 27, 48],
+                    data: [@foreach ($charttabungan as $row)
+                        "{{ $row->first()->where('tipe', '1')->count() }}",
+                        @endforeach
+                    ],
                     borderWidth: 5,
                     borderColor: '#343a40',
                     backgroundColor: 'transparent',

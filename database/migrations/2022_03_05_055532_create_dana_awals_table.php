@@ -16,8 +16,7 @@ class CreateDanaAwalsTable extends Migration
         Schema::create('dana_awals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('tahun_akademik_id');
-            $table->foreignId('kelas_id');
-            $table->string('dana_awal_tahun');
+            $table->string('dana');
             $table->string('nominal');
             $table->timestamps();
         });

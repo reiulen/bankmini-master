@@ -218,20 +218,30 @@ label {
     justify-content: center;
 }
 
-table#example1 {
-    border: 1px solid lightgray;
-    width: 100%;
+table tr th,
+td {
+    border: 0 !important;
 }
-table#example1 th {
-    background-color: lightgray;
-    text-align: center;
 
-    border: none;
+table tr th {
+    background-color: rgb(212, 212, 212);
 }
-table#example1 tr td {
-    border: 0;
-    padding: 5px;
-    padding-left: 20px;
+
+ul[role='tablist'] .nav-link.active {
+     box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+}
+
+ul[role='tablist']  .nav-link.active:hover {
+    color: white !important;
+}
+
+ul[role='tablist']  .nav-link:hover {
+    box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    color: #6091ba !important;
 }
 
 .content-header .btn-laporan .btn.btn-none {
@@ -268,6 +278,18 @@ table#example1 tr td {
 
 .table-center td {
     text-align: center;
+}
+
+.input-gambar{
+    position: absolute;
+    top: 0;
+    height: 210px;
+    width: 80%;
+    opacity: 0;
+}
+
+.form-control.select2 {
+    width: 100% !important;
 }
 
 @media (max-width: 767.98px) {

@@ -3,30 +3,30 @@
     <link rel="stylesheet" href="{{ asset('assets/dist/css/tabs.css') }}" />
     @endpush
 
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-3">
-                <div class="col-sm-6">
-                    <h1>Laporan Tunggakan</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Laporan Pemasukan</li>
-                    </ol>
-                </div>
-            </div>
-            <div class="card">
-               <div class="card-body">
-                    <div class="row btn-laporan">
-                        <button class="btn btn-primary mx-1" onclick="openPage('Home', this, )" id="perkelas">Perkelas</button>
-                        <button class="btn btn-none mx-1" onclick="openPage('News', this,)" id="keseluruhan">Keseluruhan</button>
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <h1>Laporan Tunggakan</h1>
                     </div>
-               </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Laporan Pemasukan</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="card">
+                <div class="card-body">
+                        <div class="row btn-laporan">
+                            <button class="btn btn-primary mx-1" onclick="openPage('Home', this, )" id="perkelas">Perkelas</button>
+                            <button class="btn btn-none mx-1" onclick="openPage('News', this,)" id="keseluruhan">Keseluruhan</button>
+                        </div>
+                </div>
+                </div>
             </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+            <!-- /.container-fluid -->
+        </section>
         <!-- Main content 1-->
         <section class="content tabcontent" id="Home">
             <div class="container-fluid">
@@ -230,8 +230,8 @@
             <script>
                 $(function () {
                     $("#example1").DataTable({
-                    "responsive": true, 
-                    "lengthChange": false, 
+                    "responsive": true,
+                    "lengthChange": false,
                     "autoWidth": false,
                     "info": false,
                     "buttons": ["copy", "csv", "excel", "pdf", "print"]
@@ -251,17 +251,17 @@
                         perkelas.addClass('btn-none');
                     });
                 });
-            
+
                 $(function () {
                     $("#example2").DataTable({
-                    "responsive": true, 
-                    "lengthChange": false, 
+                    "responsive": true,
+                    "lengthChange": false,
                     "autoWidth": false,
                     "info": false,
                     "buttons": ["copy", "csv", "excel", "pdf", "print"]
                     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
                 });
-            
+
                 function openPage(pageName, elmnt) {
                 // Hide all elements with class="tabcontent" by default */
                 var i, tabcontent, tablinks;
@@ -269,20 +269,20 @@
                 for (i = 0; i < tabcontent.length; i++) {
                     tabcontent[i].style.display = "none";
                 }
-            
+
                 // Remove the background color of all tablinks/buttons
                 tablinks = document.getElementsByClassName("tablink");
                 for (i = 0; i < tablinks.length; i++) {
                     tablinks[i].style.backgroundColor = "";
                 }
-            
+
                 // Show the specific tab content
                 document.getElementById(pageName).style.display = "block";
-            
+
                 // Add the specific color to the button used to open the tab content
                 elmnt.style.backgroundColor = color;
                 }
-            
+
                 // Get the element with id="defaultOpen" and click on it
                 document.getElementById("perkelas").click();
                 </script>

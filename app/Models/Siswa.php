@@ -18,4 +18,14 @@ class Siswa extends Model
     public function Pekerjaan(){
         return $this->belongsTo(Pekerjaan::class);
     }
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+    }
+
+    public function tahunakademik()
+    {
+        return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
+    }
 }

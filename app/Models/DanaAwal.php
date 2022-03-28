@@ -15,8 +15,8 @@ class DanaAwal extends Model
         return $this->belongsTo(Kelas::class);
     }
 
-    public function tahun_akademik()
+    public function tahunakademik()
     {
-        return $this->belongsTo(TahunAkademik::class);
+        return $this->belongsTo(TahunAkademik::class, 'tahun_akademik_id');
     }
 }

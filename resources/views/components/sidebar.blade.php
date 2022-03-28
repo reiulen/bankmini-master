@@ -16,7 +16,7 @@
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <p>{{ auth::user()->nama }}</p>
-                            <p class="level text-muted">{{ Auth::user()->level }}</p>
+                            <p class="level text-muted">{{ Auth::user()->roles[0]->name }}</p>
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"><i class="fa fa-user text-primary pr-1"></i> Profil</a>
@@ -50,34 +50,79 @@
                         </a>
                     </li>
                     <li class="nav-header">PILIHAN MENU</li>
-                    <li class="nav-item">
-                      <a href="{{ route('pengguna.index') }}" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit']) }}">
-                          <i class="nav-icon fas fa-user"></i>
-                          <p>{{ __('Pengguna') }}</p>
-                      </a>
+                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit']) }}">
+                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit']) }}">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Data Master
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @canany(['pengguna.index'])
+                            <li class="nav-item">
+                                <a href="{{ route('pengguna.index') }}" class="nav-link {{ set_active_sub(['pengguna.index', 'pengguna.create', 'pengguna.edit']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Pengguna') }}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('role.index')
+                            <li class="nav-item">
+                                <a href="{{ route('role.index') }}" class="nav-link {{ set_active_sub(['role.index', 'role.create', 'role.edit']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Role & Permission') }}</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    <li class="nav-item nav-item {{ set_menu_open(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Referensi
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('jurusan.index') }}" class="nav-link {{ set_active_sub(['jurusan.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Jurusan') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active_sub(['kelas.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Kelas') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('tahunakademik.index')}}" class="nav-link {{ set_active_sub(['tahunakademik.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Tahun Akademik') }}</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('danaawal.index')}}" class="nav-link {{ set_active_sub(['danaawal.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Dana Awal Tahun') }}</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                      <a href="{{ route('tahunakademik.index')}}" class="nav-link {{ set_active(['tahunakademik.index', 'tahunakademik.create', 'tahunakademik.edit']) }}">
-                          <i class="nav-icon fas fa-calendar"></i>
-                          <p>{{ __('Tahun Akademik') }}</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active(['kelas.index']) }}">
-                          <i class="nav-icon fas fa-home"></i>
-                          <p>{{ __('Kelas') }}</p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('siswa.index') }}" class="nav-link ">
+                        <a href="{{ route('siswa.index') }}" class="nav-link
+                                                                            {{
+                                                                                set_active([
+                                                                                    'siswa.index', 'siswa.create', 'siswa.edit','siswa.show',
+                                                                                    'tabungan.index', 'tabunga.create', 'tabungan.edit',
+                                                                                    'pembayaran.index', 'pembayaran.create', 'pembayaran.edit', 'pembayaran.tagihan',
+                                                                                ])
+                                                                            }}">
                             <i class="nav-icon fas fa-user-graduate"></i>
                             <p>{{ __('Siswa') }}</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('danaawal.index')}}" class="nav-link {{ set_active(['danaawal.index']) }}">
-                          <i class="nav-icon fas fa-money-check-alt"></i>
-                        <p>{{ __('Dana Awal Tahun') }}</p>
                         </a>
                     </li>
                     <li class="nav-item nav-item">

@@ -11,5 +11,7 @@ Route::group(['prefix' => 'siswa', 'as' => 'siswa.'], function() {
     Route::put('/{siswa:nis}/editsiswa', [SiswaController::class, 'update'])->name('update');
     Route::delete('/{siswa:nis}/siswa', [SiswaController::class, 'delete'])->name('delete');
     Route::get('/eksportsiswa', [SiswaController::class, 'eksport'])->name('eksport');
-    
+    Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
+        Route::post('dataTable', [SiswaController::class, 'datatable'])->name('datatable');
+    });
 });

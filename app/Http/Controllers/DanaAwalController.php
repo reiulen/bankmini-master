@@ -2,143 +2,101 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\DanaAwal;
 use App\Models\Kelas;
+use App\Models\DanaAwal;
+use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class DanaAwalController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function getData($id)
+    {
+        $dana = DanaAwal::with(['tahunakademik'])->findorFail($id);
+        return response()->json([
+            'awal' => tahun($dana->tahunakademik->awal),
+            'akhir' => tahun($dana->tahunakademik->akhir),
+            'data' => $dana
+        ]);
+    }
+
     public function index()
-    {  
+    {
         $d_awal = DanaAwal::with(['kelas'])->latest()->get();
         $t_akademik = TahunAkademik::latest()->get();
         $kelas = Kelas::latest()->get();
         return view('backend.danaawal.index', compact('d_awal', 't_akademik', 'kelas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $message = [
-            'required' => 'Tidak boleh kosong',
-        ];
-
-        $request->validate([
+         $validasi = Validator::make($request->all(),[
             'tahun_akademik' => 'required',
-            'kelas' => 'required',
-            'danaawaltahun' => 'required',
+            'dana' => 'required',
             'nominal' => 'required'
-        ], $message);
-
-        DanaAwal::create([
-            'tahun_akademik_id' => $request->tahun_akademik,
-            'kelas_id' => $request->kelas,
-            'dana_awal_tahun' => $request->danaawaltahun,
-            'nominal' => $request->nominal
         ]);
 
-        return redirect(route('danaawal.index'))->with([
-            'pesan' => 'Data berhasil ditambahkan',
-            'pesan1' => 'Data ' . $request->danaawaltahun . ' sebesar ' . $request->nominal . ' berhasil ditambahkan'
+        if($validasi->fails()){
+            return response()->json([
+                'error' => $validasi->errors(),
+            ]);
+        }
+
+        $danaawal = DanaAwal::find($request->id);
+        $nominal = preg_replace("/[^0-9]/", "", $request->nominal);
+        if($danaawal){
+            $danaawal->update([
+                'tahun_akademik_id' => $request->tahun_akademik,
+                'dana' => $request->dana,
+                'nominal' => $nominal
+            ]);
+        }else{
+            DanaAwal::create([
+                'tahun_akademik_id' => $request->tahun_akademik,
+                'dana' => $request->dana,
+                'nominal' => $nominal
+            ]);
+        }
+
+        return response()->json([
+            'success' => 'Data ' . $request->dana . ' sebesar ' . $request->nominal . ' berhasil disimpan'
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $d_awal = DanaAwal::findorFail($id);
-
-        $message = [
-            'required' => 'Tidak boleh kosong',
-        ];
-
-        $request->validate([
-            'tahun_akademik' => 'required',
-            'kelas' => 'required',
-            'danaawaltahun' => 'required',
-            'nominal' => 'required'
-        ], $message);
-
-        $d_awal->update([
-            'tahun_akademik_id' => $request->tahun_akademik,
-            'kelas_id' => $request->kelas,
-            'dana_awal_tahun' => $request->danaawaltahun,
-            'nominal' => $request->nominal
-        ]);
-
-        return redirect(route('danaawal.index'))->with([
-            'pesan' => 'Data berhasil diedit',
-            'pesan1' => 'Data ' . $request->danaawaltahun . ' ' . $d_awal->kelas->kelas 
-            . ' ' . $d_awal->kelas->nama_kelas . ' '. 
-            $d_awal->kelas->urut_kelas .' berhasil diedit'
-        ]);
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $d_awal = DanaAwal::findorFail($id);
-        $d_awal->delete($id);
-        return redirect(route('danaawal.index'))->with([
-            'pesan' => 'Data berhasil dihapus',
-            'pesan1' => 'Data ' . $d_awal->danaawaltahun . ' ' . $d_awal->kelas->kelas 
-            . ' ' . $d_awal->kelas->nama_kelas . ' '. 
-            $d_awal->kelas->urut_kelas .' berhasil dihapus'
+        $dana = DanaAwal::findorFail($id);
+        $dana->delete($id);
+        return response()->json([
+            'success' => 'Data ' . $dana->dana . ' sebesar ' . format_rupiah($dana->nominal) . ' berhasil dihapus'
         ]);
+    }
+
+    public function data()
+    {
+        $data = DanaAwal::with(['tahunakademik'])->latest()->get();
+        return DataTables::of($data)
+                    ->addindexColumn()
+                    ->addColumn('nominal', function($data){
+                        return format_rupiah($data->nominal);
+                    })
+                    ->addColumn('tahun_akademik', function($data){
+                        return tahun($data->tahunakademik->awal) . ' - ' . tahun($data->tahunakademik->akhir);
+                    })
+                    ->addColumn('aksi', function($data){
+                         return '<div class="dropdown">
+                                            <button class="btn btn-none" id="edit'.$data->id.'" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="edit'.$data->id .'">
+                                                <a class="dropdown-item btn-edit" data-id="'.$data->id.'"><i class="fas fa-pencil-alt text-primary pr-1" ></i> Edit</a>
+                                                <a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'.$data->dana. ' ' .tahun($data->tahunakademik->awal) . ' - ' . tahun($data->tahunakademik->akhir) .' sebesar ' . format_rupiah($data->nominal) .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                            </div>
+                                        </div>
+                                    ';
+                    })
+                    ->rawColumns(['tahun_akademik', 'aksi'])
+                    ->make(true);
     }
 }

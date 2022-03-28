@@ -4,22 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
 {
     public function index(){
-        $user = User::where('id', '!=', Auth::user()->id)->get();
+        $user = User::with("roles:id,name")->whereHas("roles", function ($query) {
+            return $query->where("name", '!=', "Super Admin");
+        })->latest()->get();
         return view('backend.pengguna.index', compact('user'));
     }
 
     public function create(){
-        return view('backend.pengguna.tambah');
+        $role = Role::orderBy('name','asc')->get();
+        return view('backend.pengguna.tambah', compact('role'));
     }
 
     public function store(Request $request){
-        
+
         $message = [
             'required' => 'Tidak boleh kosong',
             'email' => 'Email tidak valid',
@@ -33,15 +37,19 @@ class PenggunaController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required_with:password2|same:password2|max:14|min:6',
             'password2' => 'max:14|min:6',
-            'level' => 'required',
+            'role' => 'required',
         ], $message);
-        User::create([
-            'avatar' => 'upload/avatar/user.png',
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'level' => $request->level,
-        ]);
+
+        $user = User::create([
+                    'avatar' => 'upload/avatar/user.png',
+                    'nama' => $request->nama,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                ]);
+
+        $role = Role::find($request->role);
+        $user->assignRole($role);
+
         return redirect(route('pengguna.index'))->with([
             'pesan' => 'Data berhasil ditambahkan',
             'pesan1' => 'Data ' . $request->nama . ' berhasil ditambahkan'
@@ -50,8 +58,9 @@ class PenggunaController extends Controller
 
 
     public function edit($id){
-        $user = User::findorfail($id);
-        return view('backend.pengguna.edit', compact('user'));
+        $user = User::with(['roles:id,name'])->findorfail($id);
+        $role = Role::orderBy('name','asc')->get();
+        return view('backend.pengguna.edit', compact('user', 'role'));
     }
 
     public function update(Request $request, $id)
@@ -66,12 +75,12 @@ class PenggunaController extends Controller
         $request->validate([
             'nama' => 'required',
             'email' => 'required|email|unique:users,email,' .$id,
-            'level' => 'required',
+            'role' => 'required',
         ], $message);
-        
+
         $user = User::find($id);
 
-        if($request->password) { 
+        if($request->password) {
             $request->validate([
                 'password' => 'same:password2|max:14|min:6',
                 'password2' => 'max:14|min:6',
@@ -81,12 +90,15 @@ class PenggunaController extends Controller
             $password = $user->password;
         }
 
-        $user->update([
+        $role = Role::find($request->role);
+        $update = $user->update([
             'nama' => $request->nama,
             'email' => $request->email,
             'password' => bcrypt($password),
-            'level' => $request->level,
         ]);
+
+        $update = $user->syncRoles($role);
+
         return redirect(route('pengguna.index'))->with([
             'pesan' => 'Data berhasil diedit',
             'pesan1' => 'Data ' . $request->nama . ' berhasil diedit'
@@ -102,5 +114,5 @@ class PenggunaController extends Controller
             'pesan1' => 'Data ' . $user->nama . ' berhasil dihapus'
         ]);
     }
-    
+
 }

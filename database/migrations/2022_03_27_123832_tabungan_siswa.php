@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTabunganSiswasTable extends Migration
+class TabunganSiswa extends Migration
 {
     /**
      * Run the migrations.
@@ -15,14 +15,16 @@ class CreateTabunganSiswasTable extends Migration
     {
         Schema::create('tabungan_siswas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('siswa_id');
             $table->string('kode');
-            $table->string('tanggal');
-            $table->string('petugas');
+            $table->foreignId('siswa_id');
+            $table->foreignId('petugas_id');
             $table->string('tipe');
             $table->string('keterangan');
             $table->string('nominal');
             $table->string('sisa_saldo');
+            $table->foreignId('kelas_id');
+            $table->string('bulan');
+            $table->string('tahun');
             $table->timestamps();
         });
     }
@@ -34,6 +36,6 @@ class CreateTabunganSiswasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tabungan_siswas');
+        //
     }
 }

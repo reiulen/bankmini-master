@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnPetugasToTabunganSiswasTable extends Migration
+class CreateKelasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddColumnPetugasToTabunganSiswasTable extends Migration
      */
     public function up()
     {
-        Schema::table('tabungan_siswas', function (Blueprint $table) {
-            $table->string('petugas')->after('kode');
+        Schema::create('kelas', function (Blueprint $table) {
+            $table->id();
+            $table->string('kelas');
+            $table->foreignId('jurusan_id');
+            $table->string('urut_kelas');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddColumnPetugasToTabunganSiswasTable extends Migration
      */
     public function down()
     {
-        Schema::table('tabungan_siswas', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('kelas');
     }
 }

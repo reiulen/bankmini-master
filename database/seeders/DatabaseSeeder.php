@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'reiandika10@gmail.com',
             'avatar' => 'upload/avatar/user.png',
             'password' => bcrypt('admin'),
-            'level' => 'Operator'
         ]);
     }
 }

@@ -50,6 +50,7 @@ class PermissionSeeder extends Seeder
 
         $role = Role::find('1');
         $user->assignRole($role);
+        $role->syncPermissions('1');
 
     }
 }

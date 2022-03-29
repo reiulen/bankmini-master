@@ -18,15 +18,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            PermissionSeeder::class
+            ModelHasRoleSeeder::class,
+            PekerjaanSeeder::class
         ]);
-        // PekerjaanSeeder::class
-        // User::create([
-        //     'avatar' => 'upload/avatar/user.png',
-        //     'nama' => 'Reihan Andika AM',
-        //     'email' => 'reiandika10@gmail.com',
-        //     'avatar' => 'upload/avatar/user.png',
-        //     'password' => bcrypt('admin'),
-        // ]);
+
     }
 }

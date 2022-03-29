@@ -12,7 +12,7 @@ class PenggunaController extends Controller
 {
     public function index(){
         $user = User::with("roles:id,name")->whereHas("roles", function ($query) {
-            return $query->where("name", '!=', "Super Admin");
+            return $query->where("name", '!=', "Pengelola");
         })->latest()->get();
         return view('backend.pengguna.index', compact('user'));
     }

@@ -16,7 +16,7 @@
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <p>{{ auth::user()->nama }}</p>
-                            {{-- <p class="level text-muted">{{ Auth::user()->roles[0]->name }}</p> --}}
+                            <p class="level text-muted">{{ Auth::user()->roles[0]->name }}</p>
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"><i class="fa fa-user text-primary pr-1"></i> Profil</a>

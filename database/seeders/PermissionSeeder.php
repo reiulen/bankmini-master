@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
@@ -37,5 +39,17 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'web',
             ]);
         }
+
+        $user = User::create([
+            'avatar' => 'upload/avatar/user.png',
+            'nama' => 'Reihan Andika AM',
+            'email' => 'reiandika10@gmail.com',
+            'avatar' => 'upload/avatar/user.png',
+            'password' => bcrypt('admin'),
+        ]);
+
+        $role = Role::find('1');
+        $user->assignRole($role);
+
     }
 }

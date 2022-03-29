@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Pekerjaan;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PekerjaanSeeder;
+use Database\Seeders\PermissionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,13 +17,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(PekerjaanSeeder::class);
-        User::create([
-            'avatar' => 'upload/avatar/user.png',
-            'nama' => 'Reihan Andika AM',
-            'email' => 'reiandika10@gmail.com',
-            'avatar' => 'upload/avatar/user.png',
-            'password' => bcrypt('admin'),
+        $this->call([
+            PermissionSeeder::class
         ]);
+        // PekerjaanSeeder::class
+        // User::create([
+        //     'avatar' => 'upload/avatar/user.png',
+        //     'nama' => 'Reihan Andika AM',
+        //     'email' => 'reiandika10@gmail.com',
+        //     'avatar' => 'upload/avatar/user.png',
+        //     'password' => bcrypt('admin'),
+        // ]);
     }
 }

@@ -13,8 +13,11 @@ const domStrings = {
     jurusan: $('input[name="jurusan"]').val(),
     kelas: $('input[name="kelas"]').val(),
     tahunAkademik: $('input[name="tahun_akademik"]').val(),
+    formTanggal: $("#form-tgl"),
+    btnCari: $(".btn-cari"),
 };
 domStrings.inputFilter.select2();
+console.log($("#dari"));
 
 var table = $("#example1").DataTable({
     responsive: true,
@@ -29,27 +32,17 @@ var table = $("#example1").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: `${url}/siswa/ajax/dataTable`,
+        url: `${url}/laporantabungan/ajax/dataTables`,
         method: "POST",
         data: function (d) {
             d.filter = filter;
-            console.log(d.filter.kelas);
+            d.dari = $("#tgl_awal").val();
+            d.sampai = $("#tgl_akhir").val();
+            console.log(d.sampai);
             return d;
         },
     },
     columns: [
-        {
-            name: "no",
-            data: "DT_RowIndex",
-        },
-        {
-            name: "foto",
-            data: "foto",
-        },
-        {
-            name: "nisn",
-            data: "nisn",
-        },
         {
             name: "nis",
             data: "nis",
@@ -59,22 +52,32 @@ var table = $("#example1").DataTable({
             data: "nama",
         },
         {
-            name: "jenis_kelamin",
-            data: "jenis_kelamin",
-        },
-        {
             name: "kelas",
             data: "kelas",
         },
         {
-            name: "tahun_akademik",
-            data: "tahun_akademik",
+            name: "debit",
+            data: "debit",
         },
         {
-            name: "aksi",
-            data: "aksi",
+            name: "kredit",
+            data: "kredit",
+        },
+        {
+            name: "saldo",
+            data: function (data) {
+                return `<p class="total-saldo">${data.saldo}</p>`;
+            },
         },
     ],
+});
+
+$("#dari").on("change", function (e) {
+    $("#sampai").min = $(this).val();
+});
+
+domStrings.btnCari.on("click", function (e) {
+    table.draw();
 });
 
 domStrings.inputForm.submit(function (e) {
@@ -97,3 +100,10 @@ domStrings.inputForm.submit(function (e) {
     $("#modalFilter").modal("hide");
     table.draw();
 });
+
+const totalSaldo = $("tbody tr td p.total-saldo");
+let total_saldo = [];
+$.each(totalSaldo, function (index, value) {
+    total_saldo.push($(value).text());
+});
+console.log(total_saldo);

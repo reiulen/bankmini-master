@@ -292,6 +292,10 @@ ul[role='tablist']  .nav-link:hover {
     width: 100% !important;
 }
 
+.select2-selection__choice{
+    background-color: #6091ba !important;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

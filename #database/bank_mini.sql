@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 28, 2022 at 12:10 AM
+-- Generation Time: Mar 30, 2022 at 05:42 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.27
 
@@ -328,7 +328,10 @@ CREATE TABLE `pembayaran_siswas` (
 --
 
 INSERT INTO `pembayaran_siswas` (`id`, `kode`, `siswa_id`, `petugas_id`, `dana_awal_id`, `keterangan`, `nominal`, `sisa_tagihan`, `kelas_id`, `tanggal`, `bulan`, `tahun`, `created_at`, `updated_at`) VALUES
-(2, 'PS03202200001', 1, 6, 7, '-', '250000', '0', 10, '28 Maret 2022', 'Maret', '2022', '2022-03-27 20:19:57', '2022-03-27 20:19:57');
+(2, 'PS03202200001', 1, 6, 7, '-', '250000', '0', 10, '28 Maret 2022', 'Maret', '2022', '2022-03-27 20:19:57', '2022-03-27 20:19:57'),
+(5, 'PS03202200004', 1, 6, 6, '-', '125000', '0', 10, '30 Maret 2022', 'Maret', '2022', '2022-03-30 04:42:03', '2022-03-30 04:42:03'),
+(9, 'PS03202200005', 5, 6, 7, '-', '250000', '0', 10, '30 Maret 2022', 'Maret', '2022', '2022-03-30 08:51:36', '2022-03-30 08:51:36'),
+(10, 'PS03202200006', 5, 6, 6, '-', '12000', '113000', 10, '30 Maret 2022', 'Maret', '2022', '2022-03-30 09:51:28', '2022-03-30 10:00:24');
 
 -- --------------------------------------------------------
 
@@ -449,6 +452,7 @@ CREATE TABLE `siswa` (
   `nis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun_akademik_id` bigint(20) NOT NULL,
   `kelas_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jurusan_id` bigint(20) NOT NULL,
   `jenis_kelamin` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tempat_lahir` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tgl_lahir` date NOT NULL,
@@ -478,9 +482,10 @@ CREATE TABLE `siswa` (
 -- Dumping data for table `siswa`
 --
 
-INSERT INTO `siswa` (`id`, `foto`, `nama`, `nisn`, `nis`, `tahun_akademik_id`, `kelas_id`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `anak_ke`, `warga_negara`, `agama`, `asal_sekolah`, `no_ijazah`, `tahun_lulus`, `alamat_sekolah`, `ayah`, `ibu`, `alamat_ortu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `wali`, `alamat_wali`, `kerja_wali`, `hubungan_wali`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'upload/foto/siswa/12 RPL 1/Reihan Andika AM_472×709_.webp', 'Reihan Andika Abdipraja Makmur', '0001234567', '192010568', 11, '10', 'Laki-Laki', 'Ciamis', '2004-06-14', 'Jl. Pasar Rancah', '4', 'WNI', 'Islam', 'SMP Negeri 1 Rancah', '-', '2019', 'Rancah', 'Amin', 'Elin Herlina', 'Rancah', 'Anggota DPRD Provinsi/Anggota DPRD Kabupaten/Kota', 'Mengurus Rumah Tangga', NULL, NULL, NULL, NULL, 'Aktif', '2022-03-27 02:56:38', '2022-03-27 19:54:09'),
-(5, 'upload/foto/siswa/12 RPL 1/Muhammad Imam Firman_472×709_.webp', 'Muhammad Imam Firman', '1920200210', '199920109', 11, '10', 'Laki-Laki', 'Ciamis', '2004-06-15', 'Tanjungmangu', '2', 'WNI', 'Islam', 'SMP Negeri 2 Ciamis', '-', '2019', '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aktif', '2022-03-27 19:45:11', '2022-03-27 19:45:11');
+INSERT INTO `siswa` (`id`, `foto`, `nama`, `nisn`, `nis`, `tahun_akademik_id`, `kelas_id`, `jurusan_id`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `anak_ke`, `warga_negara`, `agama`, `asal_sekolah`, `no_ijazah`, `tahun_lulus`, `alamat_sekolah`, `ayah`, `ibu`, `alamat_ortu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `wali`, `alamat_wali`, `kerja_wali`, `hubungan_wali`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'upload/foto/siswa/12 RPL 1/Reihan Andika AM_472×709_.webp', 'Reihan Andika Abdipraja Makmur', '0001234567', '192010568', 11, '10', 3, 'Laki-Laki', 'Ciamis', '2004-06-14', 'Jl. Pasar Rancah', '4', 'WNI', 'Islam', 'SMP Negeri 1 Rancah', '-', '2019', 'Rancah', 'Amin', 'Elin Herlina', 'Rancah', 'Anggota DPRD Provinsi/Anggota DPRD Kabupaten/Kota', 'Mengurus Rumah Tangga', NULL, NULL, NULL, NULL, 'Aktif', '2022-03-27 02:56:38', '2022-03-30 13:30:33'),
+(5, 'upload/foto/siswa/12 RPL 1/Muhammad Imam Firman_472×709_.webp', 'Muhammad Imam Firman', '1920200210', '199920109', 11, '10', 3, 'Laki-Laki', 'Ciamis', '2004-06-15', 'Tanjungmangu', '2', 'WNI', 'Islam', 'SMP Negeri 2 Ciamis', '-', '2019', '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aktif', '2022-03-27 19:45:11', '2022-03-30 13:30:32'),
+(6, 'upload/foto/siswa/siswa.png', 'Marcelio Rif\'at', '0000201111', '192010998', 10, '10', 3, 'Laki-Laki', 'Ciamis', '2004-06-14', 'Ciamis', '2', 'WNI', 'Islam', 'SMP Negeri 1 Rancah', '-', '2019', '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Aktif', '2022-03-30 11:53:11', '2022-03-30 13:30:33');
 
 -- --------------------------------------------------------
 
@@ -496,8 +501,8 @@ CREATE TABLE `tabungan_siswas` (
   `tipe` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nominal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sisa_saldo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kelas_id` bigint(20) UNSIGNED NOT NULL,
+  `sisa_saldo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bulan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -509,9 +514,10 @@ CREATE TABLE `tabungan_siswas` (
 -- Dumping data for table `tabungan_siswas`
 --
 
-INSERT INTO `tabungan_siswas` (`id`, `kode`, `siswa_id`, `petugas_id`, `tipe`, `keterangan`, `nominal`, `sisa_saldo`, `kelas_id`, `tanggal`, `bulan`, `tahun`, `created_at`, `updated_at`) VALUES
-(4, 'TS03202200001', 1, 6, '1', '-', '1000000', '1000000', 10, '28 Maret 2022', 'Maret', '2022', '2022-03-27 20:52:58', '2022-03-27 20:56:35'),
-(5, 'TS03202200002', 1, 6, '2', '-', '250000', '750000', 10, '28 Maret 2022', 'Maret', '2022', '2022-03-27 20:56:43', '2022-03-27 20:56:43');
+INSERT INTO `tabungan_siswas` (`id`, `kode`, `siswa_id`, `petugas_id`, `tipe`, `keterangan`, `nominal`, `kelas_id`, `sisa_saldo`, `tanggal`, `bulan`, `tahun`, `created_at`, `updated_at`) VALUES
+(25, 'TS03202200001', 1, 6, '1', '-', '125000', 10, '125000', '30 Maret 2022', 'Maret', '2022', '2022-03-30 15:26:57', '2022-03-30 15:26:57'),
+(26, 'TS03202200002', 1, 6, '2', '-', '20000', 10, '105000', '30 Maret 2022', 'Maret', '2022', '2022-03-30 15:28:45', '2022-03-30 15:28:45'),
+(27, 'TS03202200003', 5, 6, '1', '-', '125000', 10, '125000', '30 Maret 2022', 'Maret', '2022', '2022-03-30 15:47:30', '2022-03-30 15:47:30');
 
 -- --------------------------------------------------------
 
@@ -532,7 +538,7 @@ CREATE TABLE `tahun_akademiks` (
 --
 
 INSERT INTO `tahun_akademiks` (`id`, `awal`, `akhir`, `created_at`, `updated_at`) VALUES
-(10, '2022-03', '2022-12', '2022-03-26 04:26:00', '2022-03-26 04:26:00'),
+(10, '2022-03', '2023-03', '2022-03-26 04:26:00', '2022-03-30 13:42:13'),
 (11, '2023-01', '2024-01', '2022-03-26 07:56:46', '2022-03-26 07:56:46');
 
 -- --------------------------------------------------------
@@ -663,7 +669,8 @@ ALTER TABLE `role_has_permissions`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `tahun_akademik_id` (`tahun_akademik_id`);
+  ADD KEY `tahun_akademik_id` (`tahun_akademik_id`),
+  ADD KEY `jurusan_id` (`jurusan_id`);
 
 --
 -- Indexes for table `tabungan_siswas`
@@ -728,7 +735,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `pembayaran_siswas`
 --
 ALTER TABLE `pembayaran_siswas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -752,13 +759,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tabungan_siswas`
 --
 ALTER TABLE `tabungan_siswas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tahun_akademiks`

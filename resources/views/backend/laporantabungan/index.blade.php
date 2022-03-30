@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Tabungan">
     @push('css')
     <link rel="stylesheet" href="{{ asset('assets/dist/css/tabs.css') }}" />
     @endpush
@@ -7,19 +7,26 @@
             <div class="container-fluid">
                 <div class="row mb-3">
                     <div class="col-sm-6">
-                        <h1>Laporan Tunggakan</h1>
+                        <h1>Laporan Tabungan</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Laporan Pemasukan</li>
+                            <li class="breadcrumb-item active">Laporan Tabungan</li>
                         </ol>
                     </div>
                 </div>
                 <div class="card">
                 <div class="card-body">
                     <div class="row btn-laporan">
-                        <div class="col-md-3 my-auto">
+                        <div class="d-md-flex">
+                            <input type="date" name="tgl_awal" id="tgl_awal" class="form-control mx-1" />
+                            <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control mx-1" />
+                            <div class="col-md-6 my-md-0 my-2">
+                                <button class="btn btn-primary btn-cari"><i class="fa fa-search"></i>&nbsp; Cari</button>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                         </div>
                     </div>
@@ -39,7 +46,12 @@
                                                 <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</button>
                                             </div>
                                             <div>
-                                                <h5>Total : Rp. 250.000.000</h5>
+                                                @php
+                                                    $debit =  $tabungan->where('tipe', '1');
+                                                    $kredit = $tabungan->where('tipe', '2');
+                                                    $total = $debit->sum('nominal') - $kredit->sum('nominal');
+                                                @endphp
+                                                <h4>Total : <span class="saldo">{{ format_rupiah($total) }}</span></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -49,6 +61,10 @@
                                                 <tr>
                                                     <th>NIS</th>
                                                     <th>Nama</th>
+                                                    <th>Kelas</th>
+                                                    <th>Debit</th>
+                                                    <th>Kredit</th>
+                                                    <th>Saldo</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -72,7 +88,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Filter Siswa</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Filter Tabungan</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -113,6 +129,7 @@
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="by">
+
                                 <option value="nama|ASC">A-Z</option>
                                 <option value="nama|DESC">Z-A</option>
                             </select>
@@ -133,6 +150,6 @@
             @include('backend.lib.select2')
             @include('backend.lib.datatable')
             @push('script')
-            <script src="{{ asset('assets/dist/js/pages/laporantunggakan/index.js') }}"></script>
+            <script src="{{ asset('assets/dist/js/pages/laptabungan/index.js') }}"></script>
             @endpush
 </x-layout>

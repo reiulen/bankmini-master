@@ -11,6 +11,7 @@ Route::group(['prefix' => 'siswa/pembayaran', 'as' => 'pembayaran.'], function()
     Route::get('/sisatagihan/{siswa:id}', [PembayaranController::class, 'tagihan'])->name('tagihan');
     Route::delete('/{pembayaran:id}/{siswa:id}', [PembayaranController::class, 'delete'])->name('delete');
     Route::group(['prefix' => 'ajax', 'as' => 'ajax.'] , function() {
+        Route::post('/{siswa:id}/dataTable', [PembayaranController::class, 'dataTable'])->name('dataTables');
         Route::get('/{siswa:id}/getdata/{dana:id}', [PembayaranController::class, 'getData'])->name('getdata');
     });
 });

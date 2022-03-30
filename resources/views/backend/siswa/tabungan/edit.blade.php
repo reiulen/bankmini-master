@@ -85,8 +85,8 @@
 
     @push('script')
     <script>
-        const nominal = "{{ $tabungan->nominal }}";
         const sisaSaldo = "{{ $historytabungan->first() ? $historytabungan->first()->sisa_saldo : 0 }}";
+        const inputNominal = "{{ $tabungan->nominal }}";
     </script>
     <script src="{{ asset('assets/dist/js/pages/tabungan/create-update.js') }}"></script>
     @endpush

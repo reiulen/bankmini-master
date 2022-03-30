@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Siswa;
 use App\Models\DanaAwal;
 use Illuminate\Http\Request;
 use App\Models\PembayaranSiswa;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Validated;
+use Yajra\DataTables\Facades\DataTables;
 
 class PembayaranController extends Controller
 {
@@ -38,9 +40,10 @@ class PembayaranController extends Controller
     }
 
     public function index($nis){
-        $siswa = Siswa::where('nis', $nis)->firstOrFail();
-        $pembayaran = PembayaranSiswa::with(['petugas'])->where(['siswa_id' => $siswa->id])->latest()->get();
-        return view('backend.siswa.pembayaran.index', compact('siswa', 'pembayaran'));
+        $siswa = Siswa::with(['kelas'])->where('nis', $nis)->firstOrFail();
+        $petugas = User::orderBy('nama', 'ASC')->get();
+        $dana = DanaAwal::where(['tahun_akademik_id' => $siswa->tahun_akademik_id])->latest()->get();
+        return view('backend.siswa.pembayaran.index', compact('siswa', 'petugas', 'dana'));
     }
 
     public function create($nis){
@@ -93,6 +96,7 @@ class PembayaranController extends Controller
                 'nominal' => $nominal,
                 'sisa_tagihan' => $sisatagihan,
                 'kelas_id' => $siswa->kelas_id,
+                'tanggal' => Carbon::now()->isoformat('D MMMM Y'),
                 'bulan' => Carbon::parse(date('M'))->isoFormat('MMMM'),
                 'tahun' => tahun(date('Y')),
             ]);
@@ -148,7 +152,6 @@ class PembayaranController extends Controller
                 'nominal' => $nominal,
                 'sisa_tagihan' => $sisatagihan,
                 'kelas_id' => $siswa->kelas_id,
-                'tanggal' => Carbon::now()->isoformat('d MMMM Y'),
                 'bulan' => Carbon::parse(date('M'))->isoFormat('MMMM'),
                 'tahun' => tahun(date('Y')),
             ]);
@@ -163,9 +166,8 @@ class PembayaranController extends Controller
     {
         $pembayaran = PembayaranSiswa::findorfail($pembayaran);
         $pembayaran->delete();
-        return redirect(route('pembayaran.index', $siswa))->with([
-            'pesan' => 'Berhasil menghapus data pembayaran',
-            'pesan1' => 'Pembayaran ' .$pembayaran->kode .' berhasil dihapus',
+        return response()->json([
+            'success' => 'Pembayaran ' .$pembayaran->kode .' berhasil dihapus',
         ]);
     }
 
@@ -174,5 +176,40 @@ class PembayaranController extends Controller
         $dana = DanaAwal::where(['tahun_akademik_id' => $siswa->tahun_akademik_id])->latest()->get();
         $pembayaran = PembayaranSiswa::with(['danaawal'])->get();
         return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran'));
+    }
+
+    public function dataTable($nis, Request $request)
+    {
+        $siswa = Siswa::where('nis', $nis)->firstOrFail();
+        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])->where(['siswa_id' => $siswa->id])->latest()->get();
+        if($request->filter){
+            $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+                                    ->where(['siswa_id' => $siswa->id])
+                                    ->filter($request->filter)
+                                    ->order($request->filter)
+                                    ->get();
+        }
+        return DataTables::of($data)
+                         ->addIndexColumn()
+                         ->addColumn('tanggal', function($data){
+                             return tanggal($data->created_at);
+                         })
+                         ->addColumn('nominal', function($data){
+                             return format_rupiah($data->nominal);
+                         })->addColumn('sisa_tagihan', function($data){
+                            return format_rupiah($data->sisa_tagihan);
+                         })->addColumn('aksi', function($data){
+                             return '<div class="dropdown">
+                                        <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="'. route('pembayaran.edit', [$data->siswa->nis, $data->id]) .'"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
+                                        <a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'. $data->kode .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                        </div>
+                                    </div>';
+                         })
+                         ->rawColumns(['tanggal', 'nominal', 'sisa_tagihan', 'aksi'])
+                         ->make(true);
     }
 }

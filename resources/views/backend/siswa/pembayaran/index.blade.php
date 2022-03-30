@@ -15,12 +15,13 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-              <div class="card">
-                <div class="card-header card-outline">
+              <div class="card card-outline">
+                <div class="card-header">
                   <div class="row">
                     <div class="col-md">
                       <a class="btn btn-primary border-0" href="{{ route('pembayaran.create', $siswa->nis) }}"><i class="fa fa-plus px-1"></i> Tambah Pembayaran</a>
                       <a class="btn btn-primary border-0" href="{{ route('pembayaran.tagihan', $siswa->nis) }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
+                      <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                     </div>
                     <div>
                       <p style="font-size: 15px" class="text-end py-2 py-md-0"><b> {{ $siswa->nama }}</b><br />NIS: {{ $siswa->nis }}<br />Kelas: {{ $siswa->kelas->kelas .' ' . $siswa->kelas->jurusan->nama. ' ' .$siswa->kelas->urut_kelas}}</p>
@@ -43,32 +44,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($pembayaran as $row)
-                      <tr>
-                        <td>{{ tanggal($row->created_at) }}</td>
-                        <td>{{ $row->kode }}</td>
-                        <td>{{ $row->danaawal->dana }}</td>
-                        <td>{{ $row->petugas->nama }}</td>
-                        <td>{{ $row->keterangan }}</td>
-                        <td>{{ format_rupiah($row->nominal) }}</td>
-                        <td>{{ format_rupiah($row->sisa_tagihan) }}</td>
-                        <td>
-                          <div class="dropdown">
-                            <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="{{ route('pembayaran.edit', [$siswa->nis, $row->id]) }}"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                              <a class="dropdown-item" role="button" id="hapus{{ $row->id }}" onclick="hapus({{ $row->id }})" data="{{ $row->kode }}"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                              <form action="{{ route('pembayaran.delete', [$row->id, $siswa->nis]) }}" method="POST" id="form-hapus{{ $row->id }}">
-                                  @csrf
-                                  @method('delete')
-                              </form>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      @endforeach
+
                     </tbody>
                   </table>
                 </div>
@@ -84,19 +60,74 @@
     </section>
     <!-- /.content -->
 
-      @include('backend.lib.datatable')
+    <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Filter Siswa</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-filter">
+                    <div class="form-group row mb-4">
+                        <label class="col-md-3">Status</label>
+                        <div class="col-md-9">
+                            <select class="form-control filter" name="status">
+                                <option value="lunas">Lunas</option>
+                                <option value="belum lunas">Belum lunas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-md-3">Pembayaran</label>
+                        <div class="col-md-9">
+                            <select class="form-control filter" multiple name="pembayaran">
+                                @foreach ($dana as $row)
+                                <option value="{{ $row->id }}">{{ $row->dana }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-md-3">Petugas</label>
+                        <div class="col-md-9">
+                            <select class="form-control filter" multiple name="petugas">
+                                @foreach ($petugas as $row)
+                                <option value="{{ $row->id }}">{{ $row->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-md-3">Urut Berdasarkan</label>
+                        <div class="col-md-9">
+                            <select class="form-control filter" name="by">
+                                <option value="created_at|DESC">Terbaru</option>
+                                <option value="created_at|ASC">Terlama</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
+                        <label class="col-md-8"></label>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary">Terapkan Filter</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
+      @include('backend.lib.datatable')
+      @include('backend.lib.select2')
       @push('script')
       <script>
-        $(function () {
-          $('#example1')
-            .DataTable({
-              responsive: true,
-              lengthChange: true,
-              autoWidth: false,
-            });
-        });
+          const nis = "{{ $siswa->nis }}";
       </script>
+      <script src="{{ asset('assets/dist/js/pages/pembayaran/index.js') }}"></script>
       @endpush
 
 </x-layout>

@@ -6,6 +6,7 @@ use Image;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\DanaAwal;
+use App\Models\Jurusan;
 use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
@@ -17,9 +18,10 @@ use Yajra\DataTables\Facades\DataTables;
 class SiswaController extends Controller
 {
     public function index(){
-        $siswa = Siswa::with(['kelas', 'tahunakademik'])->orderBy('nis', 'DESC')->get();
         $kelas = Kelas::with(['jurusan'])->orderBy('kelas', 'ASC')->get();
-        return view('backend.siswa.index', compact('siswa', 'kelas'));
+        $tahunakademik = TahunAkademik::orderBy('id', 'ASC')->get();
+        $jurusan = Jurusan::orderBy('id', 'ASC')->get();
+        return view('backend.siswa.index', compact( 'kelas', 'tahunakademik', 'jurusan'));
     }
 
     public function create(){
@@ -75,7 +77,7 @@ class SiswaController extends Controller
             }else{
                 $foto = 'upload/foto/siswa/siswa.png';
             }
-
+            $kelas = Kelas::with(['jurusan'])->find($request->kelas_id);
             Siswa::create([
                 'foto' => $foto,
                 'nama' => $request->nama,
@@ -84,6 +86,7 @@ class SiswaController extends Controller
                 'tahun_akademik_id' => $request->tahun_akademik,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'kelas_id' => $request->kelas_id,
+                'jurusan_id' => $kelas->jurusan->id,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'alamat' => $request->alamat,
@@ -180,6 +183,7 @@ class SiswaController extends Controller
                 'tahun_akademik_id' => $request->tahun_akademik,
                 'jenis_kelamin' => $request->jenis_kelamin,
                 'kelas_id' => $request->kelas_id,
+                'jurusan_id' => $kelas->jurusan->id,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tgl_lahir' => $request->tgl_lahir,
                 'alamat' => $request->alamat,
@@ -235,9 +239,12 @@ class SiswaController extends Controller
 
     public function datatable(Request $request)
     {
-        $data = Siswa::with(['kelas', 'tahunakademik'])->where(['status' => 'Aktif'])->orderBy('nis', 'DESC')->get();
-        if($request->kelas){
-            $data = Siswa::with(['kelas', 'tahunakademik'])->where(['kelas_id' => $request->kelas, 'status' => 'Aktif'])->orderBy('nis', 'DESC')->get();
+        $data = Siswa::with(['kelas', 'tahunakademik'])->orderBy('nis', 'DESC')->get();
+        if($request->filter){
+            $data = Siswa::with(['kelas', 'tahunakademik'])
+            ->filter($request->filter)
+            ->order($request->filter)
+            ->get();
         }
         return DataTables::of($data)
                             ->addindexColumn()

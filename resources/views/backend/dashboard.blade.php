@@ -205,7 +205,7 @@
                 </div>
                 <!-- /.card -->
               </div> --}}
-              <div class="col-md-4">
+              {{-- <div class="col-md-4">
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title">Aktifitas</h3>
@@ -234,7 +234,7 @@
                   <!-- /.card-footer -->
                 </div>
                 <!-- /.card -->
-              </div>
+              </div> --}}
             </div>
           </div>
           <!-- /.container-fluid -->
@@ -256,12 +256,14 @@
                 data: {
                   labels: [
                     @foreach ($pembayaran->groupBy('tanggal') as $row)
-                      "{{ $row->first()->first()->tanggal }}",
+                      "{{ $row->first()->tanggal }}",
                     @endforeach
                   ],
                   datasets: [{
-                    label: 'Views',
-                    data: [244, 174, 154, 111, 33, ],
+                    label: 'Transaksi',
+                    data: [@foreach ($pembayaran->groupBy('tanggal') as $row)
+                      "{{ $row->count() }}",
+                    @endforeach],
                     backgroundColor: [
                         '#63ed7a',
                         '#ffa426',
@@ -305,14 +307,14 @@
                 data: {
                   labels: [
                     @foreach ($charttabungan as $row)
-                      "{{ $row->first()->first()->tanggal }}",
+                      "{{ $row->first()->tanggal }}",
                     @endforeach
                   ],
                   datasets: [{
                     label: 'Kredit',
                     data: [
                         @foreach ($charttabungan as $row)
-                        "{{ $row->first()->where('tipe', '2')->count() }}",
+                        "{{ $row->where('tipe', '2')->count() }}",
                         @endforeach
                     ],
                     borderWidth: 5,
@@ -325,7 +327,7 @@
                   {
                     label: 'Debit',
                     data: [@foreach ($charttabungan as $row)
-                        "{{ $row->first()->where('tipe', '1')->count() }}",
+                        "{{ $row->where('tipe', '1')->count() }}",
                         @endforeach
                     ],
                     borderWidth: 5,

@@ -94,6 +94,7 @@
     @push('script')
     <script>
         const sisaSaldo = "{{ $tabungan->first() ? $tabungan->first()->sisa_saldo : 0 }}";
+        const inputNominal = "0";
     </script>
     <script src="{{ asset('assets/dist/js/pages/tabungan/create-update.js') }}"></script>
     @endpush

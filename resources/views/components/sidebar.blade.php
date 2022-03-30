@@ -50,8 +50,8 @@
                         </a>
                     </li>
                     <li class="nav-header">PILIHAN MENU</li>
-                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit']) }}">
-                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Data Master
@@ -75,6 +75,12 @@
                                 </a>
                             </li>
                             @endcan
+                            <li class="nav-item">
+                                <a href="{{ route('kenaikan.index') }}" class="nav-link {{ set_active_sub(['kenaikan.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Kenaikan Siswa') }}</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item nav-item {{ set_menu_open(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
@@ -125,8 +131,8 @@
                             <p>{{ __('Siswa') }}</p>
                         </a>
                     </li>
-                    <li class="nav-item nav-item">
-                      <a href="#" class="nav-link">
+                    <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index']) }}">
                         <i class="nav-icon fas fa-copy"></i>
                           <p>
                             {{ __('Laporan') }}
@@ -135,15 +141,40 @@
                       </a>
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="{{ route('pemasukan.index') }}" class="nav-link">
+                          <a href="{{ route('laptabungan.index') }}" class="nav-link {{ set_active_sub(['laptabungan.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
-                              <p>{{ __('Pemasukan') }}</p>
+                              <p>{{ __('Tabungan') }}</p>
                           </a>
                         </li>
                       </ul>
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link">
+                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['laporantunggakan.index']) }}">
+                            <i class="far fa-circle nav-icon"></i>
+                              <p>{{ __('Tunggakan') }}</p>
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index']) }}">
+                        <i class="nav-icon fas fa-copy"></i>
+                          <p>
+                            {{ __('History') }}
+                            <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ route('historytabungan.index') }}" class="nav-link {{ set_active_sub(['historytabungan.index']) }}">
+                            <i class="far fa-circle nav-icon"></i>
+                              <p>{{ __('Tabungan') }}</p>
+                          </a>
+                        </li>
+                      </ul>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['tunggakan.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tunggakan') }}</p>
                           </a>

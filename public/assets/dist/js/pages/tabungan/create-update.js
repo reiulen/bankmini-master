@@ -23,16 +23,31 @@ domStrings.inputTipe.on("change", function () {
     if (this.value == 1) {
         rupiah.addEventListener("keyup", function (e) {
             const jumlah =
-                parseInt(replaceString(this.value)) + parseInt(sisaSaldo);
+                parseInt(replaceString(this.value)) +
+                parseInt(sisaSaldo) -
+                parseInt(inputNominal);
             domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
         });
     } else {
         rupiah.addEventListener("keyup", function (e) {
-            const jumlah =
-                parseInt(replaceString(this.value)) - parseInt(sisaSaldo);
-            domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
-            if (jumlah > 0) {
-                domStrings.sisaSaldo.text("Saldo tidak mencukupi");
+            if (sisaSaldo < inputNominal) {
+                const jumlah =
+                    parseInt(sisaSaldo) -
+                    parseInt(inputNominal) -
+                    parseInt(replaceString(this.value));
+                domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
+                if (jumlah < 0) {
+                    domStrings.sisaSaldo.text("Saldo tidak mencukupi");
+                }
+            } else {
+                const jumlah =
+                    parseInt(sisaSaldo) +
+                    parseInt(inputNominal) -
+                    parseInt(replaceString(this.value));
+                domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
+                if (jumlah < 0) {
+                    domStrings.sisaSaldo.text("Saldo tidak mencukupi");
+                }
             }
         });
     }
@@ -42,16 +57,20 @@ if (domStrings.valueInputTipe) {
     if (domStrings.valueInputTipe == "1") {
         rupiah.addEventListener("keyup", function (e) {
             const jumlah =
-                parseInt(replaceString(this.value)) + parseInt(sisaSaldo);
+                parseInt(replaceString(this.value)) +
+                parseInt(sisaSaldo) -
+                inputNominal;
             domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
         });
     }
     if (domStrings.valueInputTipe == "2") {
         rupiah.addEventListener("keyup", function (e) {
             const jumlah =
-                parseInt(replaceString(this.value)) - parseInt(sisaSaldo);
+                parseInt(sisaSaldo) +
+                parseInt(inputNominal) -
+                parseInt(replaceString(this.value));
             domStrings.sisaSaldo.text("Rp. " + formatRupiah(`${jumlah}`));
-            if (jumlah > 0) {
+            if (jumlah < 0) {
                 domStrings.sisaSaldo.text("Saldo tidak mencukupi");
             }
         });

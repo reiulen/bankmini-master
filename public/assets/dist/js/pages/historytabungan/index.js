@@ -4,17 +4,14 @@ $.ajaxSetup({
     },
 });
 
-let filter = { status: [] };
-
 const domStrings = {
-    inputFilter: $(".filter"),
-    inputForm: $("#form-filter"),
-    jKelamin: $('input[name="j_kelamin"]').val(),
-    jurusan: $('input[name="jurusan"]').val(),
-    kelas: $('input[name="kelas"]').val(),
-    tahunAkademik: $('input[name="tahun_akademik"]').val(),
+    inputSelect: $(".filter"),
+    formFilter: $("#form-filter"),
 };
-domStrings.inputFilter.select2();
+
+domStrings.inputSelect.select2();
+
+let filter = {};
 
 var table = $("#example1").DataTable({
     responsive: true,
@@ -29,58 +26,56 @@ var table = $("#example1").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: `${url}/siswa/ajax/dataTable`,
+        url: `${url}/historytabungan/ajax/dataTable`,
         method: "POST",
-        data: function (d) {
-            d.filter = filter;
-            console.log(d.filter.kelas);
-            return d;
+        data: function (data) {
+            data.filter = filter;
+            return data;
         },
     },
     columns: [
         {
-            name: "no",
-            data: "DT_RowIndex",
+            name: "tanggal",
+            data: "tanggal",
         },
         {
-            name: "foto",
-            data: "foto",
-        },
-        {
-            name: "nisn",
-            data: "nisn",
+            name: "kode",
+            data: "kode",
         },
         {
             name: "nis",
-            data: "nis",
+            data: "siswa.nis",
         },
         {
-            name: "nama",
-            data: "nama",
+            name: "siswa",
+            data: "siswa.nama",
         },
         {
-            name: "jenis_kelamin",
-            data: "jenis_kelamin",
+            name: "keterangan",
+            data: "keterangan",
         },
         {
-            name: "kelas",
-            data: "kelas",
+            name: "petugas",
+            data: "petugas.nama",
         },
         {
-            name: "tahun_akademik",
-            data: "tahun_akademik",
+            name: "tipe",
+            data: "tipe",
         },
         {
-            name: "aksi",
-            data: "aksi",
+            name: "nominal",
+            data: "nominal",
+        },
+        {
+            name: "saldo",
+            data: "saldo",
         },
     ],
 });
 
-domStrings.inputForm.submit(function (e) {
+domStrings.formFilter.on("submit", function (e) {
     e.preventDefault();
     let data = $(this).serializeArray();
-
     data = data.reduce((obj, item) => {
         if (obj.hasOwnProperty(item.name)) {
             temp = obj[item.name];
@@ -92,8 +87,7 @@ domStrings.inputForm.submit(function (e) {
         }
         return obj;
     }, {});
-
     filter = data;
-    $("#modalFilter").modal("hide");
     table.draw();
+    $("#modalFilter").modal("hide");
 });

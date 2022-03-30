@@ -93,7 +93,6 @@ domStrings.form.on("submit", function (e) {
 });
 
 function tanggal(tgl) {
-    console.log(tgl);
     document.getElementById("tgl_akhir").min = tgl;
 }
 

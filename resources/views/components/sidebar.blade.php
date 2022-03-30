@@ -85,7 +85,7 @@
                     </li>
                     <li class="nav-item nav-item {{ set_menu_open(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
-                            <i class="nav-icon fas fa-copy"></i>
+                            <i class="fas fa-clone nav-icon"></i>
                             <p>
                                 Referensi
                                 <i class="fas fa-angle-left right"></i>
@@ -133,7 +133,7 @@
                     </li>
                     <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index']) }}">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="fas fa-chart-bar nav-icon"></i>
                           <p>
                             {{ __('Laporan') }}
                             <i class="fas fa-angle-left right"></i>
@@ -158,7 +158,7 @@
                     </li>
                     <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index']) }}">
-                        <i class="nav-icon fas fa-copy"></i>
+                        <i class="fa fa-edit nav-icon"></i>
                           <p>
                             {{ __('History') }}
                             <i class="fas fa-angle-left right"></i>

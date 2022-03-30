@@ -49,7 +49,7 @@
                         $totalhari = $pembayaranhari + $debithari - $kredithari;
                       @endphp
                     <h3>{{ format_rupiah($totalhari) }}</h3>
-                    <p>Pemasukan Harian</p>
+                    <p>Pemasukan Hari Ini</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-money-check-alt"></i>
@@ -76,7 +76,7 @@
                         $totalbulan = $pembayaranbulan + $debitbulan - $kreditbulan;
                       @endphp
                     <h3>{{ format_rupiah($totalbulan) }}</h3>
-                    <p>Pemasukan Bulanan</p>
+                    <p>Pemasukan Bulan Ini</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-credit-card"></i>

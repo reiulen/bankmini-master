@@ -27,7 +27,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-            <section class="content">
+            <section class="content laporan" style="display: none">
                 <div class="container-fluid">
                     <div class="row">
                             <div class="col-12">
@@ -113,6 +113,7 @@
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="by">
+                                <option value="">Pilih</option>
                                 <option value="nama|ASC">A-Z</option>
                                 <option value="nama|DESC">Z-A</option>
                             </select>

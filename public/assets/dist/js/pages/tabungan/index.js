@@ -23,6 +23,7 @@ var table = $("#example1").DataTable({
             '<span class="sr-only">Loading...</span>' +
             "</div>",
     },
+    order: [[0, "desc"]],
     processing: true,
     serverSide: true,
     ajax: {

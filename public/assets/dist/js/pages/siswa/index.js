@@ -20,6 +20,7 @@ var table = $("#example1").DataTable({
     responsive: true,
     lengthChange: true,
     autoWidth: false,
+    order: [[2, "asc"]],
     language: {
         processing:
             '<div class="spinner-border text-info" role="status">' +

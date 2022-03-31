@@ -36,9 +36,6 @@ var table = $("#example1").DataTable({
         method: "POST",
         data: function (d) {
             d.filter = filter;
-            d.dari = $("#tgl_awal").val();
-            d.sampai = $("#tgl_akhir").val();
-            console.log(d.sampai);
             return d;
         },
     },
@@ -76,10 +73,6 @@ $("#dari").on("change", function (e) {
     $("#sampai").min = $(this).val();
 });
 
-domStrings.btnCari.on("click", function (e) {
-    table.draw();
-});
-
 domStrings.inputForm.submit(function (e) {
     e.preventDefault();
     let data = $(this).serializeArray();
@@ -97,6 +90,7 @@ domStrings.inputForm.submit(function (e) {
     }, {});
 
     filter = data;
+    $(".laporan").slideDown();
     $("#modalFilter").modal("hide");
     table.draw();
 });

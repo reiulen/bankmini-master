@@ -7,6 +7,7 @@ $.ajaxSetup({
 const domStrings = {
     inputSelect: $(".filter"),
     formFilter: $("#form-filter"),
+    btnCari: $(".btn-cari"),
 };
 
 domStrings.inputSelect.select2();
@@ -30,6 +31,8 @@ var table = $("#example1").DataTable({
         method: "POST",
         data: function (data) {
             data.filter = filter;
+            data.dari = $("#tgl_awal").val();
+            data.sampai = $("#tgl_akhir").val();
             return data;
         },
     },
@@ -72,6 +75,13 @@ var table = $("#example1").DataTable({
         },
     ],
 });
+
+domStrings.btnCari.on("click", function (e) {
+    $(".history-table").slideDown();
+    table.draw();
+});
+
+
 
 domStrings.formFilter.on("submit", function (e) {
     e.preventDefault();

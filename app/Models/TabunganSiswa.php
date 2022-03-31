@@ -31,12 +31,18 @@ class TabunganSiswa extends Model
         });
     }
 
-
     public function scopeOrder($query, $order)
     {
         $query->when($order['by'] ?? false, function ($query) use ($order) {
             $by = explode('|', $order['by']);
             return $query->orderBy($by[0], $by[1]);
+        });
+    }
+
+    public function scopeTanggal($query, $tanggal)
+    {
+        $query->when($tanggal[0] ?? false, function ($query) use ($tanggal) {
+            return $query->whereBetween('created_at', [$tanggal[0], $tanggal[1]]);
         });
     }
 }

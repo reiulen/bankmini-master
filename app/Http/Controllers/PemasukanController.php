@@ -22,10 +22,10 @@ class PemasukanController extends Controller
 
     public function datatable(Request $request)
     {
-        $data = Siswa::with(['kelas', 'tahunakademik'])->orderBy('nis', 'DESC')->get();
+        $data = Siswa::with(['kelas', 'tahunakademik'])
+                      ->orderBy('nis', 'DESC')->get();
             if($request->filter){
                 $data = Siswa::with(['kelas', 'tahunakademik'])
-                ->where('created_at', [$request->dari, $request->sampai])
                 ->filter($request->filter)
                 ->order($request->filter)
                 ->get();

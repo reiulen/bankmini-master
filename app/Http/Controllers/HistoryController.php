@@ -22,9 +22,14 @@ class HistoryController extends Controller
 
     public function datatable(Request $request)
     {
-        $data =  TabunganSiswa::with(['petugas', 'siswa'])->orderBy('id', 'DESC')->get();
+        $tanggal = [$request->dari, $request->sampai];
+        $data =  TabunganSiswa::with(['petugas', 'siswa'])
+                                ->tanggal($tanggal)
+                                ->orderBy('id', 'DESC')
+                                ->get();
             if($request->filter){
                 $data =  TabunganSiswa::with(['petugas', 'siswa'])
+                                        ->tanggal($tanggal)
                                         ->filter($request->filter)
                                         ->order($request->filter)
                                         ->get();

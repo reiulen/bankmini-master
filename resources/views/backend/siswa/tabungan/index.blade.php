@@ -96,6 +96,7 @@
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="by">
+                                <option value="">Pilih</option>
                                 <option value="nominal|DESC">Terbesar</option>
                                 <option value="created_at|DESC">Terbaru</option>
                                 <option value="created_at|ASC">Terlama</option>

@@ -19,7 +19,14 @@
                 <div class="card">
                 <div class="card-body">
                     <div class="row btn-laporan">
-                        <div class="col-md-3 my-auto">
+                        <div class="d-md-flex">
+                            <input type="date" name="tgl_awal" id="tgl_awal" class="form-control mx-1" />
+                            <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control mx-1" />
+                            <div class="col-md-6 my-md-0 my-2">
+                                <button class="btn btn-primary btn-cari"><i class="fa fa-search"></i>&nbsp; Cari</button>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                         </div>
                     </div>
@@ -27,7 +34,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-            <section class="content">
+            <section class="content history-table" style="display: none">
                 <div class="container-fluid">
                     <div class="row">
                             <div class="col-12">
@@ -95,6 +102,7 @@
                         <label class="col-md-3">Tipe</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="tipe">
+                                <option value="">Pilih</option>
                                 <option value="1">Debit</option>
                                 <option value="2">Kredit</option>
                             </select>
@@ -124,6 +132,7 @@
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="by">
+                                <option value="">Pilih</option>
                                 <option value="nominal|DESC">Terbesar</option>
                                 <option value="created_at|DESC">Terbaru</option>
                                 <option value="created_at|ASC">Terlama</option>

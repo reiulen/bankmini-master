@@ -26,8 +26,9 @@ var table = $("#example1").DataTable({
     },
     processing: true,
     serverSide: true,
+    order: [],
     ajax: {
-        url: `${url}/historytabungan/ajax/dataTable`,
+        url: `${url}/historytransaksi/ajax/dataTable`,
         method: "POST",
         data: function (data) {
             data.filter = filter;
@@ -42,36 +43,32 @@ var table = $("#example1").DataTable({
             data: "tanggal",
         },
         {
-            name: "kode",
-            data: "kode",
-        },
-        {
             name: "nis",
             data: "siswa.nis",
         },
         {
-            name: "siswa",
+            name: "nama",
             data: "siswa.nama",
         },
         {
-            name: "keterangan",
-            data: "keterangan",
+            name: "pembayaran",
+            data: "danaawal.dana",
         },
         {
             name: "petugas",
             data: "petugas.nama",
         },
         {
-            name: "tipe",
-            data: "tipe",
+            name: "keterangan",
+            data: "keterangan",
         },
         {
             name: "nominal",
             data: "nominal",
         },
         {
-            name: "saldo",
-            data: "saldo",
+            name: "sisa_tagihan",
+            data: "sisa_tagihan",
         },
     ],
 });
@@ -131,6 +128,21 @@ domStrings.formFilter.on("submit", function (e) {
     );
 });
 
-
-
-
+domStrings.formFilter.on("submit", function (e) {
+    e.preventDefault();
+    let data = $(this).serializeArray();
+    data = data.reduce((obj, item) => {
+        if (obj.hasOwnProperty(item.name)) {
+            temp = obj[item.name];
+            obj[item.name] = Array.isArray(temp)
+                ? temp.concat(item.value)
+                : [temp, item.value];
+        } else {
+            obj[item.name] = item.value;
+        }
+        return obj;
+    }, {});
+    filter = data;
+    table.draw();
+    $("#modalFilter").modal("hide");
+});

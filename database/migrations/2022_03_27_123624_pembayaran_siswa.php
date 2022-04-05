@@ -23,6 +23,8 @@ class PembayaranSiswa extends Migration
             $table->string('nominal');
             $table->string('sisa_tagihan');
             $table->foreignId('kelas_id');
+            $table->foreignId('jurusan_id');
+            $table->foreignId('tahun_akademik_id');
             $table->string('bulan');
             $table->string('tahun');
             $table->timestamps();

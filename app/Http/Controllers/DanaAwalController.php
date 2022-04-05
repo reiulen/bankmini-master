@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Validator;
 
 class DanaAwalController extends Controller
 {
+    public function danaawal(){
+        $dana = DanaAwal::orderBy('id', 'desc')->get();
+        return response()->json($dana);
+    }
+
     public function getData($id)
     {
         $dana = DanaAwal::with(['tahunakademik'])->findorFail($id);

@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     include_once 'pages/siswa.php';
     include_once 'pages/pengguna.php';
     include_once 'pages/historytabungan.php';
+     include_once 'pages/historytransaksi.php';
     include_once 'pages/laporantunggakan.php';
     include_once 'pages/laporanmasuk.php';
     include_once 'pages/role.php';

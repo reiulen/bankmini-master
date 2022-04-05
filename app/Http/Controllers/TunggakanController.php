@@ -8,6 +8,7 @@ use App\Models\Jurusan;
 use App\Models\DanaAwal;
 use Illuminate\Http\Request;
 use App\Models\TahunAkademik;
+use App\Models\PembayaranSiswa;
 use Yajra\DataTables\Facades\DataTables;
 
 class TunggakanController extends Controller
@@ -37,5 +38,13 @@ class TunggakanController extends Controller
                             })
                             ->rawColumns(['kelas'])
                             ->make(true);
+    }
+
+    public function table(Request $request)
+    {
+        $dana = DanaAwal::where('tahun_akademik_id', $request->tahun_akademik)->orderBy('id', 'desc')->get();
+        $siswa = Siswa::with(['kelas', 'tahunakademik'])->FilterTable($request)->get();
+        $pembayaran = PembayaranSiswa::FilterTable($request)->where('tahun_akademik_id', $request->tahun_akademik)->get();
+        return view('backend.laporantunggakan.tunggakan', compact('dana', 'siswa', 'pembayaran'));
     }
 }

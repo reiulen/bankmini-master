@@ -28,7 +28,7 @@
     </div>
     <div class="card-body">
       @if (session('pesan'))
-      <div class="alert bg-blue" role="alert"> 
+      <div class="alert bg-blue" role="alert">
         {{ session('pesan') }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>

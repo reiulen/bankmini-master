@@ -69,10 +69,6 @@ var table = $("#example1").DataTable({
     ],
 });
 
-$("#dari").on("change", function (e) {
-    $("#sampai").min = $(this).val();
-});
-
 domStrings.inputForm.submit(function (e) {
     e.preventDefault();
     let data = $(this).serializeArray();
@@ -93,11 +89,20 @@ domStrings.inputForm.submit(function (e) {
     $(".laporan").slideDown();
     $("#modalFilter").modal("hide");
     table.draw();
+    $(".cetak-excel").attr(
+        "href",
+        `${url}/historytabungan/cetak-excel?${$("#form-filter").serialize()}`
+    );
+    $(".cetak-pdf").attr(
+        "href",
+        `${url}/historytabungan/cetak-pdf?${$("#form-filter").serialize()}`
+    );
 });
 
 const totalSaldo = $("tbody tr td p.total-saldo");
 let total_saldo = [];
 $.each(totalSaldo, function (index, value) {
     total_saldo.push($(value).text());
+    console.log(total_saldo);
 });
-console.log(total_saldo);
+

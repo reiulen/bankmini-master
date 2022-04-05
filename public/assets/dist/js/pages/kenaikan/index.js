@@ -93,7 +93,7 @@ domStrings.formKelas.submit(function (e) {
     let semua = $("tbody tr .pilih:checked");
     let kelas = $('select[name="kelas"]').val();
     if (kelas) {
-        if (semua.length > 1) {
+        if (semua.length > 0) {
             let semua_id = [];
             $.each(semua, function (i, v) {
                 semua_id.push($(v).val());

@@ -27,7 +27,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-            <section class="content laporan" style="display: none">
+            <section class="content laporan" >
                 <div class="container-fluid">
                     <div class="row">
                             <div class="col-12">
@@ -35,8 +35,8 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-2">
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</button>
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</button>
+                                                <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                                                <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                                             </div>
                                             <div>
                                                 @php
@@ -125,9 +125,6 @@
                                 <option value="">Pilih</option>
                                 <option value="nama|ASC">A-Z</option>
                                 <option value="nama|DESC">Z-A</option>
-                                <option value="nominal|DESC">Terbesar</option>
-                                <option value="created_at|DESC">Terbaru</option>
-                                <option value="created_at|ASC">Terlama</option>
                             </select>
                         </div>
                     </div>

@@ -156,8 +156,8 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index']) }}">
-                        <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
                         <i class="fa fa-edit nav-icon"></i>
                           <p>
                             {{ __('History') }}
@@ -174,9 +174,9 @@
                       </ul>
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['tunggakan.index']) }}">
+                          <a href="{{ route('historytransaksi.index') }}" class="nav-link {{ set_active_sub(['historytransaksi.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
-                              <p>{{ __('Tunggakan') }}</p>
+                              <p>{{ __('Pembayaran') }}</p>
                           </a>
                         </li>
                       </ul>

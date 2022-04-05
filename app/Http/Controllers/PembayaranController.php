@@ -66,7 +66,7 @@ class PembayaranController extends Controller
                 'nominal' => 'required',
             ], $message);
 
-            $siswa = Siswa::where('nis', $nis)->firstOrFail();
+            $siswa = Siswa::with(['kelas'])->where('nis', $nis)->firstOrFail();
 
             $nominal = preg_replace("/[^0-9]/", "", $request->nominal);
             $pembayaran = PembayaranSiswa::with(['danaawal'])
@@ -96,6 +96,8 @@ class PembayaranController extends Controller
                 'nominal' => $nominal,
                 'sisa_tagihan' => $sisatagihan,
                 'kelas_id' => $siswa->kelas_id,
+                'jurusan_id' => $siswa->kelas->jurusan_id,
+                'tahun_akademik_id' => $siswa->tahun_akademik_id,
                 'tanggal' => Carbon::now()->isoformat('D MMMM Y'),
                 'bulan' => Carbon::parse(date('M'))->isoFormat('MMMM'),
                 'tahun' => tahun(date('Y')),
@@ -127,7 +129,7 @@ class PembayaranController extends Controller
                 'nominal' => 'required',
             ], $message);
 
-            $siswa = Siswa::where('nis', $nis)->firstOrFail();
+            $siswa = Siswa::with(['kelas'])->where('nis', $nis)->firstOrFail();
 
             $nominal = preg_replace("/[^0-9]/", "", $request->nominal);
             $pembayaran = PembayaranSiswa::with(['danaawal'])->find($id);
@@ -152,6 +154,8 @@ class PembayaranController extends Controller
                 'nominal' => $nominal,
                 'sisa_tagihan' => $sisatagihan,
                 'kelas_id' => $siswa->kelas_id,
+                'jurusan_id' => $siswa->kelas->jurusan_id,
+                'tahun_akademik_id' => $siswa->tahun_akademik_id,
                 'bulan' => Carbon::parse(date('M'))->isoFormat('MMMM'),
                 'tahun' => tahun(date('Y')),
             ]);

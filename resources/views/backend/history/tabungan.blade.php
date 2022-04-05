@@ -34,7 +34,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-            <section class="content history-table" style="display: none">
+            <section class="content history-table">
                 <div class="container-fluid">
                     <div class="row">
                             <div class="col-12">
@@ -42,16 +42,8 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-2">
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</button>
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</button>
-                                            </div>
-                                            <div>
-                                                @php
-                                                    $debit =  $tabungan->where('tipe', '1');
-                                                    $kredit = $tabungan->where('tipe', '2');
-                                                    $total = $debit->sum('nominal') - $kredit->sum('nominal');
-                                                @endphp
-                                                <h4>Total : <span class="saldo">{{ format_rupiah($total) }}</span></h4>
+                                                <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                                                <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                                             </div>
                                         </div>
                                     </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DanaAwalController;
 use App\Http\Controllers\PemasukanController;
 
 Route::group(['prefix' => 'laporantabungan', 'as' => 'laptabungan.'], function() {

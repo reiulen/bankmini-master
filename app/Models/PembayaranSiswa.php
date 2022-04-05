@@ -48,4 +48,22 @@ class PembayaranSiswa extends Model
             return $query->orderBy($by[0], $by[1]);
         });
     }
+
+    public function scopeFilterTable($query, $filter)
+    {
+        $query->when($filter->kelas ?? false, function ($query) use ($filter) {
+            return $query->where('kelas_id', $filter->kelas);
+        })->when($filter->tahun_akademik ?? false, function ($query) use ($filter) {
+            return $query->where('tahun_akademik_id', $filter->tahun_akademik);
+        })->when($filter->jurusan ?? false, function ($query) use ($filter) {
+            return $query->where('jurusan_id', $filter->jurusan);
+        });;
+    }
+
+     public function scopeTanggal($query, $tanggal)
+    {
+        $query->when($tanggal[0] ?? false, function ($query) use ($tanggal) {
+            return $query->whereBetween('created_at', [$tanggal[0], $tanggal[1]]);
+        });
+    }
 }

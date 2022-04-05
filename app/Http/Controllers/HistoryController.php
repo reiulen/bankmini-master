@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Jurusan;
+use App\Models\DanaAwal;
 use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\TahunAkademik;
+use App\Models\PembayaranSiswa;
 use Yajra\DataTables\Facades\DataTables;
 
 class HistoryController extends Controller
@@ -53,5 +55,36 @@ class HistoryController extends Controller
                             })
                             ->rawColumns(['tanggal', 'tipe', 'nominal', 'sisa_tagihan'])
                             ->make(true);
+    }
+
+    public function indexPembayaran()
+    {
+        $petugas = User::orderBy('nama', 'ASC')->get();
+        $dana = DanaAwal::latest()->get();
+        return view('backend.history.pembayaran', compact('petugas', 'dana'));
+    }
+
+    public function dataTablePembayaran(Request $request)
+    {
+        $tanggal = [$request->dari, $request->sampai];
+        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])->tanggal($tanggal)->latest()->get();
+        if($request->filter){
+            $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+                                    ->filter($request->filter)
+                                    ->tanggal($tanggal)
+                                    ->order($request->filter)
+                                    ->get();
+        }
+        return DataTables::of($data)
+                         ->addIndexColumn()
+                         ->addColumn('tanggal', function($data){
+                             return tanggal($data->created_at);
+                         })
+                         ->addColumn('nominal', function($data){
+                             return format_rupiah($data->nominal);
+                         })->addColumn('sisa_tagihan', function($data){
+                            return format_rupiah($data->sisa_tagihan);
+                         })->rawColumns(['tanggal', 'nominal', 'sisa_tagihan'])
+                           ->make(true);
     }
 }

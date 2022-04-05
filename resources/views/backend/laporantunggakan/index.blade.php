@@ -1,6 +1,7 @@
 <x-layout>
     @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/dist/css/tabs.css') }}" />
+    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
     @endpush
 
         <section class="content-header">
@@ -19,7 +20,7 @@
                 <div class="card">
                 <div class="card-body">
                     <div class="row btn-laporan">
-                        <div class="col-md-3 my-auto">
+                        <div>
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                         </div>
                     </div>
@@ -27,45 +28,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-            <section class="content laporan" style="display: none">
-                <div class="container-fluid">
-                    <div class="row">
-                            <div class="col-12">
-                                <div class="card card-outline">
-                                    <div class="card-header">
-                                        <div class="row justify-content-between">
-                                            <div class="row btn-laporan mx-2">
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</button>
-                                                <button class="btn btn-primary mx-1"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</button>
-                                            </div>
-                                            <div>
-                                                <h5>Total : Rp. 250.000.000</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-hover">
-                                            <thead class="b-head">
-                                                <tr>
-                                                    <th>NIS</th>
-                                                    <th>Nama</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+             <div id="card-table"></div>
             <!-- /.content -->
 
     <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -131,9 +94,9 @@
         </div>
     </div>
 
-            @include('backend.lib.select2')
-            @include('backend.lib.datatable')
-            @push('script')
-            <script src="{{ asset('assets/dist/js/pages/laporantunggakan/index.js') }}"></script>
-            @endpush
+    @include('backend.lib.select2')
+    @push('script')
+    <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.production.min.js"></script>
+    <script src="{{ asset('assets/dist/js/pages/laporantunggakan/index.js') }}"></script>
+    @endpush
 </x-layout>

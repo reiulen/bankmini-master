@@ -296,6 +296,19 @@ ul[role='tablist']  .nav-link:hover {
     background-color: #6091ba !important;
 }
 
+table{
+    border-radius: 0 !important;
+}
+
+.gridjs-tr th{
+    background-color: rgb(212, 212, 212) !important;
+    color:black !important;
+}
+
+.gridjs-wrapper:nth-last-of-type(2){
+    border-radius: 0 !important;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

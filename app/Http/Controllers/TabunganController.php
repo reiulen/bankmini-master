@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
 class TabunganController extends Controller
@@ -154,14 +155,11 @@ class TabunganController extends Controller
      public function dataTable($nis, Request $request)
     {
         $siswa = Siswa::where('nis', $nis)->firstOrFail();
-        $data =  TabunganSiswa::with(['petugas'])->where(['siswa_id' =>  $siswa->id])->orderBy('id', 'DESC')->get();
-        if($request->filter){
-            $data =  TabunganSiswa::with(['petugas', 'siswa'])
+        $data = TabunganSiswa::with(['petugas', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
                                     ->order($request->filter)
                                     ->get();
-        }
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){

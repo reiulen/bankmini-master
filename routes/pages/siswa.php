@@ -4,6 +4,7 @@ use App\Http\Controllers\SiswaController;
 
 Route::group(['prefix' => 'siswa', 'as' => 'siswa.'], function() {
     Route::get('/', [SiswaController::class, 'index'])->name('index');
+    Route::post('/importsiswa', [SiswaController::class, 'importSiswa'])->name('import');
     Route::get('/tambahsiswa', [SiswaController::class, 'create'])->name('create');
     Route::post('/tambahsiswa', [SiswaController::class, 'store'])->name('store');
     Route::get('/{siswa:nis}/lihatsiswa', [SiswaController::class, 'show'])->name('show');

@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout title="Laporan Tunggakan">
     @push('css')
     <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />

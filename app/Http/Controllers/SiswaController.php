@@ -5,19 +5,24 @@ namespace App\Http\Controllers;
 use Image;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Models\DanaAwal;
 use App\Models\Jurusan;
+use App\Models\DanaAwal;
 use App\Models\Pekerjaan;
+use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\TahunAkademik;
 use App\Models\PembayaranSiswa;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $kelas = Kelas::with(['jurusan'])->orderBy('kelas', 'ASC')->get();
         $tahunakademik = TahunAkademik::orderBy('id', 'ASC')->get();
         $jurusan = Jurusan::orderBy('id', 'ASC')->get();
@@ -168,7 +173,7 @@ class SiswaController extends Controller
                 });
                 $image->save($tujuan . '/' . $rename);
                 $foto = $tujuan . '/' . $rename;
-                if($request->foto != 'upload/foto/siswa/siswa.png' ){
+                if($siswa->foto != 'upload/foto/siswa/siswa.png' ){
                     File::delete($siswa->foto);
                 }
             }else{
@@ -239,20 +244,17 @@ class SiswaController extends Controller
 
     public function datatable(Request $request)
     {
-        $data = Siswa::with(['kelas', 'tahunakademik'])->orderBy('nis', 'DESC')->get();
-        if($request->filter){
-            $data = Siswa::with(['kelas', 'tahunakademik'])
-            ->filter($request->filter)
-            ->order($request->filter)
-            ->get();
-        }
+        $data =  Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
+                    ->filter($request->filter)
+                    ->order($request->filter)
+                    ->get();
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('foto', function($data){
                                 return '<img src="' .asset($data->foto). '" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px; width:60px; object-fit:cover;object-position:top;">';
                             })
                             ->addColumn('kelas', function($data){
-                                return $data->kelas->kelas . ' ' . $data->kelas->jurusan->nama . ' ' . $data->kelas->urut_kelas;
+                                return $data->kelas->kelas . ' ' . $data->jurusan->nama . ' ' . $data->kelas->urut_kelas;
                             })
                             ->addColumn('tahun_akademik', function($data){
                                 return tahun($data->tahunakademik->awal). ' - ' .tahun($data->tahunakademik->akhir);
@@ -277,6 +279,23 @@ class SiswaController extends Controller
                             })
                             ->rawColumns(['foto', 'tahun_akademik','aksi'])
                             ->make(true);
+    }
+
+    public function importSiswa(Request $request)
+    {
+        $validasi = Validator::make($request->all(), [
+            'file' => 'required|mimes:xls,xlsx'
+        ]);
+
+        if($validasi->fails()){
+            return response()->json($validasi->errors());
+        }
+
+        Excel::import(new SiswaImport, $request->file('file'));
+
+        return response()->json([
+            'succes' => 'Data siswa berhasil diimport',
+        ]);
     }
 
 }

@@ -77,6 +77,7 @@
                         <label class="col-md-3">Tipe</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="tipe">
+                                <option value="">Pilih</option>
                                 <option value="1">Debit</option>
                                 <option value="2">Kredit</option>
                             </select>

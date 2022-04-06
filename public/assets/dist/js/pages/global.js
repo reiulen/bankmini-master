@@ -1,7 +1,7 @@
 $(".logout").click(function () {
     Swal.fire({
         title: "Apakah yakin?",
-        text: `Anda akan keluar dari e-Filling`,
+        text: `Anda akan keluar dari Sistem Bank Mini`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#6492b8da",

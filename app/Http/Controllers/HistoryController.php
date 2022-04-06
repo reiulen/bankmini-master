@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\TahunAkademik;
 use App\Models\PembayaranSiswa;
+use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
 class HistoryController extends Controller
@@ -27,15 +28,10 @@ class HistoryController extends Controller
         $tanggal = [$request->dari, $request->sampai];
         $data =  TabunganSiswa::with(['petugas', 'siswa'])
                                 ->tanggal($tanggal)
-                                ->orderBy('id', 'DESC')
+                                ->filter($request->filter)
+                                ->order($request->filter)
+                                ->latest()
                                 ->get();
-            if($request->filter){
-                $data =  TabunganSiswa::with(['petugas', 'siswa'])
-                                        ->tanggal($tanggal)
-                                        ->filter($request->filter)
-                                        ->order($request->filter)
-                                        ->get();
-            }
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('tanggal', function($data){
@@ -67,14 +63,12 @@ class HistoryController extends Controller
     public function dataTablePembayaran(Request $request)
     {
         $tanggal = [$request->dari, $request->sampai];
-        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])->tanggal($tanggal)->latest()->get();
-        if($request->filter){
-            $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
                                     ->filter($request->filter)
                                     ->tanggal($tanggal)
                                     ->order($request->filter)
+                                    ->latest()
                                     ->get();
-        }
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){

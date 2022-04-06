@@ -59,20 +59,17 @@ class KenaikanController extends Controller
 
     public function datatable(Request $request)
     {
-        $data = Siswa::with(['kelas', 'tahunakademik'])->orderBy('nis', 'DESC')->get();
-        if($request->filter){
-            $data = Siswa::with(['kelas', 'tahunakademik'])
+        $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
             ->filter($request->filter)
             ->order($request->filter)
             ->get();
-        }
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('foto', function($data){
                                 return '<img src="' .asset($data->foto). '" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px; width:60px; object-fit:cover;object-position:top;">';
                             })
                             ->addColumn('kelas', function($data){
-                                return $data->kelas->kelas . ' ' . $data->kelas->jurusan->nama . ' ' . $data->kelas->urut_kelas;
+                                return $data->kelas->kelas . ' ' . $data->jurusan->nama . ' ' . $data->kelas->urut_kelas;
                             })
                             ->addColumn('tahun_akademik', function($data){
                                 return tahun($data->tahunakademik->awal). ' - ' .tahun($data->tahunakademik->akhir);

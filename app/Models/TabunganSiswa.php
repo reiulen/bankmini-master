@@ -28,6 +28,8 @@ class TabunganSiswa extends Model
             return $query->where('petugas_id', $filter['petugas']);
         })->when($filter['kelas'] ?? false, function ($query) use ($filter) {
             return $query->where('kelas_id', $filter['kelas']);
+        })->when($filter->id ?? false, function ($query) use ($filter) {
+            return $query->where('siswa_id', $filter->id);
         });
     }
 

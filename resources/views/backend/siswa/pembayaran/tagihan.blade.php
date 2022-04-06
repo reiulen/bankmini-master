@@ -23,8 +23,35 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <div class="col-md-10">
-                            <table>
+                        <div class="card col-md-6 mx-auto">
+                            <div class="card-header text-center bg-blue" style="font-weight: 600">
+                                {{ $siswa->nama }} <br/>
+                                {{ $siswa->nis }} <br/>
+                                {{ $siswa->kelas->kelas . ' ' . $siswa->kelas->jurusan->nama . ' ' . $siswa->kelas->urut_kelas }}
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody>
+                                        @foreach ($dana as $row)
+                                        <tr>
+                                            <th class="table-active py-1 my-1">{{ $row->dana }}</th>
+                                            <td class="py-1 my-1">
+                                                @php
+                                                    $tagihan = $pembayaran->where('dana_awal_id', $row->id)
+                                                                ->where('siswa_id', $siswa->id)
+                                                                ->sum('nominal')
+                                                @endphp
+                                                <b>{{
+                                                    format_rupiah(preg_replace("/[^0-9]/", "", $tagihan - $row->nominal))
+                                                }}</b>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                            {{-- <table>
                                 <div class="row">
                                         <label class="col-md-6"><b>NIS</b></label>
                                         <label class="mb-4">{{ $siswa->nis }}</label>
@@ -48,8 +75,7 @@
                                         </label>
                                         @endforeach
                                     </div>
-                            </table>
-                        </div>
+                            </table> --}}
                     </div>
                 <!-- /.card-body -->
                 </div>

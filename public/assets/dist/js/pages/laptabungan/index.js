@@ -17,9 +17,13 @@ const domStrings = {
     btnCari: $(".btn-cari"),
 };
 domStrings.inputFilter.select2();
-console.log($("#dari"));
 
 var table = $("#example1").DataTable({
+    lengthMenu: [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"],
+    ],
+    order: [],
     responsive: true,
     lengthChange: true,
     autoWidth: false,
@@ -69,8 +73,24 @@ var table = $("#example1").DataTable({
     ],
 });
 
+$.getJSON(
+    `${url}/laporantabungan/ajax/dataTables?sisa_saldo=true&${domStrings.inputForm.serialize()}`,
+    function (data) {
+        $(".total_saldo").html("Rp. " + formatRupiah(`${data}`));
+    }
+);
+
 domStrings.inputForm.submit(function (e) {
     e.preventDefault();
+    $.getJSON(
+        `${url}/laporantabungan/ajax/dataTables?sisa_saldo=true&${$(
+            this
+        ).serialize()}`,
+        function (data) {
+            $(".total_saldo").html("Rp. " + formatRupiah(`${data}`));
+        }
+    );
+
     let data = $(this).serializeArray();
 
     data = data.reduce((obj, item) => {
@@ -91,18 +111,27 @@ domStrings.inputForm.submit(function (e) {
     table.draw();
     $(".cetak-excel").attr(
         "href",
-        `${url}/historytabungan/cetak-excel?${$("#form-filter").serialize()}`
+        `${url}/laporantabungan/cetak-excel?${$("#form-filter").serialize()}`
     );
     $(".cetak-pdf").attr(
         "href",
-        `${url}/historytabungan/cetak-pdf?${$("#form-filter").serialize()}`
+        `${url}/laporantabungan/cetak-pdf?${$("#form-filter").serialize()}`
     );
 });
 
-const totalSaldo = $("tbody tr td p.total-saldo");
-let total_saldo = [];
-$.each(totalSaldo, function (index, value) {
-    total_saldo.push($(value).text());
-    console.log(total_saldo);
-});
+function formatRupiah(angka, prefix) {
+    var number_string = angka.replace(/[^,\d]/g, "").toString(),
+        split = number_string.split(","),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
+    // tambahkan titik jika yang di input sudah menjadi angka ribuan
+    if (ribuan) {
+        separator = sisa ? "." : "";
+        rupiah += separator + ribuan.join(".");
+    }
+
+    rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+    return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+}

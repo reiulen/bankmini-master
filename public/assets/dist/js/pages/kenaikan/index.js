@@ -35,7 +35,6 @@ var table = $("#example1").DataTable({
         method: "POST",
         data: function (d) {
             d.filter = filter;
-            console.log(d.filter.kelas);
             return d;
         },
     },
@@ -126,7 +125,6 @@ domStrings.formKelas.submit(function (e) {
                             });
                         },
                         error: function (err) {
-                            console.log(err.responseJSON);
                             Swal.fire({
                                 icon: "error",
                                 title: "Gagal",

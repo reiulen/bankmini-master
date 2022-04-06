@@ -309,6 +309,11 @@ table{
     border-radius: 0 !important;
 }
 
+.table .table-active{
+    background: none !important;
+    font-weight: 400;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

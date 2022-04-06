@@ -75,6 +75,7 @@
                         <label class="col-md-3">Status</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="status">
+                                <option value="">Pilih</option>
                                 <option value="lunas">Lunas</option>
                                 <option value="belum lunas">Belum lunas</option>
                             </select>

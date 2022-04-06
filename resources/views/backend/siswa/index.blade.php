@@ -30,7 +30,7 @@
                                         Opsi Data
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="import_siswa.html">Import Data Siswa</a>
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#modalUpload" href="#"><i class="fa fa-upload text-success"></i>&nbsp; Import Data Pengguna</a>
                                     <a class="dropdown-item" href="{{ route('siswa.eksport') }}">Eksport Data Siswa</a>
                                 </div>
                             </div>
@@ -141,10 +141,40 @@
         </div>
     </div>
 
+<!-- Modal Upload -->
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Import Data Pengguna</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="load" class="text-center"></div>
+      <form action="{{ route('siswa.import') }}" enctype="multipart/form-data" method="POST" id="uploadSiswa">
+        <div class="modal-body">
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" name="file" class="form-control" id="inputGroupFile02">
+                </div>
+            </div>
+            <span class="small pb-5 text-danger">Pilih file dengan ekstensi *csv, *xlxs</span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
+          <button class="btn btn-primary">Import Data</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
     @include('backend.lib.datatable')
     @include('backend.lib.select2')
     @push('script')
     <script src="{{ asset('assets/dist/js/pages/siswa/index.js') }}"></script>
+    <script src="{{ asset('assets/dist/js/pages/siswa/upload.js') }}"></script>
     @endpush
 
 </x-layout>

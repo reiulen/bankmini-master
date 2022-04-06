@@ -185,14 +185,11 @@ class PembayaranController extends Controller
     public function dataTable($nis, Request $request)
     {
         $siswa = Siswa::where('nis', $nis)->firstOrFail();
-        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])->where(['siswa_id' => $siswa->id])->latest()->get();
-        if($request->filter){
-            $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
                                     ->order($request->filter)
                                     ->get();
-        }
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){

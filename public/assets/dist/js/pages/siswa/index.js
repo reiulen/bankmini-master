@@ -13,6 +13,7 @@ const domStrings = {
     jurusan: $('input[name="jurusan"]').val(),
     kelas: $('input[name="kelas"]').val(),
     tahunAkademik: $('input[name="tahun_akademik"]').val(),
+    uploadSiswa: $("#uploadSiswa"),
 };
 domStrings.inputFilter.select2();
 
@@ -20,7 +21,7 @@ var table = $("#example1").DataTable({
     responsive: true,
     lengthChange: true,
     autoWidth: false,
-    order: [[2, "asc"]],
+    order: [[3, "asc"]],
     language: {
         processing:
             '<div class="spinner-border text-info" role="status">' +
@@ -34,7 +35,6 @@ var table = $("#example1").DataTable({
         method: "POST",
         data: function (d) {
             d.filter = filter;
-            console.log(d.filter.kelas);
             return d;
         },
     },
@@ -98,3 +98,4 @@ domStrings.inputForm.submit(function (e) {
     $("#modalFilter").modal("hide");
     table.draw();
 });
+

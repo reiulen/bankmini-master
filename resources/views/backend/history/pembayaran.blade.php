@@ -23,9 +23,11 @@
                                 <button class="btn btn-primary btn-cari"><i class="fa fa-search"></i>&nbsp; Cari</button>
                             </div>
                         </div>
+                        @can('pengelola')
                         <div class="ml-auto">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                         </div>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -78,6 +80,7 @@
     </section>
     <!-- /.content -->
 
+    @can('pengelola')
     <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -140,6 +143,7 @@
           </div>
         </div>
     </div>
+    @endcan
 
       @include('backend.lib.datatable')
       @include('backend.lib.select2')

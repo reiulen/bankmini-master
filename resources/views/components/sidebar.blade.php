@@ -11,11 +11,11 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset(Auth::guard('siswa') ? Auth::guard('siswa')->user()->foto : Auth::user()->avatar) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
+                        <img src="{{ asset(Auth::user() ?  Auth::user()->avatar : Auth::guard('siswa')->user()->foto ) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
                     </div>
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <p>{{ Str::substr(Auth::guard('siswa') ? Auth::guard('siswa')->user()->nama : Auth::user()->nama, 0, 18) }}</p>
+                            <p>{{ Str::substr(Auth::user() ? Auth::user()->nama : Auth::guard('siswa')->user()->nama, 0, 18) }}</p>
                             <p class="level text-muted">{{ Auth::user() ? Auth::user()->roles[0]->name : Auth::guard('siswa')->user()->nis  }}</p>
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
@@ -49,6 +49,7 @@
                             <p>{{ __('Dashboard') }}</p>
                         </a>
                     </li>
+                    @can('pengelola')
                     <li class="nav-header">PILIHAN MENU</li>
                     <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
@@ -156,6 +157,7 @@
                         </li>
                       </ul>
                     </li>
+                    @endcan
                     <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
                         <i class="fa fa-edit nav-icon"></i>

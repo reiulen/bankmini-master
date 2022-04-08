@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\TahunAkademik;
 use App\Models\PembayaranSiswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -19,7 +20,11 @@ class HistoryController extends Controller
     {
         $kelas = Kelas::with(['jurusan'])->orderBy('kelas', 'ASC')->get();
         $petugas = User::orderBy('nama', 'ASC')->get();
-        $tabungan = TabunganSiswa::with(['petugas'])->orderBy('id', 'DESC')->get();
+        if(Auth::guard('siswa')->user()){
+            $tabungan = TabunganSiswa::with(['petugas'])->where('siswa_id', Auth::guard('siswa')->user()->id)->orderBy('id', 'DESC')->get();
+        }else{
+            $tabungan = TabunganSiswa::with(['petugas'])->orderBy('id', 'DESC')->get();
+        }
         return view('backend.history.tabungan', compact('tabungan', 'kelas', 'petugas'));
     }
 

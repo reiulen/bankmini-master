@@ -19,8 +19,11 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+include_once 'pages/historytabungan.php';
+include_once 'pages/historytransaksi.php';
+
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     include_once 'pages/jurusan.php';
     include_once 'pages/tahunakademik.php';
@@ -31,8 +34,6 @@ Route::group(['middleware' => 'auth'], function(){
     include_once 'pages/kenaikan.php';
     include_once 'pages/siswa.php';
     include_once 'pages/pengguna.php';
-    include_once 'pages/historytabungan.php';
-    include_once 'pages/historytransaksi.php';
     include_once 'pages/laporantunggakan.php';
     include_once 'pages/laporanmasuk.php';
     include_once 'pages/role.php';

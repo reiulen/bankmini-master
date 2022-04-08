@@ -50,6 +50,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
+        Auth::guard('siswa')->logout();
         Request()->session()->regenerateToken();
         Request()->session()->invalidate();
         return redirect(route('login.index'));

@@ -152,9 +152,7 @@ class SiswaController extends Controller
                 'warga_negara' => 'required',
                 'agama' => 'required',
                 'asal_sekolah' => 'required',
-                'no_ijazah' => 'required',
                 'tahun_lulus' => 'required',
-                'alamat_sekolah' => 'required',
             ], $message);
 
             $kelas = Kelas::with(['jurusan'])->find($request->kelas_id);

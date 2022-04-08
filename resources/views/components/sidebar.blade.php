@@ -11,12 +11,12 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="{{ asset(Auth::user()->avatar) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
+                        <img src="{{ asset(Auth::guard('siswa') ? Auth::guard('siswa')->user()->foto : Auth::user()->avatar) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
                     </div>
                     <div class="dropdown">
                         <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <p>{{ auth::user()->nama }}</p>
-                            <p class="level text-muted">{{ Auth::user()->roles[0]->name }}</p>
+                            <p>{{ Str::substr(Auth::guard('siswa') ? Auth::guard('siswa')->user()->nama : Auth::user()->nama, 0, 18) }}</p>
+                            <p class="level text-muted">{{ Auth::user() ? Auth::user()->roles[0]->name : Auth::guard('siswa')->user()->nis  }}</p>
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"><i class="fa fa-user text-primary pr-1"></i> Profil</a>

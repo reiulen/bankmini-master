@@ -3,7 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        <title>
+            Laporan Tabungan Siswa
+                @if($jurusan)
+                    {{ $jurusan->jurusan }}
+                @endif
+                @if($kelas)
+                    {{ $kelas->kelas . ' ' . $kelas->jurusan->nama .' '. $kelas->urut_kelas }}
+                @endif
+                @if($tahunakademik)
+                TA.   {{ tahun($tahunakademik->awal). ' - ' .tahun($tahunakademik->akhir) }}
+                @endif
+        </title>
         <style>
             *{
                 font-family: 'Arial', sans-serif;
@@ -38,7 +49,7 @@
     <body>
         <div style="text-align:center">
             <h3>
-                Laporan Tabungan
+                Laporan Tabungan Siswa
                 @if($jurusan)
                     {{ $jurusan->jurusan }}
                 @endif
@@ -46,7 +57,7 @@
                     {{ $kelas->kelas . ' ' . $kelas->jurusan->nama .' '. $kelas->urut_kelas }}
                 @endif
                 @if($tahunakademik)
-                    {{ tahun($tahunakademik->awal). ' - ' .tahun($tahunakademik->akhir) }}
+                TA.   {{ tahun($tahunakademik->awal). ' - ' .tahun($tahunakademik->akhir) }}
                 @endif
             </h3>
         </div>

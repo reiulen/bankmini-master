@@ -75,19 +75,28 @@ class PemasukanController extends Controller
         $kelas = [];
         $jurusan = [];
         $tahunakademik = [];
+        $kelasc = '';
+        $jurusanc = '';
+        $tahunakademikc = '';
 
         if($request->kelas){
             $kelas = Kelas::with(['jurusan'])->find($request->kelas);
+            $kelasc = $kelas->kelas . ' ' . $kelas->jurusan->nama .' '. $kelas->urut_kelas;
         }
-        if($request->tahunakademik){
+        if($request->tahun_akademik){
             $tahunakademik = TahunAkademik::find($request->tahun_akademik);
+            $tahunakademikc = 'TA ' . tahun($tahunakademik->awal). ' - ' .tahun($tahunakademik->akhir);
         }
         if($request->jurusan){
             $jurusan = Jurusan::find($request->jurusan);
+            $jurusanc = $jurusan->jurusan;
         }
+        $cetak = 'LaporanTabunganSiswa' . $kelasc . ' ' . $jurusanc . ' ' . $tahunakademikc . '.pdf';
 
-        $pdf = PDF::loadview('backend.laporantabungan.cetak', compact('data', 'tabungan', 'kelas', 'tahunakademik', 'jurusan'))->setPaper('f4', 'landscape');
-        return $pdf->stream('cetaklaporantabungan');
+        $pdf = PDF::loadview('backend.laporantabungan.cetak',
+                compact('data', 'tabungan', 'kelas', 'tahunakademik', 'jurusan'))
+                ->setPaper('f4', 'landscape');
+        return $pdf->stream($cetak);
         // return view('backend.laporantabungan.cetak',  compact('data', 'tabungan', 'kelas', 'tahunakademik', 'jurusan'));
     }
 
@@ -112,7 +121,7 @@ class PemasukanController extends Controller
         }else{
             $tahunakademik = '';
         }
-        $cetak = 'CetakLaporanTabungan ' . $jurusan . ' ' . $kelas . ' ' . $tahunakademik . ' ' . tanggal(date('d-m-Y')) . '.xlsx';
+        $cetak = 'LaporanTabunganSiswa' . $jurusan . ' ' . $kelas . ' ' . $tahunakademik . ' ' . tanggal(date('d-m-Y')) . '.xlsx';
         return Excel::download(new LaporanTabunganExport($request), $cetak);
     }
 }

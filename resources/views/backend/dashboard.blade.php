@@ -84,6 +84,37 @@
                 </div>
               </div>
               <!-- ./col -->
+              {{-- <div class="col-lg-3 col-md-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                  <div class="inner text-right">
+                      @php
+                        $hasil = [];
+                        foreach ($tahunakademik as $ta) {
+                            $hasil[] = $dana->where('tahun_akademik_id', $ta->id);
+                            $sw[] = $siswa->where('tahun_akademik_id', $ta->id)->count();
+                        }
+                        $no = 0;
+                        $ha = [];
+                        foreach ($hasil as $h) {
+                            $ha[] = $hasil[$no++]->sum('nominal');
+                        }
+
+                        function jumlahbayar($v1,$v2)
+                        {
+                            return $v1+v2;
+                        }
+                        $tunggakan = array_reduce($sw,"jumlahbayar");
+                      @endphp
+                    <h3>{{ $tunggakan }}</h3>
+                    <p>Tunggakan Siswa</p>
+                  </div>
+                  <div class="icon">
+                    <i class="fas fa-money-check-alt"></i>
+                  </div>
+                </div>
+              </div> --}}
+              <!-- ./col -->
               <div class="col-lg-3 col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-success">

@@ -127,9 +127,14 @@ span.badge {
     color: white;
 }
 
-.paginate_button.page-item.active .page-link {
+.paginate_button.page-item.active .page-link{
     background-color: #6492b8;
     border-color: #6492b8;
+    color: #fff;
+}
+
+.paginate_button.page-item .page-link{
+    color: #6091ba;
 }
 
 .user-nama p {
@@ -312,6 +317,40 @@ table{
 .table .table-active{
     background: none !important;
     font-weight: 400;
+}
+
+.login-box .btn-siswa {
+    color: #6091ba !important;
+}
+
+.login-box .btn-siswa:hover {
+    box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+}
+
+.login-box .btn-siswa.active {
+    box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    color: #fff !important;
+}
+
+.login-box .btn-pengelola {
+    color: #6091ba !important;
+}
+
+.login-box .btn-pengelola:hover {
+    box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+}
+
+.login-box .btn-pengelola.active {
+    box-shadow: 0px 4px 26px 0px #6091babd;
+    -webkit-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    -moz-box-shadow: 0px 4px 26px 0px #6091ba6b;
+    color: #fff !important;
 }
 
 @media (max-width: 767.98px) {

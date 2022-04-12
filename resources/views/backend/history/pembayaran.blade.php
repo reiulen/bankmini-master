@@ -56,6 +56,7 @@
                       @if($siswa)
                       <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
                            @php
+                                $pembayaran = PembayaranSiswa::select('id','nominal', 'siswa_id')->get();
                                 $danaawal = $dana->where('tahun_akademik_id', $siswa->tahun_akademik_id)
                                              ->sum('nominal');
                                 $bayar = $pembayaran->where('siswa_id', $siswa->id)

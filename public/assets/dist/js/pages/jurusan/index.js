@@ -14,6 +14,7 @@ const domStrings = {
 };
 
 var table = $("#example1").DataTable({
+    pagingType: "full_numbers",
     language: {
         search: "_INPUT_",
         searchPlaceholder: "Cari...",
@@ -26,7 +27,7 @@ var table = $("#example1").DataTable({
             first: "<i class='fas fa-angle-double-left'></i>",
             previous: "<i class='fas fa-angle-left'></i>",
             next: "<i class='fas fa-angle-right'></i>",
-            last: "<i class='far fa-angle-double-right'></i>",
+            last: "<i class='fas fa-angle-double-right'></i>",
         },
     },
     oLanguage: {

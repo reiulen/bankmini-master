@@ -357,6 +357,11 @@ table{
     color: #6091ba !important;
 }
 
+.gridjs-pages button {
+    margin-right: 5px !important;
+    border-radius: 4px !important;
+}
+
 .pagination .paginate_button{
     border: 0 !important;
 }
@@ -380,6 +385,12 @@ table{
     background-color: #6091ba !important;
     color: white !important;
 }
+
+.gridjs-currentPage{
+    background-color: #6091ba !important;
+    color: white !important;
+}
+
 
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {

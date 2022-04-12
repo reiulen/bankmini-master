@@ -24,10 +24,10 @@
         <div class="card-body">
             <ul class="nav nav-pills justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link btn-siswa active" href="#" role="button">Siswa</a>
+                  <a class="nav-link btn-siswa active" role="button">Siswa</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link btn-pengelola" href="#" role="button">Pengelola</a>
+                  <a class="nav-link btn-pengelola" role="button">Pengelola</a>
                 </li>
             </ul>
         </div>

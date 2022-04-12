@@ -73,15 +73,14 @@ class HistoryController extends Controller
     {
         $petugas = User::orderBy('nama', 'ASC')->get();
         $dana = DanaAwal::latest()->get();
-        $pembayaran = PembayaranSiswa::select('id','nominal', 'siswa_id')->get();
-        return view('backend.history.pembayaran', compact('petugas', 'dana', 'pembayaran'));
+        return view('backend.history.pembayaran', compact('petugas', 'dana'));
     }
 
     public function dataTablePembayaran(Request $request)
     {
         $tanggal = [$request->dari, $request->sampai];
         if(Auth::guard('siswa')->user()){
-           $data =  PembayaranSiswa::select('*')
+           $data =  PembayaranSiswa::select('id','created_at', 'siswa_id', 'dana_awal_id', 'petugas_id', 'nominal', 'sisa_tagihan', 'keterangan')
                                     ->with(['petugas', 'danaawal', 'siswa'])
                                     ->where('siswa_id', Auth::guard('siswa')->user()->id)
                                     ->filter($request->filter)
@@ -89,7 +88,7 @@ class HistoryController extends Controller
                                     ->order($request->filter)
                                     ->latest();
         }else{
-            $data =  PembayaranSiswa::select('*')
+            $data =  PembayaranSiswa::select('created_at', 'siswa_id', 'dana_awal_id', 'petugas_id', 'nominal', 'sisa_tagihan', 'keterangan')
                                     ->with(['petugas', 'danaawal', 'siswa'])
                                     ->filter($request->filter)
                                     ->tanggal($tanggal)

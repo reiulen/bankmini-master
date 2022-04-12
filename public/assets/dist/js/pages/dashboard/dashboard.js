@@ -15,7 +15,7 @@ domStrings.dsFilterTs.click(function (e) {
 
 domStrings.dsFilterTab.click(function (e) {
     e.preventDefault();
-    domStrings.btnFilterTs.text($(this).text());
+    domStrings.btnFilterTab.text($(this).text());
     $(this).addClass("active").siblings().removeClass("active");
     var chart = $(this).text().toLowerCase();
     $(`#kreditChart${chart}`).show("slow").siblings().hide("slow");

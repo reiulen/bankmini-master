@@ -81,18 +81,25 @@ if(!function_exists('tahun')){
 
 if(!function_exists('badge_level')){
     function badge_level($level){
-        if($level == 'Operator'){
-            return 'badge-success';
-        }elseif($level == 'Admin Bank'){
-            return 'badge-info';
-        }elseif($level == 'Komite'){
-            return 'badge-secondary';
-        }elseif($level == 'Kepala Sekolah'){
-            return 'badge-dark';
-        }elseif($level == 'Kepala Bank'){
-            return 'badge-danger';
-        }else{
-            return 'badge-warning';
+        switch($level){
+            case 'Operator':
+                return 'badge-success';
+                break;
+            case 'Admin Bank':
+                return 'badge-info';
+                break;
+            case 'Komite':
+                return 'badge-secondary';
+                break;
+            case 'Kepala Sekolah':
+                return 'badge-dark';
+                break;
+            case 'Kepala Bank':
+                return 'badge-danger';
+                break;
+            default:
+                return 'badge-warning';
+                break;
         }
     }
 }

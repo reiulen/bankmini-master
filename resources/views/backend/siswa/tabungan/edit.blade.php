@@ -33,7 +33,7 @@
                                     <x-session-error name="kode"></x-session-error>
                                 </div>
                                 <div class="col-md-6">
-                                    <label>Tipe Tabungan</label>
+                                    <label>Tipe Transaksi</label>
                                     <div class="input">
                                         <input type="radio" id="debit" name="tipe" value="1"  {{ $tabungan->tipe == '1' ? 'checked' : '' }}>
                                         <label for="debit" class="mr-2">Debit</label>

@@ -42,7 +42,7 @@ class DashboardController extends Controller
             if($by == 'hari'){
                 $by = 'tanggal';
             }
-            foreach($pembayaran->groupBy($by)->take(10) as $row){
+            foreach($pembayaran->groupBy($by)->take(12) as $row){
                 $labels[] = $row->first()->$by;
                 $jumlah[] = $row->count();
             }
@@ -74,7 +74,7 @@ class DashboardController extends Controller
         $jumlahdebit = [];
 
         try{
-            foreach($charttabungan->take(10) as $row){
+            foreach($charttabungan->take(12) as $row){
                 $labels[] = $row->first()->$by;
                 $jumlahkredit[] = $row->where('tipe', '2')->count();
                 $jumlahdebit[] = $row->where('tipe', '1')->count();

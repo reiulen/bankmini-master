@@ -19,10 +19,16 @@
                 <div class="card">
                 <div class="card-body">
                     <div class="row btn-laporan">
-                        <div class="d-md-flex">
-                            <input type="date" name="tgl_awal" id="tgl_awal" class="form-control mx-1" />
-                            <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control mx-1" />
-                            <div class="col-md-6 my-md-0 my-2">
+                        <div class="d-md-flex col-10">
+                            <div>
+                                <label style="font-size: 14px">Dari Tanggal</label>
+                                <input type="date" name="tgl_awal" id="tgl_awal" class="form-control" />
+                            </div>
+                            <div class="mx-md-2">
+                                <label style="font-size: 14px">Sampai Tanggal</label>
+                                <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control" />
+                            </div>
+                            <div class="col-md-6" style="margin-top: 28px">
                                 <button class="btn btn-primary btn-cari"><i class="fa fa-search"></i>&nbsp; Cari</button>
                             </div>
                         </div>
@@ -41,10 +47,20 @@
                                 <div class="card card-outline">
                                     <div class="card-header">
                                         <div class="row justify-content-between">
-                                            <div class="row btn-laporan mx-2">
+                                            <div class="row btn-laporan mx-auto mx-md-2">
                                                 <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
                                                 <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                                             </div>
+                                            @if(Auth::guard('siswa')->user())
+                                            <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
+                                                @php
+                                                    $debit = $tabungan->where('tipe', '1')->sum('nominal');
+                                                    $kredit = $tabungan->where('tipe', '2')->sum('nominal');
+                                                    $saldo = $debit - $kredit;
+                                                @endphp
+                                                <h5>Saldo: {{ format_rupiah($saldo) }}</h5>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -53,8 +69,10 @@
                                                 <tr>
                                                     <th>Tanggal</th>
                                                     <th>Kode</th>
+                                                    @if(!Auth::guard('siswa')->user())
                                                     <th>NIS</th>
                                                     <th>Nama</th>
+                                                    @endif
                                                     <th>Keterangan</th>
                                                     <th>Petugas</th>
                                                     <th>Tipe</th>
@@ -78,7 +96,6 @@
                 <!-- /.container-fluid -->
             </section>
             <!-- /.content -->
-
     <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -110,6 +127,7 @@
                             </select>
                         </div>
                     </div>
+                    @can('pengelola')
                     <div class="form-group row mb-4">
                         <label class="col-md-3">Kelas</label>
                         <div class="col-md-9">
@@ -120,6 +138,7 @@
                             </select>
                         </div>
                     </div>
+                    @endcan
                     <div class="form-group row mb-4">
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
@@ -146,6 +165,10 @@
             @include('backend.lib.select2')
             @include('backend.lib.datatable')
             @push('script')
+            @if(!Auth::guard('siswa')->user())
             <script src="{{ asset('assets/dist/js/pages/historytabungan/index.js') }}"></script>
+            @else
+            <script src="{{ asset('assets/dist/js/pages/historytabungan/indexuser.js') }}"></script>
+            @endif
             @endpush
 </x-layout>

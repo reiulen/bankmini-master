@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\RoleController;
 
-Route::group(['prefix' => 'role', 'as' => 'role.'], function(){
+Route::group(['middleware' => ['permission:role.index'],'prefix' => 'role', 'as' => 'role.'], function(){
     Route::get('/', [RoleController::class, 'index'])->name('index');
     Route::get('tambahrole', [RoleController::class, 'tambahrole'])->name('create');
     Route::post('tambahrole', [RoleController::class, 'storerole'])->name('store');
@@ -11,7 +11,7 @@ Route::group(['prefix' => 'role', 'as' => 'role.'], function(){
     Route::delete('/{role:id}', [RoleController::class, 'delete'])->name('delete');
 });
 
-Route::group(['prefix' => 'permission', 'as' => 'permission.'], function(){
+Route::group(['middleware' => ['permission:permission.index'], 'prefix' => 'permission', 'as' => 'permission.'], function(){
     Route::get('/', [RoleController::class, 'index'])->name('index');
     Route::get('tambahpermission', [RoleController::class, 'tambahpermission'])->name('create');
     Route::post('tambahpermission', [RoleController::class, 'storepermission'])->name('store');

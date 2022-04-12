@@ -185,11 +185,12 @@ class PembayaranController extends Controller
     public function dataTable($nis, Request $request)
     {
         $siswa = Siswa::where('nis', $nis)->firstOrFail();
-        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+        $data =  PembayaranSiswa::select('*')
+                                    ->with(['petugas', 'danaawal', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
-                                    ->order($request->filter)
-                                    ->get();
+                                    ->order($request->filter);
+
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
@@ -200,15 +201,22 @@ class PembayaranController extends Controller
                          })->addColumn('sisa_tagihan', function($data){
                             return format_rupiah($data->sisa_tagihan);
                          })->addColumn('aksi', function($data){
-                             return '<div class="dropdown">
-                                        <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="'. route('pembayaran.edit', [$data->siswa->nis, $data->id]) .'"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                        <a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'. $data->kode .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                        </div>
-                                    </div>';
+                              $user = Auth::user();
+                              $user->can('siswapembayaran.delete') ? $delete = '<a class="dropdown-item btn-hapus" role="button" data-id="'.$data->id.'" data-nama="'. $data->kode .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>' : $delete = '';
+                              $user->can('siswapembayaran.update') ? $update = '<a class="dropdown-item" href="'. route('pembayaran.edit', [$data->siswa->nis, $data->id]) .'"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>' : $update = '';
+                              $menu = '';
+                              if($user->canany(['siswapembayaran.delete', 'siswapembayaran.update'])){
+                                  $menu = '<button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                            '.$update.'
+                                            '.$delete.'
+                                            </div>';
+                              }
+                              return '<div class="dropdown">
+                                        '.$menu.'
+                                      </div>';
                          })
                          ->rawColumns(['tanggal', 'nominal', 'sisa_tagihan', 'aksi'])
                          ->make(true);

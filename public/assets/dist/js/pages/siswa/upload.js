@@ -15,7 +15,7 @@ domStrings.uploadSiswa.submit(function (e) {
     } else {
         var fd = new FormData(this);
         $(this).addClass("d-none");
-        $("#load").append(
+        $("#load").html(
             '<div class="spinner-border text-info m-5 p-5" role="status">' +
                 '<span class="sr-only">Loading...</span>' +
                 "</div>"
@@ -33,6 +33,7 @@ domStrings.uploadSiswa.submit(function (e) {
                     "Data siswa berhasil diimport!",
                     "success"
                 );
+                $("#load").html("");
             },
             error: function (response) {
                 Swal.fire(
@@ -40,6 +41,7 @@ domStrings.uploadSiswa.submit(function (e) {
                     response.responseJSON.message,
                     "error"
                 );
+                $("#load").html("");
             },
         });
     }

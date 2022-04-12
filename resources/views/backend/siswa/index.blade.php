@@ -20,24 +20,41 @@
                     <div class="card-header card-outline">
                         <div class="row">
                             <div class="d-md-flex">
+                                @can('siswa.create')
                                 <a class="btn btn-primary border-0 col-md-8" href="{{ route('siswa.create') }}"><i class="fa fa-plus px-1"></i> Tambah Siswa</a>
+                                @endcan
                                 <div class="col-md-6 col-12 mx-md-2 my-md-0 my-2">
                                     <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                                 </div>
                             </div>
+                            @canany(['siswa.import', 'siswa.export'])
                             <div class="dropdown ml-auto">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Opsi Data
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                    @can('siswa.import')
                                     <a class="dropdown-item"  data-toggle="modal" data-target="#modalUpload" href="#"><i class="fa fa-upload text-success"></i>&nbsp; Import Data Pengguna</a>
+                                    @endcan
+                                    @can('siswa.export')
                                     <a class="dropdown-item" href="{{ route('siswa.eksport') }}">Eksport Data Siswa</a>
+                                    @endcan
                                 </div>
                             </div>
+                            @endcanany
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        {{-- <div class="input-group col-md-3 mb-2 px-0 mx-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent border-right-0" id="addon-wrapping"><i class="fa fa-search"></i></span>
+                            </div>
+                            <input type="text" class="form-control border-left-0" id="inputcari" placeholder="Ketik untuk pencarian...." aria-label="Username" aria-describedby="addon-wrapping">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" id="btncari">Cari</button>
+                            </div>
+                        </div> --}}
                         <table id="example1" class="table table-bordered  table-hover">
                             <thead>
                                 <tr>
@@ -141,6 +158,7 @@
         </div>
     </div>
 
+@can('siswa.import')
 <!-- Modal Upload -->
 <div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -169,6 +187,7 @@
     </div>
   </div>
 </div>
+@endcan
 
     @include('backend.lib.datatable')
     @include('backend.lib.select2')

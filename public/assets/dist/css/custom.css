@@ -353,6 +353,34 @@ table{
     color: #fff !important;
 }
 
+.text-primary{
+    color: #6091ba !important;
+}
+
+.pagination .paginate_button{
+    border: 0 !important;
+}
+
+.page-item:first-child .page-link{
+    margin-right: 5px !important;
+    border-radius: 4px !important;
+}
+
+.page-item .page-link{
+    margin-left: 4px !important;
+    border-radius: 4px !important;
+}
+
+.page-item:last-child .page-link{
+    margin-left: 5px !important;
+    border-radius: 4px !important;
+}
+
+.dropdown-item.active{
+    background-color: #6091ba !important;
+    color: white !important;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

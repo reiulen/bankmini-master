@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\PenggunaController;
 
-Route::group(['prefix' => 'pengguna', 'as' => 'pengguna.'], function() {
+Route::group(['middleware' => ['permission:pengguna.index'],'prefix' => 'pengguna', 'as' => 'pengguna.'], function() {
     Route::get('/', [PenggunaController::class, 'index'])->name('index');
     Route::get('/tambahpengguna', [PenggunaController::class, 'create'])->name('create');
     Route::post('/tambahpengguna', [PenggunaController::class, 'store'])->name('store');

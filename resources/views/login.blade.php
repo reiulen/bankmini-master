@@ -51,6 +51,7 @@
           @csrf
           <input type="hidden" name="siswa" value="hai"/>
           <div class="input-group mb-3">
+              {{ Request()->expectsJson() }}
             <input type="text" name="nis" class="form-control" placeholder="NIS" required>
             <div class="input-group-append">
               <div class="input-group-text">

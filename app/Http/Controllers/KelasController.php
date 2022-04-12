@@ -69,7 +69,7 @@ class KelasController extends Controller
 
     public function data()
     {
-        $data = Kelas::with(['jurusan'])->orderBy('kelas', 'DESC')->get();
+        $data = Kelas::with(['jurusan'])->orderBy('kelas', 'DESC');
         return DataTables::of($data)
                            ->addindexColumn()
                            ->addColumn('jurusan', function($data){

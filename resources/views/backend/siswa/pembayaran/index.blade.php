@@ -19,8 +19,12 @@
                 <div class="card-header">
                   <div class="row">
                     <div class="col-md">
+                      @can('siswapembayaran.create')
                       <a class="btn btn-primary border-0" href="{{ route('pembayaran.create', $siswa->nis) }}"><i class="fa fa-plus px-1"></i> Tambah Pembayaran</a>
+                      @endcan
+                      @can('siswapembayaran.tagihan')
                       <a class="btn btn-primary border-0" href="{{ route('pembayaran.tagihan', $siswa->nis) }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
+                      @endcan
                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                     </div>
                     <div>

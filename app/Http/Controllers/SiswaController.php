@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\TahunAkademik;
 use App\Models\PembayaranSiswa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
@@ -242,10 +243,12 @@ class SiswaController extends Controller
 
     public function datatable(Request $request)
     {
-        $data =  Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
-                    ->filter($request->filter)
-                    ->order($request->filter)
-                    ->get();
+        $data =  Siswa::select('id', 'foto', 'nama', 'nisn', 'nis',
+                        'jenis_kelamin', 'kelas_id', 'tahun_akademik_id',
+                        'jurusan_id')
+                        ->with(['kelas', 'tahunakademik', 'jurusan'])
+                        ->filter($request->filter)
+                        ->order($request->filter);
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('foto', function($data){
@@ -258,24 +261,35 @@ class SiswaController extends Controller
                                 return tahun($data->tahunakademik->awal). ' - ' .tahun($data->tahunakademik->akhir);
                             })
                             ->addColumn('aksi', function($data){
-                                return '<div class="dropdown">
-                                            <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                $user = Auth::user();
+                                $user->can('siswapembayaran.index') ? $btnpembayaran = '<a class="dropdown-item" href="' . route("pembayaran.index", $data->nis) .'"><i class="fas fa-coins text-warning pr-1"></i> Pembayaran</a>' : $btnpembayaran = '';
+                                $user->can('siswatabungan.index') ? $btntabungan = '<a class="dropdown-item" href="' .route("tabungan.index", $data->nis). '"><i class="fas fa-book text-secondary pr-1"></i> Tabungan</a>' : $btntabungan = '';
+                                $user->can('siswa.read') ? $read = '<a class="dropdown-item" href="' .route("siswa.show", $data->nis). '"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>' : $read = '';
+                                $user->can('siswa.update') ? $update = '<a class="dropdown-item" href="' .route("siswa.edit", $data->nis). '"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>' : $update = '';
+                                $user->can('siswa.delete') ? $delete = '<a class="dropdown-item" role="button" id="hapus' .$data->id. '" onclick="hapus('.$data->id.')" data="' .$data->nama. '"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                                        <form action="' .route("siswa.delete", $data->nis). '" method="POST" id="form-hapus' .$data->id. '">
+                                                                            ' .csrf_field(). '
+                                                                            <input type="hidden" name="_method" value="DELETE">
+                                                                        </form>' : $delete = '';
+                                $menu = '';
+                                if($user->canany(['siswapembayaran.index', 'siswatabungan.index', 'siswa.read', 'siswa.update', 'siswa.delete'])){
+                                    $menu = '<button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="' . route("pembayaran.index", $data->nis) .'"><i class="fas fa-coins text-warning pr-1"></i> Pembayaran</a>
-                                                <a class="dropdown-item" href="' .route("tabungan.index", $data->nis). '"><i class="fas fa-book text-secondary pr-1"></i> Tabungan</a>
-                                                <a class="dropdown-item" href="' .route("siswa.show", $data->nis). '"><i class="fas fa-eye text-success pr-1"></i> Lihat</a>
-                                                <a class="dropdown-item" href="' .route("siswa.edit", $data->nis). '"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                                <a class="dropdown-item" role="button" id="hapus' .$data->id. '" onclick="hapus('.$data->id.')" data="' .$data->nama. '"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                                <form action="' .route("siswa.delete", $data->nis). '" method="POST" id="form-hapus' .$data->id. '">
-                                                    ' .csrf_field(). '
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                </form>
-                                            </div>
+                                                '.$btnpembayaran.'
+                                                '.$btntabungan.'
+                                                '.$read.'
+                                                '.$update.'
+                                                '.$delete.'
+                                            </div>';
+                                }
+                                return '<div class="dropdown">
+                                            '.$menu.'
                                         </div>';
                             })
                             ->rawColumns(['foto', 'tahun_akademik','aksi'])
+                            ->smart(true)
                             ->make(true);
     }
 

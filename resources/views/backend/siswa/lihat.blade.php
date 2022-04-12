@@ -157,7 +157,7 @@
                                          @foreach ($dana as $row)
                                          <div class="col-lg-6">
                                             <label class="text-primary">Sisa {{ $row->dana }}</label>
-                                            <div class="isi mb-2">
+                                            <div class="isi mb-2" style="font-weight: bold">
                                                             @php
                                                                 $tagihan = $pembayaran->where('dana_awal_id', $row->id)
                                                                             ->where('siswa_id', $siswa->id)

@@ -63,7 +63,7 @@ class JurusanController extends Controller
 
     public function data()
     {
-        $data = Jurusan::latest()->get();
+        $data = Jurusan::select('*')->latest();
          return DataTables::of($data)
                            ->addindexColumn()
                            ->make(true);

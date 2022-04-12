@@ -15,7 +15,8 @@
           <div class="container-fluid">
             <!-- Small boxes (Stat box) -->
             <div class="row">
-              <div class="col-lg-3 col-md-6">
+            @can('pengelola')
+               <div class="col-lg-3 col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-info">
                   <div class="inner text-right">
@@ -135,17 +136,99 @@
                 </div>
               </div>
               <!-- ./col -->
+            @endcan
+            @php
+                $siswa = Auth::guard('siswa')->user();
+            @endphp
+            @if($siswa)
+                <div class="col-lg-3 col-md-6">
+                    <!-- small box -->
+                    <div class="small-box  bg-danger">
+                        <div class="inner text-right">
+                            @php
+                                $dana = DB::table('dana_awals')
+                                        ->where('tahun_akademik_id', $siswa->tahun_akademik_id)->sum('nominal');
+                                $bayar = DB::table('pembayaran_siswas')
+                                        ->where('siswa_id', $siswa->id)->sum('nominal');
+                                $tunggakan = $dana - $bayar;
+                            @endphp
+                            <h3>{{ format_rupiah($tunggakan) }}</h3>
+                            <p>Sisa Tunggakan</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fa fa-money-check-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                <!-- small box -->
+                    <div class="small-box bg-secondary">
+                        <div class="inner text-right">
+                            @php
+                                function format_bulan($bulan){
+                                    return \Carbon\Carbon::parse($bulan)->isoFormat('MMMM');
+                                }
+
+                                $kreditbulan = $tabungan->where('bulan', format_bulan(date('M')))
+                                                    ->where('tipe', '2')
+                                                    ->sum('nominal');
+                                $debitbulan = $tabungan->where('bulan', format_bulan(date('M')))
+                                                    ->where('tipe', '1')
+                                                    ->sum('nominal');
+                                $totalbulan = $debitbulan - $kreditbulan;
+                            @endphp
+                            <h3>{{ format_rupiah($totalbulan) }}</h3>
+                            <p>Tabungan Bulan Ini</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <!-- small box -->
+                    <div class="small-box bg-success">
+                        <div class="inner text-right">
+                            @php
+                                $debittotal = $tabungan->where('tipe', '1')->sum('nominal');
+                                $kredittotal = $tabungan->where('tipe', '2')->sum('nominal');
+
+                                $saldo = $debittotal - $kredittotal;
+                            @endphp
+                            <h3>{{ format_rupiah($saldo) }}</h3>
+                            <p>Total Saldo Tabungan</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                </div>
+            @endif
             </div>
             <div class="row">
               <div class="col-md-6">
                 <!-- AREA CHART -->
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header row justify-content-between">
                     <h3 class="card-title">Transaksi</h3>
+                    <div class="ml-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="filterTsChart" data-toggle="dropdown" aria-expanded="false">
+                                Hari
+                            </button>
+                            <div class="dropdown-menu" id="dropfilterTsChart" aria-labelledby="filterTsChart">
+                                <a class="dropdown-item" id="dsHari" role="button">Hari</a>
+                                <a class="dropdown-item" role="button">Bulan</a>
+                                <a class="dropdown-item" role="button">Tahun</a>
+                            </div>
+                        </div>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="chart">
-                      <canvas id="transaksiChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                      <canvas id="transaksiCharthari" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                      <canvas id="transaksiChartbulan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
+                      <canvas id="transaksiCharttahun" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
                     </div>
                   </div>
                   <!-- /.card-body -->
@@ -155,12 +238,26 @@
               <div class="col-md-6">
                 <!-- BAR CHART -->
                 <div class="card">
-                  <div class="card-header">
+                  <div class="card-header row justify-content-center">
                     <h3 class="card-title">Kredit dan Debit Tabungan</h3>
+                    <div class="ml-auto">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="filterTabChart" data-toggle="dropdown" aria-expanded="false">
+                                Hari
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" id="dropfilterTabChart" aria-labelledby="filterTabChart">
+                                <a class="dropdown-item" id="dsHari" role="button">Hari</a>
+                                <a class="dropdown-item" role="button">Bulan</a>
+                                <a class="dropdown-item" role="button">Tahun</a>
+                            </div>
+                        </div>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="chart">
-                      <canvas id="kreditChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                      <canvas id="kreditCharthari" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                      <canvas id="kreditChartbulan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
+                      <canvas id="kreditCharttahun" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
                     </div>
                   </div>
                   <!-- /.card-body -->
@@ -278,121 +375,6 @@
     <script src="{{ asset('assets/plugins/moment/moment.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- dashboard -->
-    <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
-    <script>
-      $(function(){
-              var ctx = document.getElementById("transaksiChart").getContext('2d');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: [
-                    @foreach ($pembayaran->groupBy('tanggal') as $row)
-                      "{{ $row->first()->tanggal }}",
-                    @endforeach
-                  ],
-                  datasets: [{
-                    label: 'Transaksi',
-                    data: [@foreach ($pembayaran->groupBy('tanggal') as $row)
-                      "{{ $row->count() }}",
-                    @endforeach],
-                    backgroundColor: [
-                        '#63ed7a',
-                        '#ffa426',
-                        '#fc544b',
-                        '#191d21',
-                    ],
-                    pointBackgroundColor: '#ffffff',
-                    pointRadius: 4
-                  }]
-                },
-                options: {
-                  legend: {
-                    display: false
-                  },
-                  scales: {
-                    yAxes: [{
-                      gridLines: {
-                        drawBorder: false,
-                        color: '#f2f2f2',
-                      },
-                      ticks: {
-                        beginAtZero: true,
-                        stepSize: 150
-                      }
-                    }],
-                    xAxes: [{
-                      ticks: {
-                        display: false
-                      },
-                      gridLines: {
-                        display: false
-                      }
-                    }]
-                  },
-                }
-              });
-
-              var statistics_chart = document.getElementById("kreditChart").getContext('2d');
-              var myChart = new Chart(statistics_chart, {
-                type: 'line',
-                data: {
-                  labels: [
-                    @foreach ($charttabungan as $row)
-                      "{{ $row->first()->tanggal }}",
-                    @endforeach
-                  ],
-                  datasets: [{
-                    label: 'Kredit',
-                    data: [
-                        @foreach ($charttabungan as $row)
-                        "{{ $row->where('tipe', '2')->count() }}",
-                        @endforeach
-                    ],
-                    borderWidth: 5,
-                    borderColor: '#6091ba',
-                    backgroundColor: 'transparent',
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#6091ba',
-                    pointRadius: 4
-                  },
-                  {
-                    label: 'Debit',
-                    data: [@foreach ($charttabungan as $row)
-                        "{{ $row->where('tipe', '1')->count() }}",
-                        @endforeach
-                    ],
-                    borderWidth: 5,
-                    borderColor: '#343a40',
-                    backgroundColor: 'transparent',
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#343a40',
-                    pointRadius: 4
-                  }]
-                },
-                options: {
-                  legend: {
-                    display: false
-                  },
-                  scales: {
-                    yAxes: [{
-                      gridLines: {
-                        display: false,
-                        drawBorder: false,
-                      },
-                      ticks: {
-                        stepSize: 150,
-                      }
-                    }],
-                    xAxes: [{
-                      gridLines: {
-                        color: '#0000',
-                        lineWidth: 2
-                      }
-                    }]
-                  },
-                }
-              });
-      });
-    </script>
+    <script src="{{ asset('assets/dist/js/pages/dashboard/dashboard.js') }}"></script>
     @endpush
 </x-layout>

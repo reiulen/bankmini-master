@@ -28,9 +28,9 @@ class TunggakanController extends Controller
     public function datatable(Request $request)
     {
         $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
-            ->filter($request->filter)
-            ->order($request->filter)
-            ->get();
+                ->filter($request->filter)
+                ->order($request->filter)
+                ->get();
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('kelas', function($data){
@@ -77,7 +77,7 @@ class TunggakanController extends Controller
 
         $pdf = PDF::loadview('backend.laporantunggakan.cetak',
                 compact('dana', 'siswa', 'kelas', 'tahunakademik', 'jurusan', 'pembayaran'))
-                ->setPaper('f4', 'landscape');;
+                ->setPaper('f4', 'portrait');;
         return $pdf->stream($cetak);
         // return view('backend.laporantunggakan.cetak',  compact('dana', 'siswa', 'kelas', 'tahunakademik', 'jurusan', 'pembayaran'));
     }

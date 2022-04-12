@@ -22,11 +22,12 @@
             #table {
                 border-collapse: collapse;
                 width: 100%;
+                font-size: 11px
             }
 
             #table td, #table th {
                 border: 1px solid #ddd;
-                padding: 8px;
+                padding: 3px;
             }
 
             #table tr:nth-child(even){background-color: #f2f2f2;}

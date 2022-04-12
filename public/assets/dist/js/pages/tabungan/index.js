@@ -18,10 +18,22 @@ var table = $("#example1").DataTable({
     lengthChange: true,
     autoWidth: false,
     language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Cari...",
         processing:
             '<div class="spinner-border text-info" role="status">' +
             '<span class="sr-only">Loading...</span>' +
             "</div>",
+        paginate: {
+            Search: '<i class="icon-search"></i>',
+            first: "<i class='fas fa-angle-double-left'></i>",
+            previous: "<i class='fas fa-angle-left'></i>",
+            next: "<i class='fas fa-angle-right'></i>",
+            last: "<i class='far fa-angle-double-right'></i>",
+        },
+    },
+    oLanguage: {
+        sSearch: "",
     },
     order: [[1, "desc"]],
     processing: true,
@@ -44,7 +56,7 @@ var table = $("#example1").DataTable({
             data: "kode",
         },
         {
-            name: "petugas",
+            name: "petugas.nama",
             data: "petugas.nama",
         },
         {
@@ -66,6 +78,8 @@ var table = $("#example1").DataTable({
         {
             name: "aksi",
             data: "aksi",
+            searchable: false,
+            orderlable: false,
         },
     ],
 });

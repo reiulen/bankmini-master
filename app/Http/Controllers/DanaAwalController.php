@@ -80,7 +80,7 @@ class DanaAwalController extends Controller
 
     public function data()
     {
-        $data = DanaAwal::with(['tahunakademik'])->latest()->get();
+        $data = DanaAwal::select('*')->with(['tahunakademik'])->latest();
         return DataTables::of($data)
                     ->addindexColumn()
                     ->addColumn('nominal', function($data){

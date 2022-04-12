@@ -3,7 +3,7 @@
 use App\Http\Controllers\DanaAwalController;
 use App\Http\Controllers\TunggakanController;
 
-Route::group(['prefix' => 'laporantunggakan', 'as' => 'laporantunggakan.'], function(){
+Route::group(['middleware' => ['permission:laporantunggakan.index'],'prefix' => 'laporantunggakan', 'as' => 'laporantunggakan.'], function(){
     Route::get('/', [TunggakanController::class, 'index'])->name('index');
     Route::get('/cetak-pdf', [TunggakanController::class, 'cetak'])->name('cetak-pdf');
     Route::get('/cetak-excel', [TunggakanController::class, 'export'])->name('cetak-excel');

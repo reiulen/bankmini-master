@@ -19,12 +19,8 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-include_once 'pages/historytabungan.php';
-include_once 'pages/historytransaksi.php';
 
-Route::group(['middleware' => 'auth'], function(){
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::group(['middleware' => 'auth', 'middleware' => 'user'], function(){
     include_once 'pages/jurusan.php';
     include_once 'pages/tahunakademik.php';
     include_once 'pages/danaawal.php';
@@ -39,6 +35,15 @@ Route::group(['middleware' => 'auth'], function(){
     include_once 'pages/role.php';
 });
 
-Route::group(['middleware' => 'guest'], function(){
+Route::group(['middleware' => 'guest', 'middleware' => 'usersiswa'], function(){
     include_once 'pages/login.php';
+});
+
+Route::group(['middleware' => 'bukanuser'], function(){
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/getDatats/{data}', [DashboardController::class, 'datats'])->name('datadashboard');
+    Route::get('/dashboard/getDatatab/{data}', [DashboardController::class, 'datatab'])->name('datatabdashboard');
+    include_once 'pages/historytabungan.php';
+    include_once 'pages/historytransaksi.php';
 });

@@ -28,9 +28,8 @@ class PemasukanController extends Controller
     {
         $tabungan = TabunganSiswa::with(['petugas'])->get();
         $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
-                ->filter($request->filter)
-                ->order($request->filter)
-                ->get();
+                        ->filter($request->filter)
+                        ->order($request->filter);
         if($request->sisa_saldo){
             $siswa = Siswa::select('id')
                 ->FilterTable($request)
@@ -95,7 +94,7 @@ class PemasukanController extends Controller
 
         $pdf = PDF::loadview('backend.laporantabungan.cetak',
                 compact('data', 'tabungan', 'kelas', 'tahunakademik', 'jurusan'))
-                ->setPaper('f4', 'landscape');
+                ->setPaper('f4', 'portrait');
         return $pdf->stream($cetak);
         // return view('backend.laporantabungan.cetak',  compact('data', 'tabungan', 'kelas', 'tahunakademik', 'jurusan'));
     }

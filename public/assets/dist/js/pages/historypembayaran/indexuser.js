@@ -55,16 +55,6 @@ var table = $("#example1").DataTable({
             data: "tanggal",
         },
         {
-            name: "siswa.nis",
-            data: "siswa.nis",
-            orderable: false,
-        },
-        {
-            name: "siswa.nama",
-            data: "siswa.nama",
-            orderable: false,
-        },
-        {
             name: "danaawal.dana",
             data: "danaawal.dana",
             orderable: false,

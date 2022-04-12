@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Models\Jurusan;
 use App\Models\DanaAwal;
 use Illuminate\Http\Request;
@@ -31,12 +32,22 @@ class HistoryController extends Controller
     public function datatable(Request $request)
     {
         $tanggal = [$request->dari, $request->sampai];
-        $data =  TabunganSiswa::with(['petugas', 'siswa'])
-                                ->tanggal($tanggal)
-                                ->filter($request->filter)
-                                ->order($request->filter)
-                                ->latest()
-                                ->get();
+        if(Auth::guard('siswa')->user()){
+             $data =  TabunganSiswa::select('*')
+                                    ->with(['petugas', 'siswa'])
+                                    ->where('siswa_id', Auth::guard('siswa')->user()->id)
+                                    ->tanggal($tanggal)
+                                    ->filter($request->filter)
+                                    ->order($request->filter)
+                                    ->latest();
+        }else{
+            $data =  TabunganSiswa::select('*')
+                                    ->with(['petugas', 'siswa'])
+                                    ->tanggal($tanggal)
+                                    ->filter($request->filter)
+                                    ->order($request->filter)
+                                    ->latest();
+        }
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('tanggal', function($data){
@@ -62,18 +73,29 @@ class HistoryController extends Controller
     {
         $petugas = User::orderBy('nama', 'ASC')->get();
         $dana = DanaAwal::latest()->get();
-        return view('backend.history.pembayaran', compact('petugas', 'dana'));
+        $pembayaran = PembayaranSiswa::select('id','nominal', 'siswa_id')->get();
+        return view('backend.history.pembayaran', compact('petugas', 'dana', 'pembayaran'));
     }
 
     public function dataTablePembayaran(Request $request)
     {
         $tanggal = [$request->dari, $request->sampai];
-        $data =  PembayaranSiswa::with(['petugas', 'danaawal', 'siswa'])
+        if(Auth::guard('siswa')->user()){
+           $data =  PembayaranSiswa::select('*')
+                                    ->with(['petugas', 'danaawal', 'siswa'])
+                                    ->where('siswa_id', Auth::guard('siswa')->user()->id)
                                     ->filter($request->filter)
                                     ->tanggal($tanggal)
                                     ->order($request->filter)
-                                    ->latest()
-                                    ->get();
+                                    ->latest();
+        }else{
+            $data =  PembayaranSiswa::select('*')
+                                    ->with(['petugas', 'danaawal', 'siswa'])
+                                    ->filter($request->filter)
+                                    ->tanggal($tanggal)
+                                    ->order($request->filter)
+                                    ->latest();
+        }
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
@@ -85,5 +107,12 @@ class HistoryController extends Controller
                             return format_rupiah($data->sisa_tagihan);
                          })->rawColumns(['tanggal', 'nominal', 'sisa_tagihan'])
                            ->make(true);
+    }
+
+    public function tagihan(){
+        $siswa = Siswa::where('nis', Auth::guard('siswa')->user()->nis)->firstorfail();
+        $dana = DanaAwal::where(['tahun_akademik_id' => $siswa->tahun_akademik_id])->latest()->get();
+        $pembayaran = PembayaranSiswa::with(['danaawal'])->get();
+        return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran'));
     }
 }

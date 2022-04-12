@@ -1,7 +1,7 @@
 <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{ route('dashboard') }}" class="brand-link">
                 <img src="{{ asset('assets/gambar/logo.png') }}" alt="SMKN 1 Ciamis Logo" class="brand-image shadow-lg" />
                 <span class="brand-text h4">BankMini</span>
             </a>
@@ -51,6 +51,7 @@
                     </li>
                     @can('pengelola')
                     <li class="nav-header">PILIHAN MENU</li>
+                    @canany(['pengguna.index', 'role.index', 'kenaikan.index'])
                     <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
                             <i class="nav-icon fas fa-copy"></i>
@@ -60,7 +61,7 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @canany(['pengguna.index'])
+                            @can('pengguna.index')
                             <li class="nav-item">
                                 <a href="{{ route('pengguna.index') }}" class="nav-link {{ set_active_sub(['pengguna.index', 'pengguna.create', 'pengguna.edit']) }}">
                                     <i class="far fa-circle nav-icon"></i>
@@ -76,14 +77,18 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('kenaikan.index')
                             <li class="nav-item">
                                 <a href="{{ route('kenaikan.index') }}" class="nav-link {{ set_active_sub(['kenaikan.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Kenaikan Siswa') }}</p>
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcanany
+                    @canany(['jurusan.index', 'kelas.index', 'tahunakademik.index', 'danaawal.index'])
                     <li class="nav-item nav-item {{ set_menu_open(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['tahunakademik.index', 'kelas.index', 'danaawal.index', 'jurusan.index']) }}">
                             <i class="fas fa-clone nav-icon"></i>
@@ -93,32 +98,42 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('jurusan.index')
                             <li class="nav-item">
                                 <a href="{{ route('jurusan.index') }}" class="nav-link {{ set_active_sub(['jurusan.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Jurusan') }}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('kelas.index')
                             <li class="nav-item">
                                 <a href="{{ route('kelas.index') }}" class="nav-link {{ set_active_sub(['kelas.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Kelas') }}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('tahunakademik.index')
                             <li class="nav-item">
                                 <a href="{{ route('tahunakademik.index')}}" class="nav-link {{ set_active_sub(['tahunakademik.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Tahun Akademik') }}</p>
                                 </a>
                             </li>
+                            @endcan
+                            @can('danaawal.index')
                             <li class="nav-item">
                                 <a href="{{ route('danaawal.index')}}" class="nav-link {{ set_active_sub(['danaawal.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Dana Awal Tahun') }}</p>
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcanany
+                    @can('siswa.index')
                     <li class="nav-item">
                         <a href="{{ route('siswa.index') }}" class="nav-link
                                                                             {{
@@ -132,6 +147,8 @@
                             <p>{{ __('Siswa') }}</p>
                         </a>
                     </li>
+                    @endcan
+                    @canany(['laporantabungan.index', 'laporantunggakan.index'])
                     <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index']) }}">
                         <i class="fas fa-chart-bar nav-icon"></i>
@@ -141,25 +158,28 @@
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
+                        @can('laporantabungan.index')
                         <li class="nav-item">
                           <a href="{{ route('laptabungan.index') }}" class="nav-link {{ set_active_sub(['laptabungan.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tabungan') }}</p>
                           </a>
                         </li>
-                      </ul>
-                      <ul class="nav nav-treeview">
+                        @endcan
+                        @can('laporantunggakan.index')
                         <li class="nav-item">
                           <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['laporantunggakan.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tunggakan') }}</p>
                           </a>
                         </li>
+                        @endcan
                       </ul>
                     </li>
+                    @endcanany
                     @endcan
-                    <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
-                        <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index', 'historytransaksi.tagihan']) }}">
+                        <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index', 'historytransaksi.tagihan']) }}">
                         <i class="fa fa-edit nav-icon"></i>
                           <p>
                             {{ __('History') }}
@@ -176,7 +196,7 @@
                       </ul>
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="{{ route('historytransaksi.index') }}" class="nav-link {{ set_active_sub(['historytransaksi.index']) }}">
+                          <a href="{{ route('historytransaksi.index') }}" class="nav-link {{ set_active_sub(['historytransaksi.index', 'historytransaksi.tagihan']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Pembayaran') }}</p>
                           </a>

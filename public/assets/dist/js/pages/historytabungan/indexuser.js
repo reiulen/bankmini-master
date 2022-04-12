@@ -40,7 +40,7 @@ var table = $("#example1").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: `${url}/historytransaksi/ajax/dataTable`,
+        url: `${url}/historytabungan/ajax/dataTable`,
         method: "POST",
         data: function (data) {
             data.filter = filter;
@@ -55,19 +55,12 @@ var table = $("#example1").DataTable({
             data: "tanggal",
         },
         {
-            name: "siswa.nis",
-            data: "siswa.nis",
-            orderable: false,
+            name: "kode",
+            data: "kode",
         },
         {
-            name: "siswa.nama",
-            data: "siswa.nama",
-            orderable: false,
-        },
-        {
-            name: "danaawal.dana",
-            data: "danaawal.dana",
-            orderable: false,
+            name: "keterangan",
+            data: "keterangan",
         },
         {
             name: "petugas.nama",
@@ -75,16 +68,16 @@ var table = $("#example1").DataTable({
             orderable: false,
         },
         {
-            name: "keterangan",
-            data: "keterangan",
+            name: "tipe",
+            data: "tipe",
         },
         {
             name: "nominal",
             data: "nominal",
         },
         {
-            name: "sisa_tagihan",
-            data: "sisa_tagihan",
+            name: "saldo",
+            data: "saldo",
         },
     ],
 });
@@ -142,23 +135,4 @@ domStrings.formFilter.on("submit", function (e) {
             "#form-filter"
         ).serialize()}`
     );
-});
-
-domStrings.formFilter.on("submit", function (e) {
-    e.preventDefault();
-    let data = $(this).serializeArray();
-    data = data.reduce((obj, item) => {
-        if (obj.hasOwnProperty(item.name)) {
-            temp = obj[item.name];
-            obj[item.name] = Array.isArray(temp)
-                ? temp.concat(item.value)
-                : [temp, item.value];
-        } else {
-            obj[item.name] = item.value;
-        }
-        return obj;
-    }, {});
-    filter = data;
-    table.draw();
-    $("#modalFilter").modal("hide");
 });

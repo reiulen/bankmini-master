@@ -2,7 +2,7 @@
 
     <x-content-header>
         <div class="col-sm-6">
-            <a href="{{ route('pembayaran.index', $siswa->nis) }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            <a href="{{ Auth::guard('siswa')->user() ? route('historytransaksi.index') : route('pembayaran.index', $siswa->nis) }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
@@ -49,6 +49,14 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="text-center mt-3 pt-3 bg-blue">
+                                @php
+                                    $dana = $dana->where('tahun_akademik_id', $siswa->tahun_akademik_id)->sum('nominal');
+                                    $bayar = $pembayaran->where('siswa_id', $siswa->id)->sum('nominal');
+                                    $total = $dana - $bayar;
+                                @endphp
+                                <p style="font-weight: bold">Total tagihan {{ format_rupiah($total) }}</p>
                             </div>
                         </div>
                             {{-- <table>

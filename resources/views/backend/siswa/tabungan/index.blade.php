@@ -21,7 +21,9 @@
                     <div class="card-header card-outline">
                         <div class="row">
                             <div class="col-md">
+                                @can('siswatabungan.create')
                                 <a class="btn btn-primary border-0" href="{{ route('tabungan.create', [$siswa->nis]) }}"><i class="fa fa-plus px-1"></i> Tambah Tabungan</a>
+                                @endcan
                                 <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                                 <h5 class="pt-3">Sisa saldo : {{ $tabungan->first() ? format_rupiah($tabungan->first()->sisa_saldo)  : 'Rp. 0' }}</h5>
                             </div>

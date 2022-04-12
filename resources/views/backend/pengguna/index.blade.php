@@ -29,7 +29,6 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Level</th>
-                                    <th>Aktifitas</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -40,13 +39,12 @@
                                 @foreach ($user as $row)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td class="text-center"><img src="{{ asset($row->avatar) }}" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
+                                    <td><img src="{{ asset($row->avatar) }}" class="rounded-circle shadow-lg img-thumbnail" style="height: 60px;"></td>
                                     <td>
                                         {{ $row->nama }}
                                     </td>
                                     <td>{{ $row->email }}</td>
                                     <td><span class="badge {{ badge_level($row->roles[0]->name) }} rounded- py-2 px-3">{{ $row->roles ? $row->roles[0]->name : '' }}</span></td>
-                                    <td>Logout 3 menit yang lalu</td>
                                     <td>
                                         <div class="dropdown">
                                             <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

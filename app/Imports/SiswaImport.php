@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\siswa;
+use App\Models\Siswa;
 use Maatwebsite\Excel\Concerns\ToModel;
 
 class SiswaImport implements ToModel
@@ -14,7 +14,7 @@ class SiswaImport implements ToModel
     */
     public function model(array $row)
     {
-        return new siswa([
+        return new Siswa([
             'foto' => 'upload/foto/siswa/siswa.png',
             'nama' => $row[1],
             'nis' => $row[3],

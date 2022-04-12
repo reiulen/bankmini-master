@@ -59,10 +59,10 @@ class KenaikanController extends Controller
 
     public function datatable(Request $request)
     {
-        $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
-            ->filter($request->filter)
-            ->order($request->filter)
-            ->get();
+        $data = Siswa::select('*')
+                        ->with(['kelas', 'tahunakademik', 'jurusan'])
+                        ->filter($request->filter)
+                        ->order($request->filter);
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('foto', function($data){

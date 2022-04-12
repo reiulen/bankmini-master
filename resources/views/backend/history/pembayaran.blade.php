@@ -16,18 +16,22 @@
                 <div class="card">
                 <div class="card-body">
                     <div class="row btn-laporan">
-                        <div class="d-md-flex">
-                            <input type="date" name="tgl_awal" id="tgl_awal" class="form-control mx-1" />
-                            <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control mx-1" />
-                            <div class="col-md-6 my-md-0 my-2">
+                        <div class="d-md-flex col-10">
+                            <div>
+                                <label style="font-size: 14px">Dari Tanggal</label>
+                                <input type="date" name="tgl_awal" id="tgl_awal" class="form-control" />
+                            </div>
+                            <div class="mx-md-2">
+                                <label style="font-size: 14px">Sampai Tanggal</label>
+                                <input type="date" name="tgl_akhir" id="tgl_akhir" class="form-control" />
+                            </div>
+                            <div class="col-md-6" style="margin-top: 28px">
                                 <button class="btn btn-primary btn-cari"><i class="fa fa-search"></i>&nbsp; Cari</button>
                             </div>
                         </div>
-                        @can('pengelola')
                         <div class="ml-auto">
                             <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
                         </div>
-                        @endcan
                     </div>
                 </div>
             </div>
@@ -42,10 +46,26 @@
               <div class="card card-outline">
                 <div class="card-header">
                   <div class="row justify-content-between">
-                      <div class="row btn-laporan mx-2">
+                      <div class="row btn-laporan mx-auto mx-md-2">
                         <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
                         <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                       </div>
+                      @php
+                      $siswa = Auth::guard('siswa')->user();
+                      @endphp
+                      @if($siswa)
+                      <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
+                           @php
+                                $danaawal = $dana->where('tahun_akademik_id', $siswa->tahun_akademik_id)
+                                             ->sum('nominal');
+                                $bayar = $pembayaran->where('siswa_id', $siswa->id)
+                                                    ->sum('nominal');
+                                $tunggakan = $danaawal - $bayar;
+                            @endphp
+                            <a class="btn btn-primary border-0" href="{{ route('historytransaksi.tagihan') }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
+                          {{-- <h5>Sisa Tunggakan : {{ format_rupiah($tunggakan) }}</h5> --}}
+                      </div>
+                      @endif
                   </div>
                 </div>
                 <!-- /.card-header -->
@@ -54,8 +74,10 @@
                     <thead>
                       <tr>
                         <th>Tanggal</th>
+                        @if(!$siswa)
                         <th>NIS</th>
                         <th>Nama</th>
+                        @endif
                         <th>Pembayaran</th>
                         <th>Petugas</th>
                         <th>Keterangan</th>
@@ -80,7 +102,6 @@
     </section>
     <!-- /.content -->
 
-    @can('pengelola')
     <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -106,6 +127,11 @@
                         <label class="col-md-3">Pembayaran</label>
                         <div class="col-md-9">
                             <select class="form-control filter" multiple name="pembayaran">
+                                @php
+                                    if($siswa){
+                                        $dana = $dana->where('tahun_akademik_id', $siswa->tahun_akademik_id);
+                                    }
+                                @endphp
                                 @foreach ($dana as $row)
                                 <option value="{{ $row->id }}">{{ $row->dana }}</option>
                                 @endforeach
@@ -143,12 +169,15 @@
           </div>
         </div>
     </div>
-    @endcan
 
       @include('backend.lib.datatable')
       @include('backend.lib.select2')
       @push('script')
-      <script src="{{ asset('assets/dist/js/pages/historypembayaran/index.js') }}"></script>
+       @if(!Auth::guard('siswa')->user())
+        <script src="{{ asset('assets/dist/js/pages/historypembayaran/index.js') }}"></script>
+        @else
+        <script src="{{ asset('assets/dist/js/pages/historypembayaran/indexuser.js') }}"></script>
+       @endif
       @endpush
 
 </x-layout>

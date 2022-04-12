@@ -21,12 +21,23 @@ var table = $("#example1").DataTable({
     responsive: true,
     lengthChange: true,
     autoWidth: false,
-    ordering: false,
     language: {
+        search: "_INPUT_",
+        searchPlaceholder: "Cari...",
         processing:
             '<div class="spinner-border text-info" role="status">' +
             '<span class="sr-only">Loading...</span>' +
             "</div>",
+        paginate: {
+            Search: '<i class="icon-search"></i>',
+            first: "<i class='fas fa-angle-double-left'></i>",
+            previous: "<i class='fas fa-angle-left'></i>",
+            next: "<i class='fas fa-angle-right'></i>",
+            last: "<i class='far fa-angle-double-right'></i>",
+        },
+    },
+    oLanguage: {
+        sSearch: "",
     },
     processing: true,
     serverSide: true,
@@ -44,6 +55,8 @@ var table = $("#example1").DataTable({
             data: function (data) {
                 return ` <input type='checkbox' class='pilih' value='${data.id}'>`;
             },
+            searchable: false,
+            orderable: false,
         },
         {
             name: "foto",

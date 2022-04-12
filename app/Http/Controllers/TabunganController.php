@@ -158,8 +158,7 @@ class TabunganController extends Controller
         $data = TabunganSiswa::with(['petugas', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
-                                    ->order($request->filter)
-                                    ->get();
+                                    ->order($request->filter);
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
@@ -177,19 +176,27 @@ class TabunganController extends Controller
                          })->addColumn('saldo', function($data){
                             return format_rupiah($data->sisa_saldo);
                          })->addColumn('aksi', function($data){
-                             return '<div class="dropdown">
-                                        <button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="'. route('tabungan.edit', [$data->siswa->nis, $data->id]) .'"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>
-                                        <a class="dropdown-item" role="button" id="hapus'. $data->id .'" onclick="hapus('. $data->id .')" data="'. $data->kode .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
-                                        <form action="'. route('tabungan.delete', [$data->id, $data->siswa->nis]) .'" method="POST" id="form-hapus'. $data->id .'">
-                                            '.csrf_field().'
-                                            '.method_field('DELETE').'
-                                        </form>
-                                        </div>
-                                    </div>';
+                             $user = Auth::user();
+                              $user->can('siswatabungan.delete') ? $delete = ' <a class="dropdown-item" role="button" id="hapus'. $data->id .'" onclick="hapus('. $data->id .')" data="'. $data->kode .'"><i class="fas fa-trash text-danger pr-1"></i> Hapus</a>
+                                                                                <form action="'. route('tabungan.delete', [$data->id, $data->siswa->nis]) .'" method="POST" id="form-hapus'. $data->id .'">
+                                                                                    '.csrf_field().'
+                                                                                    '.method_field('DELETE').'
+                                                                                </form>' : $delete = '';
+                             $user->can('siswatabungan.update') ? $update = '<a class="dropdown-item" href="'. route('tabungan.edit', [$data->siswa->nis, $data->id]) .'"><i class="fas fa-pencil-alt text-primary pr-1"></i> Edit</a>' : $update = '';
+                             $menu = '';
+                              if($user->canany(['siswatabungan.delete', 'siswatabungan.update'])){
+                                  $menu = '<button class="btn btn-none" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                            '.$update.'
+                                            '.$delete.'
+                                            </div>';
+                              }
+                              return '<div class="dropdown">
+                                        '.$menu.'
+                                      </div>';
+
                          })
                          ->rawColumns(['tanggal', 'tipe', 'nominal', 'sisa_tagihan', 'aksi'])
                          ->make(true);

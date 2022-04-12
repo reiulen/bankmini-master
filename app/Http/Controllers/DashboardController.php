@@ -16,15 +16,13 @@ class DashboardController extends Controller
     {
         $siswa = Auth::guard('siswa')->user();
         if($siswa){
-            $pembayaran = PembayaranSiswa::select('tahun_akademik_id','nominal','tanggal','bulan', 'tahun','created_at')->where('siswa_id', $siswa->id)->get();
-            $tabungan = TabunganSiswa::where('siswa_id', $siswa->id)->latest()->get();
-            $charttabungan = TabunganSiswa::where('siswa_id', $siswa->id)->latest()->limit(10)->get()->groupBy('tanggal');
+            $pembayaran = PembayaranSiswa::select(['tahun_akademik_id','nominal','tanggal','bulan', 'tahun','created_at'])->where('siswa_id', $siswa->id)->get();
+            $tabungan = TabunganSiswa::select(['id', 'tipe', 'nominal', 'created_at', 'bulan', 'tahun', 'siswa_id'])->where('siswa_id', $siswa->id)->get();
         }else{
             $pembayaran = PembayaranSiswa::select('tahun_akademik_id','nominal','tanggal','bulan', 'tahun','created_at')->get();
-            $tabungan = TabunganSiswa::latest()->get();
-            $charttabungan = TabunganSiswa::latest()->limit(10)->get()->groupBy('tanggal');
+            $tabungan = TabunganSiswa::select('id', 'tipe', 'nominal', 'created_at', 'bulan', 'tahun')->get();
         }
-        return view('backend.dashboard', compact('pembayaran', 'tabungan', 'charttabungan'));
+        return view('backend.dashboard', compact('pembayaran', 'tabungan'));
     }
 
     public function datats($by)

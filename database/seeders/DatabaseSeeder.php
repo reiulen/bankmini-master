@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Pekerjaan;
+use App\Models\TabunganSiswa;
 use App\Models\PembayaranSiswa;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PekerjaanSeeder;
@@ -26,6 +27,6 @@ class DatabaseSeeder extends Seeder
         //     // PermissionSeeder::class,
         // ]);
 
-        PembayaranSiswa::factory(100000)->create();
+        TabunganSiswa::factory(10000)->create();
     }
 }

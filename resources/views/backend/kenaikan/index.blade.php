@@ -127,7 +127,7 @@
                         <label class="col-md-3">Status</label>
                         <div class="col-md-9">
                             <select class="form-control filter"  name="status">
-                                <option>Pilih</option>
+                                <option value="">Pilih</option>
                                 <option value="Aktif">Aktif</option>
                                 <option value="Lulus">Lulus</option>
                             </select>

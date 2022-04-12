@@ -124,6 +124,16 @@
                         </div>
                     </div>
                     <div class="form-group row mb-4">
+                        <label class="col-md-3">Status</label>
+                        <div class="col-md-9">
+                            <select class="form-control filter"  name="status">
+                                <option>Pilih</option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Lulus">Lulus</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-4">
                         <label class="col-md-3">Urut Berdasarkan</label>
                         <div class="col-md-9">
                             <select class="form-control filter" name="by">

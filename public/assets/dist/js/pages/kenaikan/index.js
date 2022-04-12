@@ -22,6 +22,7 @@ var table = $("#example1").DataTable({
     lengthChange: true,
     autoWidth: false,
     pagingType: "full_numbers",
+    order: [[3, "desc"]],
     language: {
         search: "_INPUT_",
         searchPlaceholder: "Cari...",

@@ -51,6 +51,8 @@ class Siswa extends Authenticatable
             return $query->where('tahun_akademik_id', $filter['tahun_akademik']);
         })->when($filter['jurusan'] ?? false, function ($query) use ($filter) {
             return $query->where('jurusan_id', $filter['jurusan']);
+        })->when($filter['status'] ?? false, function ($query) use ($filter) {
+            return $query->where('status', $filter['status']);
         });
     }
 
@@ -72,6 +74,8 @@ class Siswa extends Authenticatable
             return $query->where('tahun_akademik_id', $filter->tahun_akademik);
         })->when($filter->jurusan ?? false, function ($query) use ($filter) {
             return $query->where('jurusan_id', $filter->jurusan);
+        })->when($filter->status ?? false, function ($query) use ($filter) {
+            return $query->where('status', $filter->status);
         })->when($filter->by ?? false, function ($query) use ($filter) {
             $by = explode('|', $filter->by);
             return $query->orderBy($by[0], $by[1]);
@@ -88,6 +92,8 @@ class Siswa extends Authenticatable
             return $query->where('tahun_akademik_id', $filter->tahun_akademik );
         })->when($filter->jurusan ?? false, function ($query) use ($filter) {
             return $query->where('jurusan_id', $filter->jurusan);
+        })->when($filter->status ?? false, function ($query) use ($filter) {
+            return $query->where('status', $filter->status);
         });
     }
 

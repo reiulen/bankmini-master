@@ -25,7 +25,7 @@ var table = $("#example1").DataTable({
     responsive: true,
     lengthChange: true,
     autoWidth: false,
-    order: [[3, "asc"]],
+    order: [[3, "desc"]],
     pagingType: "full_numbers",
     language: {
         search: "_INPUT_",

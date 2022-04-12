@@ -38,18 +38,6 @@
                     columns: ['NIS', 'Nama', @foreach ($dana as $row) '{{ $row->dana }}', @endforeach],
                     search: true,
                     sort: true,
-                    style: {
-                        td: {
-                            border: '1px solid #ccc'
-                        },
-                        th: {
-                            "font-size": '13px',
-                        },
-                        table: {
-                            'font-size': '14px',
-                            'border-radius' : '0px'
-                        }
-                    },
                     pagination: {
                         limit: 10
                     },

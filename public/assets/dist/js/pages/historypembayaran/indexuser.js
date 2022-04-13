@@ -83,7 +83,7 @@ var table = $("#example1").DataTable({
 domStrings.btnCari.on("click", function (e) {
     $(".cetak-excel").attr(
         "href",
-        `${url}/historytabungan/cetak-excel?dari=${$(
+        `${url}/historytransaksi/cetak-excel?dari=${$(
             "#tgl_awal"
         ).val()}&sampai=${$("#tgl_akhir").val()}&${$(
             "#form-filter"
@@ -91,7 +91,7 @@ domStrings.btnCari.on("click", function (e) {
     );
     $(".cetak-pdf").attr(
         "href",
-        `${url}/historytabungan/cetak-pdf?dari=${$(
+        `${url}/historytransaksi/cetak-pdf?dari=${$(
             "#tgl_awal"
         ).val()}&sampai=${$("#tgl_akhir").val()}&${$(
             "#form-filter"
@@ -119,7 +119,7 @@ domStrings.formFilter.on("submit", function (e) {
     $("#modalFilter").modal("hide");
     $(".cetak-excel").attr(
         "href",
-        `${url}/historytabungan/cetak-excel?dari=${$(
+        `${url}/historytransaksi/cetak-excel?dari=${$(
             "#tgl_awal"
         ).val()}&sampai=${$("#tgl_akhir").val()}&${$(
             "#form-filter"
@@ -127,7 +127,7 @@ domStrings.formFilter.on("submit", function (e) {
     );
     $(".cetak-pdf").attr(
         "href",
-        `${url}/historytabungan/cetak-pdf?dari=${$(
+        `${url}/historytransaksi/cetak-pdf?dari=${$(
             "#tgl_awal"
         ).val()}&sampai=${$("#tgl_akhir").val()}&${$(
             "#form-filter"

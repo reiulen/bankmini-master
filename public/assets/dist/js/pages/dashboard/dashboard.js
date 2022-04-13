@@ -11,7 +11,10 @@ const domStrings = {
 };
 
 let filter = { by: "tanggal" };
-responseChartTs(filter);
+window.onload = function () {
+    responseChartTs(filter);
+    responseChartTab(filterTab);
+};
 function responseChartTs(filter) {
     $.ajax({
         url: `${url}/dashboard/getDatats`,
@@ -79,7 +82,6 @@ domStrings.dsFilterTs.click(function (e) {
 
 //kredit dan debit
 let filterTab = { by: "tanggal" };
-responseChartTab(filterTab);
 function responseChartTab(filterTab) {
     $.ajax({
         url: `${url}/dashboard/getDatatab`,

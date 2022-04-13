@@ -67,7 +67,7 @@
                 @foreach ($data as $row)
                 <tr>
                     <td>{{ tanggal($row->created_at) }}</td>
-                    <td scope="row">{{ $row->siswa->nis }}</td>
+                    <td>{{ $row->siswa->nis }}</td>
                     <td>{{ $row->siswa->nama }}</td>
                     <td>{{ $row->danaawal->dana }}</td>
                     <td>{{ $row->petugas->nama }}</td>

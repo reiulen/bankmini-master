@@ -179,7 +179,8 @@ class PembayaranController extends Controller
         $siswa = Siswa::where('nis', $nis)->firstorfail();
         $dana = DanaAwal::where(['tahun_akademik_id' => $siswa->tahun_akademik_id])->latest()->get();
         $pembayaran = PembayaranSiswa::with(['danaawal'])->get();
-        return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran'));
+        $tipe = 'tagihan';
+        return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran', 'tipe'));
     }
 
     public function dataTable($nis, Request $request)

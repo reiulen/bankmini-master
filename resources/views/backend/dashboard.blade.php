@@ -216,7 +216,7 @@
                             <button class="btn btn-primary dropdown-toggle" type="button" id="filterTsChart" data-toggle="dropdown" aria-expanded="false">
                                 Hari
                             </button>
-                            <div class="dropdown-menu" id="dropfilterTsChart" aria-labelledby="filterTsChart">
+                            <div class="dropdown-menu dropdown-menu-right" id="dropfilterTsChart" aria-labelledby="filterTsChart">
                                 <a class="dropdown-item" id="dsHari" role="button">Hari</a>
                                 <a class="dropdown-item" role="button">Bulan</a>
                                 <a class="dropdown-item" role="button">Tahun</a>

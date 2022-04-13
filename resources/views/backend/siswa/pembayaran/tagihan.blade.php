@@ -2,7 +2,11 @@
 
     <x-content-header>
         <div class="col-sm-6">
-            <a href="{{ Auth::guard('siswa')->user() ? route('historytransaksi.index') : route('pembayaran.index', $siswa->nis) }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            @if($tipe == 'laporan')
+                <a href="{{ route('laporantunggakan.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+                @else
+                <a href="{{ Auth::guard('siswa')->user() ? route('historytransaksi.index') : route('pembayaran.index', $siswa->nis) }}" class="btn btn-primary"><i class="fas fa-arrow-left px-1"></i> Kembali</a>
+            @endif
         </div>
         <x-breadcumb>
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>

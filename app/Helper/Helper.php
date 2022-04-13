@@ -104,3 +104,7 @@ if(!function_exists('badge_level')){
     }
 }
 
+function mapping($dataa){
+
+}
+

@@ -28,24 +28,24 @@ class TunggakanController extends Controller
     public function datatable(Request $request)
     {
         $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
-                ->filter($request->filter)
-                ->order($request->filter)
-                ->get();
+                        ->filter($request->filter)
+                        ->order($request->filter);
+        $dana = DanaAwal::orderBy('dana', 'asc')->get();
+        $pembayaran = PembayaranSiswa::FilterTable($request);
         return DataTables::of($data)
                             ->addindexColumn()
                             ->addColumn('kelas', function($data){
                                 return $data->kelas->kelas . ' ' . $data->jurusan->nama . ' ' . $data->kelas->urut_kelas;
                             })
-                            ->rawColumns(['kelas'])
+                            ->addColumn('tunggakan', function($data) use ($dana, $pembayaran){
+                                $bayar = $pembayaran->where('siswa_id', $data->id)
+                                                    ->sum('nominal');
+                                $jumlahbayar = $dana->where('tahun_akademik_id', $data->tahun_akademik_id)->sum('nominal');
+                                $tunggakan =  $jumlahbayar - $bayar;
+                                return format_rupiah($tunggakan);
+                            })
+                            ->rawColumns(['kelas', 'tunggakan'])
                             ->make(true);
-    }
-
-    public function table(Request $request)
-    {
-        $dana = DanaAwal::where('tahun_akademik_id', $request->tahun_akademik)->orderBy('dana', 'asc')->get();
-        $siswa = Siswa::with(['kelas', 'tahunakademik'])->FilterTable($request)->get();
-        $pembayaran = PembayaranSiswa::FilterTable($request)->where('tahun_akademik_id', $request->tahun_akademik)->get();
-        return view('backend.laporantunggakan.tunggakan', compact('dana', 'siswa', 'pembayaran'));
     }
 
     public function cetak(Request $request)
@@ -105,5 +105,39 @@ class TunggakanController extends Controller
         }
         $cetak = 'LaporanTunggaknSiswa' . $jurusan . ' ' . $kelas . ' ' . $tahunakademik . ' ' . tanggal(date('d-m-Y')) . '.xlsx';
         return Excel::download(new LaporanTunggakanExport($request), $cetak);
+    }
+
+    public function getData(Request $request)
+    {
+        $data = Siswa::select('*')
+                ->with(['kelas', 'tahunakademik', 'jurusan'])
+                ->filtercetak($request)
+                ->ordercetak($request);
+
+        $dana = DanaAwal::Filter($request)->orderBy('dana', 'asc')->get();
+        $pembayaran = PembayaranSiswa::FilterTable($request)->get();
+        if($request->hasil == true){
+            foreach($dana as $row){
+                $d[] = $row->dana;
+            }
+            $a = implode(',', $d);
+            $b = 'NIS,Nama,' . $a;
+            $c = explode(',', $b);
+
+            $jumlah = $dana->sum('nominal') * $data->count() -  $pembayaran->sum('nominal');
+            return response()->json([
+                'tunggakan' => format_rupiah($jumlah),
+                'column' => $c
+            ]);
+        }
+
+    }
+
+    public function sisatagihan($nis){
+        $siswa = Siswa::where('nis', $nis)->firstorfail();
+        $dana = DanaAwal::where(['tahun_akademik_id' => $siswa->tahun_akademik_id])->latest()->get();
+        $pembayaran = PembayaranSiswa::with(['danaawal'])->get();
+        $tipe = 'laporan';
+        return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran', 'tipe'));
     }
 }

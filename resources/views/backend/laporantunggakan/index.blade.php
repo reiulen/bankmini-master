@@ -1,9 +1,4 @@
 <x-layout title="Laporan Tunggakan">
-    @push('css')
-    <script src="https://unpkg.com/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" />
-    @endpush
-
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-3">
@@ -28,7 +23,48 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-             <div id="card-table"></div>
+        <section class="content laporan">
+                <div class="container-fluid">
+                    <div class="row">
+                            <div class="col-12">
+                                <div class="card card-outline">
+                                    <div class="card-header">
+                                        <div class="row justify-content-between">
+                                            <div class="row btn-laporan mx-2">
+                                                <a href="{{ route('laporantunggakan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                                                <a href="{{ route('laporantunggakan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
+                                            </div>
+                                            <div>
+                                                <h5 class="sisatunggakan"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>NIS</th>
+                                                    <th>Nama</th>
+                                                    <th>Kelas</th>
+                                                    <th>Sisa Tunggakan</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                            <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
             <!-- /.content -->
 
     <div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -105,8 +141,8 @@
     </div>
 
     @include('backend.lib.select2')
+    @include('backend.lib.datatable')
     @push('script')
-    <script src="https://unpkg.com/gridjs-jquery/dist/gridjs.production.min.js"></script>
     <script src="{{ asset('assets/dist/js/pages/laporantunggakan/index.js') }}"></script>
     @endpush
 </x-layout>

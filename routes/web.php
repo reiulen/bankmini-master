@@ -42,8 +42,8 @@ Route::group(['middleware' => 'guest', 'middleware' => 'usersiswa'], function(){
 Route::group(['middleware' => 'bukanuser'], function(){
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/getDatats/{data}', [DashboardController::class, 'datats'])->name('datadashboard');
-    Route::get('/dashboard/getDatatab/{data}', [DashboardController::class, 'datatab'])->name('datatabdashboard');
+    Route::post('/dashboard/getDatats', [DashboardController::class, 'datats'])->name('datadashboard');
+    Route::post('/dashboard/getDatatab', [DashboardController::class, 'datatab'])->name('datatabdashboard');
     include_once 'pages/historytabungan.php';
     include_once 'pages/historytransaksi.php';
 });

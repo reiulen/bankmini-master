@@ -25,7 +25,7 @@ class DashboardController extends Controller
         return view('backend.dashboard', compact('pembayaran', 'tabungan'));
     }
 
-    public function datats($by)
+    public function datats(Request $request)
     {
         $siswa = Auth::guard('siswa')->user();
         if($siswa){
@@ -37,6 +37,7 @@ class DashboardController extends Controller
         $jumlah = [];
 
         try{
+            $by = $request->by;
             if($by == 'hari'){
                 $by = 'tanggal';
             }
@@ -56,9 +57,10 @@ class DashboardController extends Controller
         }
     }
 
-    public function datatab($by)
+    public function datatab(Request $request)
     {
         $siswa = Auth::guard('siswa')->user();
+        $by = $request->by;
         if($by == 'hari'){
             $by = 'tanggal';
         }

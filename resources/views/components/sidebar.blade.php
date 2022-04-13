@@ -14,7 +14,7 @@
                         <img src="{{ asset(Auth::user() ?  Auth::user()->avatar : Auth::guard('siswa')->user()->foto ) }}" class="img-circle elevation-2" style="width: 40px;" alt="User Image" />
                     </div>
                     <div class="dropdown">
-                        <a class="user-nama"  type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="user-nama" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <p>{{ Str::substr(Auth::user() ? Auth::user()->nama : Auth::guard('siswa')->user()->nama, 0, 18) }}</p>
                             <p class="level text-muted">{{ Auth::user() ? Auth::user()->roles[0]->name : Auth::guard('siswa')->user()->nis  }}</p>
                         </a>
@@ -149,8 +149,8 @@
                     </li>
                     @endcan
                     @canany(['laporantabungan.index', 'laporantunggakan.index'])
-                    <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index']) }}">
-                        <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
+                        <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
                         <i class="fas fa-chart-bar nav-icon"></i>
                           <p>
                             {{ __('Laporan') }}
@@ -168,7 +168,7 @@
                         @endcan
                         @can('laporantunggakan.index')
                         <li class="nav-item">
-                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['laporantunggakan.index']) }}">
+                          <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tunggakan') }}</p>
                           </a>

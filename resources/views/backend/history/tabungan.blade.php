@@ -48,8 +48,8 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-auto mx-md-2">
-                                                <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                                                <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
+                                                <a href="{{ route('historytabungan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                                                <a href="{{ route('historytabungan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                                             </div>
                                             @if(Auth::guard('siswa')->user())
                                             <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">

@@ -226,9 +226,7 @@
                   </div>
                   <div class="card-body">
                     <div class="chart">
-                      <canvas id="transaksiCharthari" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                      <canvas id="transaksiChartbulan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
-                      <canvas id="transaksiCharttahun" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
+                      <canvas id="transaksiChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                   </div>
                   <!-- /.card-body -->
@@ -255,9 +253,7 @@
                   </div>
                   <div class="card-body">
                     <div class="chart">
-                      <canvas id="kreditCharthari" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                      <canvas id="kreditChartbulan" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
-                      <canvas id="kreditCharttahun" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display:none;"></canvas>
+                      <canvas id="kreditChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                     </div>
                   </div>
                   <!-- /.card-body -->

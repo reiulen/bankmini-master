@@ -47,24 +47,15 @@
                 <div class="card-header">
                   <div class="row justify-content-between">
                       <div class="row btn-laporan mx-auto mx-md-2">
-                        <a href="" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                        <a href="" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
+                        <a href="{{ route('historytransaksi.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                        <a href="{{ route('historytransaksi.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Excel</a>
                       </div>
                       @php
                       $siswa = Auth::guard('siswa')->user();
                       @endphp
                       @if($siswa)
                       <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
-                           @php
-                                $pembayaran = PembayaranSiswa::select('id','nominal', 'siswa_id')->get();
-                                $danaawal = $dana->where('tahun_akademik_id', $siswa->tahun_akademik_id)
-                                             ->sum('nominal');
-                                $bayar = $pembayaran->where('siswa_id', $siswa->id)
-                                                    ->sum('nominal');
-                                $tunggakan = $danaawal - $bayar;
-                            @endphp
-                            <a class="btn btn-primary border-0" href="{{ route('historytransaksi.tagihan') }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
-                          {{-- <h5>Sisa Tunggakan : {{ format_rupiah($tunggakan) }}</h5> --}}
+                        <a class="btn btn-primary border-0" href="{{ route('historytransaksi.tagihan') }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
                       </div>
                       @endif
                   </div>

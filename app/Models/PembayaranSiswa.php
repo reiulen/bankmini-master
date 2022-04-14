@@ -51,12 +51,25 @@ class PembayaranSiswa extends Model
 
     public function scopeFilterTable($query, $filter)
     {
-        $query->when($filter->kelas ?? false, function ($query) use ($filter) {
+        $query->when($filter->pembayaran ?? false, function($query) use ($filter) {
+            return $query->where('dana_awal_id', $filter->pembayaran);
+        })->when($filter->petugas ?? false, function($query) use ($filter) {
+            return $query->where('petugas_id', $filter->petugas);
+        })->when($filter->status ?? false, function($query) use ($filter) {
+            if($filter->status == 'lunas') {
+                return $query->where('sisa_tagihan', '0');
+            } else {
+                return $query->where('sisa_tagihan', '!=', '0');
+            }
+        })->when($filter->kelas ?? false, function ($query) use ($filter) {
             return $query->where('kelas_id', $filter->kelas);
         })->when($filter->tahun_akademik ?? false, function ($query) use ($filter) {
             return $query->where('tahun_akademik_id', $filter->tahun_akademik);
         })->when($filter->jurusan ?? false, function ($query) use ($filter) {
             return $query->where('jurusan_id', $filter->jurusan);
+        })->when($filter->by ?? false, function($query) use ($filter) {
+            $by = explode('|', $filter->by);
+            return $query->orderBy($by[0], $by[1]);
         });;
     }
 

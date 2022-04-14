@@ -84,16 +84,14 @@ class HistoryController extends Controller
                                     ->with(['petugas', 'siswa'])
                                     ->where('siswa_id', Auth::guard('siswa')->user()->id)
                                     ->tanggal($tanggal)
-                                    ->filter($request->filter)
-                                    ->order($request->filter)
+                                    ->FilterCetak($request)
                                     ->latest()
                                     ->get();
         }else{
             $data =  TabunganSiswa::select('*')
                                     ->with(['petugas', 'siswa'])
                                     ->tanggal($tanggal)
-                                    ->filter($request->filter)
-                                    ->order($request->filter)
+                                    ->FilterCetak($request)
                                     ->latest()
                                     ->get();
         }
@@ -176,17 +174,15 @@ class HistoryController extends Controller
            $data =  PembayaranSiswa::select('id','created_at', 'siswa_id', 'dana_awal_id', 'petugas_id', 'nominal', 'sisa_tagihan', 'keterangan')
                                     ->with(['petugas', 'danaawal', 'siswa'])
                                     ->where('siswa_id', Auth::guard('siswa')->user()->id)
-                                    ->filter($request->filter)
+                                    ->FilterTable($request)
                                     ->tanggal($tanggal)
-                                    ->order($request->filter)
                                     ->latest()
                                     ->get();
         }else{
             $data =  PembayaranSiswa::select('created_at', 'siswa_id', 'dana_awal_id', 'petugas_id', 'nominal', 'sisa_tagihan', 'keterangan')
                                     ->with(['petugas', 'danaawal', 'siswa'])
-                                    ->filter($request->filter)
+                                    ->FilterTable($request)
                                     ->tanggal($tanggal)
-                                    ->order($request->filter)
                                     ->latest()
                                     ->get();
         }

@@ -67,8 +67,10 @@ class PemasukanController extends Controller
     {
         $data = Siswa::with(['kelas', 'tahunakademik', 'jurusan'])
                 ->filtercetak($request)
-                ->ordercetak($request);
-        $tabungan = TabunganSiswa::with(['petugas']);
+                ->ordercetak($request)
+                ->get();
+
+        $tabungan = TabunganSiswa::FilterCetak($request)->with(['petugas']);
 
         $kelas = [];
         $jurusan = [];

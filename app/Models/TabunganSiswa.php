@@ -33,6 +33,22 @@ class TabunganSiswa extends Model
         });
     }
 
+    public function scopeFilterCetak($query, $filter)
+    {
+        $query->when($filter->tipe ?? false, function ($query) use ($filter) {
+            return $query->where('tipe', $filter->tipe);
+        })->when($filter->petugas ?? false, function ($query) use ($filter) {
+            return $query->where('petugas_id', $filter->petugas);
+        })->when($filter->kelas ?? false, function ($query) use ($filter) {
+            return $query->where('kelas_id', $filter->kelas);
+        })->when($filter->id ?? false, function ($query) use ($filter) {
+            return $query->where('siswa_id', $filter->id);
+        })->when($filter->by ?? false, function ($query) use ($filter) {
+            $by = explode('|', $filter->by);
+            return $query->orderBy($by[0], $by[1]);
+        });
+    }
+
     public function scopeOrder($query, $order)
     {
         $query->when($order['by'] ?? false, function ($query) use ($order) {

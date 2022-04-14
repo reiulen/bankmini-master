@@ -96,9 +96,9 @@ $("#pilih").click(function () {
     $("tbody tr .pilih").prop("checked", checked);
 });
 
-$("tbody tr .pilih").click(function () {
-    if ($(this).prop("checked") != true) {
-        $("#pilih").prop("checked", false);
+table.on("click", ".pilih", function () {
+    if($(this).prop('checked') != true){
+        $('#pilih').prop('checked', false);
     }
 });
 

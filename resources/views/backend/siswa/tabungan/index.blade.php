@@ -38,6 +38,7 @@
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
+                                    <th><input type="checkbox" id="pilih"/></th>
                                     <th>Tanggal</th>
                                     <th>Kode</th>
                                     <th>Petugas</th>

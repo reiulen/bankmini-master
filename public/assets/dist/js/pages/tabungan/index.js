@@ -49,6 +49,14 @@ var table = $("#example1").DataTable({
     },
     columns: [
         {
+            name: "checked",
+            data: function(data){
+                return `<input type="checkbox" name"id" class="pilih" />`
+            },
+            orderable: false,
+            searchlable: false,
+        },
+        {
             name: "tanggal",
             data: "tanggal",
         },
@@ -134,4 +142,16 @@ table.on("click", ".btn-hapus", function (e) {
             });
         }
     });
+});
+
+
+$('#pilih').on('click', function(){
+    var checked = $('#pilih').prop('checked');
+    $('tbody tr .pilih').prop('checked', checked);
+});
+
+table.on("click", ".pilih", function () {
+    if($(this).prop('checked') != true){
+        $('#pilih').prop('checked', false);
+    }
 });

@@ -189,6 +189,7 @@ class TabunganController extends Controller
                                             <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href=""><i class="fas fa-file-pdf text-danger pr-1"></i> Cetak</a>
                                             '.$update.'
                                             '.$delete.'
                                             </div>';

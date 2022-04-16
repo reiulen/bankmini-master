@@ -25,6 +25,7 @@
                     <div class="card-body">
                         <form action="{{ route('tabungan.store', $siswa->nis) }}" method="post">
                             @csrf
+                            <input type="hidden" name="cetak" value="0"/>
                             <div class="form-group mb-4 row ">
                                 <div class="col-md-6">
                                     @php
@@ -73,7 +74,8 @@
                             </div>
                             <div class="form-group mb-4 row ">
                                 <div class="col-md-4">
-                                    <button class="btn btn-primary">Tambah</button>
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp;Simpan</button>
+                                    <button class="btn btn-secondary btn-save-cetak"><i class="fa fa-file-pdf"></i>&nbsp;Simpan dan Cetak</button>
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>

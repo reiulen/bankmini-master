@@ -26,6 +26,7 @@
                       <a class="btn btn-primary border-0" href="{{ route('pembayaran.tagihan', $siswa->nis) }}"><i class="fa fa-eye px-1"></i> Lihat Sisa Tagihan</a>
                       @endcan
                       <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
+                      <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak</a>
                     </div>
                     <div>
                       <p style="font-size: 15px" class="text-end py-2 py-md-0"><b> {{ $siswa->nama }}</b><br />NIS: {{ $siswa->nis }}<br />Kelas: {{ $siswa->kelas->kelas .' ' . $siswa->kelas->jurusan->nama. ' ' .$siswa->kelas->urut_kelas}}</p>
@@ -37,6 +38,12 @@
                   <table id="example1" class="table table-bordered table-hover">
                     <thead>
                       <tr>
+                        <th>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="pilih">
+                                <label class="custom-control-label" for="pilih"></label>
+                            </div>
+                        </th>
                         <th>Tanggal</th>
                         <th>Kode</th>
                         <th>Pembayaran</th>

@@ -391,6 +391,13 @@ table{
     color: white !important;
 }
 
+.custom-control-input{
+    cursor: pointer !important;
+}
+
+.custom-control-label{
+    cursor: pointer !important;
+}
 
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {

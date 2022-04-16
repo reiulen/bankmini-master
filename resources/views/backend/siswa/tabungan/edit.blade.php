@@ -26,6 +26,7 @@
                         <form action="{{ route('tabungan.update', [$tabungan->id, $siswa->nis]) }}" method="post">
                             @csrf
                             @method('put')
+                            <input type="hidden" name="cetak"/>
                             <div class="form-group mb-4 row ">
                                 <div class="col-md-6">
                                     <label>Kode Tabungan</label>
@@ -65,7 +66,8 @@
                             </div>
                             <div class="form-group mb-4 row ">
                                 <div class="col-md-4">
-                                    <button class="btn btn-primary">Simpan</button>
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp; Simpan</button>
+                                    <button class="btn btn-secondary btn-save-cetak"><i class="fa fa-file-pdf"></i>&nbsp;Simpan dan Cetak</button>
                                 </div>
                                 <div class="col-md-4"></div>
                             </div>

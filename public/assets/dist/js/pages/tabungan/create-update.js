@@ -3,6 +3,7 @@ const domStrings = {
     sisaSaldo: $(".sisa-saldo"),
     sisaSaldoEdit: $(".sisa-saldo-edit"),
     valueInputTipe: $("input[type='radio']:checked").val(),
+    btnSaveCetak: $(".btn-save-cetak"),
 };
 
 function replaceString(val) {
@@ -94,3 +95,7 @@ function formatRupiah(angka, prefix) {
     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
     return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
 }
+
+domStrings.btnSaveCetak.click(function () {
+    $('input[name="cetak"]').val(1);
+});

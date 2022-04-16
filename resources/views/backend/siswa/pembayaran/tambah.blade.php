@@ -25,6 +25,7 @@
                     <!-- /.card-header -->
                     <div class="card-body">
                         <form action="{{ route('pembayaran.store', $siswa->nis) }}" method="post">
+                            <input type="hidden" name="cetak" value="0"/>
                             @csrf
                             <div class="form-group mb-4 row">
                                 <div class="col-md-6">
@@ -67,7 +68,8 @@
                                     <x-session-error name="nominal"></x-session-error>
                                 </div>
                                 <div class="col-md-6 mt-2">
-                                    <button class="btn btn-primary">Tambah</button>
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp; Simpan</button>
+                                    <button class="btn btn-secondary btn-save-cetak"><i class="fa fa-file-pdf"></i>&nbsp;Simpan dan Cetak</button>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="bg-danger py-2 pl-2 mt-2">Sisa tagihan : <span class="sisa-tagihan">Rp. 0</span></h5>

@@ -11,6 +11,7 @@ use App\Models\PembayaranSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Validated;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class PembayaranController extends Controller
 {
@@ -103,6 +104,11 @@ class PembayaranController extends Controller
                 'tahun' => tahun(date('Y')),
             ]);
 
+            if($request->cetak == 1){
+                $id = PembayaranSiswa::orderBy('id','desc')->first()->id;
+                return redirect(route('pembayaran.cetak', $siswa->nis) .'?cetak='.$id);
+            }
+
             return redirect(route('pembayaran.index', $siswa->nis))->with([
                 'pesan' => 'Berhasil menambahkan data pembayaran',
                 'pesan1' => 'Pembayaran ' .$request->kode .' berhasil ditambahkan',
@@ -160,6 +166,11 @@ class PembayaranController extends Controller
                 'tahun' => tahun(date('Y')),
             ]);
 
+            if($request->cetak == 1){
+                $id = $pembayaran->id;
+                return redirect(route('pembayaran.cetak', $siswa->nis) .'?cetak='.$id);
+            }
+
             return redirect(route('pembayaran.index', $siswa->nis))->with([
                 'pesan' => 'Berhasil mengubah data pembayaran',
                 'pesan1' => 'Pembayaran ' .$request->kode .' berhasil diubah',
@@ -190,7 +201,8 @@ class PembayaranController extends Controller
                                     ->with(['petugas', 'danaawal', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
-                                    ->order($request->filter);
+                                    ->order($request->filter)
+                                    ->latest();
 
         return DataTables::of($data)
                          ->addIndexColumn()
@@ -211,7 +223,7 @@ class PembayaranController extends Controller
                                             <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href=""><i class="fas fa-file-pdf text-danger pr-1"></i> Cetak</a>
+                                            <a class="dropdown-item" href="'.route('pembayaran.cetak', $data->siswa->nis).'?cetak='.$data->id.'" target="_blank"><i class="fas fa-file-pdf text-danger pr-1"></i> Cetak</a>
                                             '.$update.'
                                             '.$delete.'
                                             </div>';
@@ -222,5 +234,24 @@ class PembayaranController extends Controller
                          })
                          ->rawColumns(['tanggal', 'nominal', 'sisa_tagihan', 'aksi'])
                          ->make(true);
+    }
+
+    public function cetak(Request $request, $nis)
+    {
+        $siswa = Siswa::where('nis', $nis)->firstOrFail();
+        $cetak = explode(',', $request->cetak);
+        $pembayaran = PembayaranSiswa::with(['siswa', 'kelas'])
+                                   ->whereIn('id', $cetak)
+                                   ->where('siswa_id', $siswa->id)
+                                   ->latest()
+                                   ->get();
+
+        $cetak = 'PembayaranSiswa' . $siswa->nama . '.pdf';
+
+
+        // return view('backend.siswa.tabungan.cetak', compact('tabungan'));
+        $pdf = PDF::loadview('backend.siswa.pembayaran.cetak', compact('pembayaran', 'siswa'))
+                    ->setPaper('f4', 'portrait');
+        return $pdf->stream($cetak);
     }
 }

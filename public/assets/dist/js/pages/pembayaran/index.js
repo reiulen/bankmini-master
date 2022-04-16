@@ -7,6 +7,7 @@ $.ajaxSetup({
 const domStrings = {
     inputSelect: $(".filter"),
     formFilter: $("#form-filter"),
+    btnCetak: $(".btn-cetak"),
 };
 
 domStrings.inputSelect.select2();
@@ -48,6 +49,17 @@ var table = $("#example1").DataTable({
         },
     },
     columns: [
+        {
+            name: "checkbox",
+            data: function (item) {
+                return `<div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input pilih" value="${item.id}" id="checkbox-${item.id}">
+                            <label class="custom-control-label" for="checkbox-${item.id}"></label>
+                        </div>`;
+            },
+            orderable: false,
+            searchable: false,
+        },
         {
             name: "tanggal",
             data: "tanggal",
@@ -135,3 +147,35 @@ table.on("click", ".btn-hapus", function (e) {
         }
     });
 });
+
+$("#pilih").on("click", function () {
+    var checked = $("#pilih").prop("checked");
+    $("tbody tr .pilih").prop("checked", checked);
+});
+
+table.on("click", ".pilih", function () {
+    if ($(this).prop("checked") != true) {
+        $("#pilih").prop("checked", false);
+    }
+});
+
+domStrings.btnCetak.on("click", function () {
+    let checked = $("tbody tr .pilih:checked");
+    if (checked.length > 0) {
+        let id = [];
+        checked.each(function () {
+            id.push($(this).val());
+        });
+        window.open(
+            `${url}/siswa/pembayaran/${nis}/cetak?cetak=${id}`,
+            "_blank"
+        );
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Pilih data terlebih dahulu!",
+        });
+    }
+});
+

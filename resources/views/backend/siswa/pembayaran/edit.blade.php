@@ -27,6 +27,7 @@
                         <form action="{{ route('pembayaran.update', [$siswa->nis, $pembayaran->id]) }}" method="post">
                             @csrf
                             @method('put')
+                            <input type="hidden" name="cetak" value="0"/>
                             <div class="form-group mb-4 row">
                                 <div class="col-md-6">
                                     <label>Kode Pembayaran</label>
@@ -59,7 +60,8 @@
                                     <x-session-error name="nominal"></x-session-error>
                                 </div>
                                 <div class="col-md-6 mt-2">
-                                    <button class="btn btn-primary">Simpan</button>
+                                    <button class="btn btn-primary"><i class="fa fa-save"></i>&nbsp; Simpan</button>
+                                    <button class="btn btn-secondary btn-save-cetak"><i class="fa fa-file-pdf"></i>&nbsp;Simpan dan Cetak</button>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="bg-danger py-2 pl-2 mt-2">Sisa tagihan : <span class="sisa-tagihan">{{ format_rupiah($pembayaran->sisa_tagihan) }}</span></h5>

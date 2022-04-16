@@ -11,10 +11,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class TabunganController extends Controller
 {
-    public function index($nis){
+    public function index(Request $request, $nis){
         $siswa = Siswa::with(['kelas'])->where('nis', $nis)->firstOrFail();
         $tabungan = TabunganSiswa::with(['petugas'])->where(['siswa_id' =>  $siswa->id])->orderBy('id', 'DESC')->get();
         $petugas = User::orderBy('nama', 'ASC')->get();
@@ -76,8 +77,13 @@ class TabunganController extends Controller
             'tahun' => tahun(date('Y')),
         ]);
 
+        if($request->cetak == 1){
+            $id = TabunganSiswa::orderBy('id','desc')->first()->id;
+            return redirect(route('tabungan.cetak', $siswa->nis) .'?cetak='.$id);
+        }
+
         return redirect(route('tabungan.index', $siswa->nis))->with([
-            'pesan' => 'Berhasil menyimpan data pembayaran',
+            'pesan' => 'Berhasil menyimpan data tabungan',
             'pesan1' => 'Tabungan ' .$request->kode .' berhasil ditambahkan',
         ]);
     }
@@ -136,8 +142,13 @@ class TabunganController extends Controller
             'sisa_saldo' => $sisasaldo,
         ]);
 
+        if($request->cetak == 1){
+            $id = $updatetabungan->id;
+            return redirect(route('tabungan.cetak', $siswa->nis) .'?cetak='.$id);
+        }
+
         return redirect(route('tabungan.index', $siswa->nis))->with([
-            'pesan' => 'Berhasil mengubah data pembayaran',
+            'pesan' => 'Berhasil mengubah data tabungan',
             'pesan1' => 'Tabungan ' .$request->kode .' berhasil diubah',
         ]);
     }
@@ -147,7 +158,7 @@ class TabunganController extends Controller
         $tabungan = TabunganSiswa::findOrFail($id);
         $tabungan->delete();
         return redirect(route('tabungan.index', $tabungan->siswa->nis))->with([
-            'pesan' => 'Berhasil menghapus data pembayaran',
+            'pesan' => 'Berhasil menghapus data tabungan',
             'pesan1' => 'Tabungan ' .$tabungan->kode .' berhasil dihapus',
         ]);
     }
@@ -158,7 +169,8 @@ class TabunganController extends Controller
         $data = TabunganSiswa::with(['petugas', 'siswa'])
                                     ->where(['siswa_id' => $siswa->id])
                                     ->filter($request->filter)
-                                    ->order($request->filter);
+                                    ->order($request->filter)
+                                    ->latest();
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
@@ -189,7 +201,7 @@ class TabunganController extends Controller
                                             <i class="fas fa-ellipsis-v"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="dropdownMenuButton">
-                                            <a class="dropdown-item" href=""><i class="fas fa-file-pdf text-danger pr-1"></i> Cetak</a>
+                                            <a class="dropdown-item" href="'.route('tabungan.cetak', $data->siswa->nis).'?cetak='.$data->id.'" target="_blank"><i class="fas fa-file-pdf text-danger pr-1"></i> Cetak</a>
                                             '.$update.'
                                             '.$delete.'
                                             </div>';
@@ -201,5 +213,24 @@ class TabunganController extends Controller
                          })
                          ->rawColumns(['tanggal', 'tipe', 'nominal', 'sisa_tagihan', 'aksi'])
                          ->make(true);
+    }
+
+    public function cetak(Request $request, $nis)
+    {
+        $siswa = Siswa::where('nis', $nis)->firstOrFail();
+        $cetak = explode(',', $request->cetak);
+        $tabungan = TabunganSiswa::with(['siswa', 'kelas'])
+                                   ->whereIn('id', $cetak)
+                                   ->where('siswa_id', $siswa->id)
+                                   ->latest()
+                                   ->get();
+
+        $cetak = 'TabunganSiswa' . $siswa->nama . '.pdf';
+
+
+        // return view('backend.siswa.tabungan.cetak', compact('tabungan'));
+        $pdf = PDF::loadview('backend.siswa.tabungan.cetak', compact('tabungan', 'siswa'))
+                    ->setPaper('f4', 'portrait');
+        return $pdf->stream($cetak);
     }
 }

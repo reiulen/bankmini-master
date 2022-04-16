@@ -20,6 +20,6 @@ class MwUser
         if(Auth::user()){
             return $next($request);
         }
-        return abort(404);
+        return redirect(route('login.index'));
     }
 }

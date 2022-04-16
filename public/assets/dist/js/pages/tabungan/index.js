@@ -7,6 +7,7 @@ $.ajaxSetup({
 const domStrings = {
     inputSelect: $(".filter"),
     formFilter: $("#form-filter"),
+    btnCetak: $(".btn-cetak"),
 };
 
 domStrings.inputSelect.select2();
@@ -36,7 +37,7 @@ var table = $("#example1").DataTable({
     oLanguage: {
         sSearch: "",
     },
-    order: [[1, "desc"]],
+    order: [],
     processing: true,
     serverSide: true,
     ajax: {
@@ -50,8 +51,11 @@ var table = $("#example1").DataTable({
     columns: [
         {
             name: "checked",
-            data: function(data){
-                return `<input type="checkbox" name"id" class="pilih" />`
+            data: function (data) {
+                return `<div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input pilih" value="${data.id}" id="checkbox-${data.id}">
+                            <label class="custom-control-label" for="checkbox-${data.id}"></label>
+                        </div>`;
             },
             orderable: false,
             searchlable: false,
@@ -144,14 +148,31 @@ table.on("click", ".btn-hapus", function (e) {
     });
 });
 
-
-$('#pilih').on('click', function(){
-    var checked = $('#pilih').prop('checked');
-    $('tbody tr .pilih').prop('checked', checked);
+$("#pilih").on("click", function () {
+    var checked = $("#pilih").prop("checked");
+    $("tbody tr .pilih").prop("checked", checked);
 });
 
 table.on("click", ".pilih", function () {
-    if($(this).prop('checked') != true){
-        $('#pilih').prop('checked', false);
+    if ($(this).prop("checked") != true) {
+        $("#pilih").prop("checked", false);
     }
 });
+
+domStrings.btnCetak.on("click", function () {
+    var checked = $("tbody tr .pilih:checked");
+    if (checked.length > 0) {
+        var id = [];
+        checked.each(function () {
+            id.push($(this).val());
+        });
+        window.open(`${url}/siswa/tabungan/${nis}/cetak?cetak=${id}`, "_blank");
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Pilih data terlebih dahulu!",
+        });
+    }
+});
+

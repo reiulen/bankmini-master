@@ -2,6 +2,7 @@ const domStrings = {
     inputPembayaran: $(".pembayaran"),
     inputNominal: $("#nominal"),
     sisTagihan: $(".sisa-tagihan"),
+    btnSaveCetak: $(".btn-save-cetak"),
 };
 
 domStrings.inputPembayaran.select2();
@@ -59,3 +60,8 @@ $("#example1").DataTable({
         [5, 10, 25, 100, "All"],
     ],
 });
+
+domStrings.btnSaveCetak.click(function () {
+    $('input[name="cetak"]').val(1);
+});
+

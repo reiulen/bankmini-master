@@ -20,6 +20,11 @@ class TabunganSiswa extends Model
         return $this->belongsTo(User::class, 'petugas_id');
     }
 
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
    public function scopeFilter($query, $filter)
     {
         $query->when($filter['tipe'] ?? false, function ($query) use ($filter) {

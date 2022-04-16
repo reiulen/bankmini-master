@@ -46,7 +46,12 @@
                         <table id="example1" class="table table-bordered  table-hover">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="pilih"/></th>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="pilih">
+                                            <label class="custom-control-label" for="pilih"></label>
+                                        </div>
+                                    </th>
                                     <th>Foto</th>
                                     <th>NISN</th>
                                     <th>NIS</th>

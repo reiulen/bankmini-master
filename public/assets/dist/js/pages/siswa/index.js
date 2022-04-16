@@ -22,6 +22,10 @@ $("#mySearchButton").on("keyup click", function () {
 });
 
 var table = $("#example1").DataTable({
+    lengthMenu: [
+        [10, 25, 50, 100, 500, -1],
+        [10, 25, 50, 100, 500, "All"],
+    ],
     responsive: true,
     lengthChange: true,
     autoWidth: false,

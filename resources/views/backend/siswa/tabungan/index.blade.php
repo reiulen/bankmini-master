@@ -25,6 +25,7 @@
                                 <a class="btn btn-primary border-0" href="{{ route('tabungan.create', [$siswa->nis]) }}"><i class="fa fa-plus px-1"></i> Tambah Tabungan</a>
                                 @endcan
                                 <a class="btn btn-primary" data-toggle="modal" data-target="#modalFilter" ><i class="fa fa-filter"></i>&nbsp; Filter</a>
+                                <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak</a>
                                 <h5 class="pt-3">Sisa saldo : {{ $tabungan->first() ? format_rupiah($tabungan->first()->sisa_saldo)  : 'Rp. 0' }}</h5>
                             </div>
                             <div>
@@ -38,7 +39,12 @@
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="pilih"/></th>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="pilih">
+                                            <label class="custom-control-label" for="pilih"></label>
+                                        </div>
+                                    </th>
                                     <th>Tanggal</th>
                                     <th>Kode</th>
                                     <th>Petugas</th>

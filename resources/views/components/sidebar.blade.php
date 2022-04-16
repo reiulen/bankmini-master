@@ -139,7 +139,7 @@
                                                                             {{
                                                                                 set_active([
                                                                                     'siswa.index', 'siswa.create', 'siswa.edit','siswa.show',
-                                                                                    'tabungan.index', 'tabunga.create', 'tabungan.edit',
+                                                                                    'tabungan.index', 'tabungan.create', 'tabungan.edit',
                                                                                     'pembayaran.index', 'pembayaran.create', 'pembayaran.edit', 'pembayaran.tagihan',
                                                                                 ])
                                                                             }}">

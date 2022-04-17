@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2022 at 05:41 PM
+-- Generation Time: Apr 17, 2022 at 06:43 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.27
 
@@ -43,7 +43,11 @@ CREATE TABLE `dana_awals` (
 INSERT INTO `dana_awals` (`id`, `tahun_akademik_id`, `dana`, `nominal`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Infaq Kelas 12', '150000', '2022-04-05 14:42:18', '2022-04-05 14:42:18'),
 (2, 2, 'Infaq Kelas 11', '140000', '2022-04-05 14:42:42', '2022-04-05 14:42:42'),
-(3, 3, 'Infaq Kelas 10', '130000', '2022-04-05 14:42:59', '2022-04-05 14:42:59');
+(3, 3, 'Infaq Kelas 10', '130000', '2022-04-05 14:42:59', '2022-04-05 14:42:59'),
+(4, 1, 'Infaq Kelas 10', '250000', '2022-04-10 15:22:39', '2022-04-10 15:22:39'),
+(5, 1, 'Infaq Kelas 11', '175000', '2022-04-10 15:22:53', '2022-04-10 15:22:53'),
+(6, 1, 'DSP', '3500000', '2022-04-10 15:23:50', '2022-04-10 15:23:50'),
+(7, 1, 'Kunjungan Industri', '1250000', '2022-04-10 15:25:27', '2022-04-10 15:25:27');
 
 -- --------------------------------------------------------
 
@@ -373,9 +377,11 @@ CREATE TABLE `pembayaran_siswas` (
 --
 
 INSERT INTO `pembayaran_siswas` (`id`, `kode`, `siswa_id`, `petugas_id`, `dana_awal_id`, `keterangan`, `nominal`, `sisa_tagihan`, `kelas_id`, `jurusan_id`, `tahun_akademik_id`, `tanggal`, `bulan`, `tahun`, `created_at`, `updated_at`) VALUES
-(1, 'PS04202200001', 558, 6, 1, '-', '150000', '0', 16, 7, 1, '5 April 2022', 'April', '2022', '2022-04-05 16:20:45', '2022-04-05 16:23:40'),
-(2, 'PS04202200002', 532, 6, 1, '-', '150000', '0', 16, 7, 1, '6 April 2022', 'April', '2022', '2022-04-06 03:54:45', '2022-04-06 03:54:45'),
-(3, 'PS04202200003', 539, 6, 1, '-', '80000', '70000', 16, 7, 1, '6 April 2022', 'April', '2022', '2022-04-06 03:58:45', '2022-04-06 03:58:45');
+(1, 'PS04202200001', 558, 6, 7, '-', '1250000', '0', 16, 7, 1, '13 April 2022', 'April', '2022', '2022-04-13 07:41:08', '2022-04-13 07:41:08'),
+(2, 'PS04202200002', 558, 6, 6, '-', '3500000', '0', 16, 7, 1, '16 April 2022', 'April', '2022', '2022-04-16 15:49:49', '2022-04-16 15:49:49'),
+(3, 'PS04202200003', 558, 6, 5, '-', '175000', '0', 16, 7, 1, '16 April 2022', 'April', '2022', '2022-04-16 15:55:44', '2022-04-16 15:55:44'),
+(4, 'PS04202200004', 558, 6, 1, '-', '150000', '0', 16, 7, 1, '16 April 2022', 'April', '2022', '2022-04-16 16:02:45', '2022-04-16 16:02:45'),
+(5, 'PS04202200005', 558, 6, 4, '-', '250000', '0', 16, 7, 1, '17 April 2022', 'April', '2022', '2022-04-17 03:39:34', '2022-04-17 03:39:34');
 
 -- --------------------------------------------------------
 
@@ -401,7 +407,7 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (4, 'jurusan.index', 'web', '2022-03-26 10:40:12', '2022-03-26 10:40:12'),
 (7, 'kelas.index', 'web', '2022-03-26 10:42:52', '2022-03-26 10:42:52'),
 (8, 'tahunakademik.index', 'web', '2022-03-26 10:43:05', '2022-03-26 10:43:05'),
-(9, 'dana.index', 'web', '2022-03-26 10:43:15', '2022-03-26 10:43:15'),
+(9, 'danaawal.index', 'web', '2022-03-26 10:43:15', '2022-04-17 03:24:37'),
 (10, 'siswa.index', 'web', '2022-03-26 12:55:07', '2022-03-26 12:55:07'),
 (11, 'siswa.create', 'web', '2022-03-26 12:55:16', '2022-03-26 12:55:16'),
 (12, 'siswa.update', 'web', '2022-03-26 12:55:26', '2022-03-26 12:55:26'),
@@ -409,7 +415,22 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (14, 'siswa.read', 'web', '2022-03-26 12:55:48', '2022-03-26 12:55:48'),
 (16, 'pengguna.create', 'web', '2022-03-26 14:16:50', '2022-03-26 14:16:50'),
 (17, 'pengguna.edit', 'web', '2022-03-26 14:17:00', '2022-03-26 14:17:00'),
-(18, 'pengguna.delete', 'web', '2022-03-26 14:17:24', '2022-03-26 14:17:24');
+(18, 'pengguna.delete', 'web', '2022-03-26 14:17:24', '2022-03-26 14:17:24'),
+(19, 'permission.index', 'web', '2022-04-11 13:26:20', '2022-04-11 13:26:20'),
+(20, 'kenaikan.index', 'web', '2022-04-11 13:27:28', '2022-04-11 13:27:28'),
+(21, 'laporantabungan.index', 'web', '2022-04-11 13:28:39', '2022-04-11 13:28:39'),
+(22, 'laporantunggakan.index', 'web', '2022-04-11 13:29:11', '2022-04-11 13:29:11'),
+(23, 'siswatabungan.index', 'web', '2022-04-11 13:30:47', '2022-04-11 13:30:47'),
+(24, 'siswatabungan.create', 'web', '2022-04-11 13:30:58', '2022-04-11 13:30:58'),
+(25, 'siswatabungan.update', 'web', '2022-04-11 13:31:10', '2022-04-11 13:31:10'),
+(26, 'siswatabungan.delete', 'web', '2022-04-11 13:31:22', '2022-04-11 13:31:22'),
+(27, 'siswapembayaran.index', 'web', '2022-04-11 13:31:55', '2022-04-11 13:31:55'),
+(28, 'siswapembayaran.create', 'web', '2022-04-11 13:32:09', '2022-04-11 13:32:19'),
+(29, 'siswapembayaran.update', 'web', '2022-04-11 13:32:31', '2022-04-11 13:32:31'),
+(30, 'siswapembayaran.delete', 'web', '2022-04-11 13:32:46', '2022-04-11 13:32:46'),
+(31, 'siswapembayaran.tagihan', 'web', '2022-04-11 13:32:59', '2022-04-11 13:32:59'),
+(32, 'siswa.import', 'web', '2022-04-11 13:33:58', '2022-04-11 13:33:58'),
+(33, 'siswa.export', 'web', '2022-04-11 13:34:10', '2022-04-11 13:34:10');
 
 -- --------------------------------------------------------
 
@@ -473,14 +494,46 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (7, 2),
 (8, 2),
 (9, 2),
+(10, 1),
 (10, 2),
+(11, 1),
 (11, 2),
+(12, 1),
 (12, 2),
+(13, 1),
 (13, 2),
+(14, 1),
 (14, 2),
 (16, 2),
 (17, 2),
-(18, 2);
+(18, 2),
+(19, 2),
+(20, 1),
+(20, 2),
+(21, 2),
+(22, 2),
+(23, 1),
+(23, 2),
+(24, 1),
+(24, 2),
+(25, 1),
+(25, 2),
+(26, 1),
+(26, 2),
+(27, 1),
+(27, 2),
+(28, 1),
+(28, 2),
+(29, 1),
+(29, 2),
+(30, 1),
+(30, 2),
+(31, 1),
+(31, 2),
+(32, 1),
+(32, 2),
+(33, 1),
+(33, 2);
 
 -- --------------------------------------------------------
 
@@ -1086,7 +1139,7 @@ INSERT INTO `siswa` (`id`, `foto`, `nama`, `nisn`, `nis`, `tahun_akademik_id`, `
 (555, 'upload/foto/siswa/siswa.png', 'MUHAMMAD SANDY NUR IHSAN', NULL, '192010565', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
 (556, 'upload/foto/siswa/siswa.png', 'NENDEN HINDUN KHOIRUNISA', NULL, '192010566', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
 (557, 'upload/foto/siswa/siswa.png', 'RAHMI HANIPAH', NULL, '192010567', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
-(558, 'upload/foto/siswa/siswa.png', 'REIHAN ANDIKA ABDIPRAJA MAKMUR', NULL, '192010568', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
+(558, 'upload/foto/siswa/siswa.png', 'REIHAN ANDIKA ABDIPRAJA MAKMUR', '0000012131', '192010568', 1, '16', 7, 'Laki-Laki', 'Ciamis', '2004-06-14', 'Jl. Pasar Rancah No. 32', '4', 'WNI', 'Islam', 'SMP Negeri 1 Rancah', NULL, '2019', 'Jl. Pasar Rancah No. 32', '-', '-', '-', '-', '-', NULL, '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-10 12:49:14'),
 (559, 'upload/foto/siswa/siswa.png', 'REZA ISWANTO', NULL, '192010569', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
 (560, 'upload/foto/siswa/siswa.png', 'RIQZA HARLY SAPUTRA', NULL, '192010570', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
 (561, 'upload/foto/siswa/siswa.png', 'SATARIA KEMAL PASHA', NULL, '192010571', 1, '16', 7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '-', '-', '-', '-', '-', '-', '-', '-', '-', 'Aktif', '2022-04-05 14:32:28', '2022-04-05 14:32:28'),
@@ -2282,12 +2335,18 @@ CREATE TABLE `tabungan_siswas` (
 --
 
 INSERT INTO `tabungan_siswas` (`id`, `kode`, `siswa_id`, `petugas_id`, `tipe`, `keterangan`, `nominal`, `kelas_id`, `sisa_saldo`, `tanggal`, `bulan`, `tahun`, `created_at`, `updated_at`) VALUES
-(1, 'TS04202200001', 532, 6, '1', '-', '1500000', 16, '1500000', '6 April 2022', 'April', '2022', '2022-04-06 03:55:22', '2022-04-06 03:55:22'),
-(2, 'TS04202200002', 533, 6, '1', '-', '4500000', 16, '4500000', '6 April 2022', 'April', '2022', '2022-04-06 03:55:50', '2022-04-06 03:55:50'),
-(3, 'TS04202200003', 534, 6, '1', '-', '15000000', 16, '15000000', '6 April 2022', 'April', '2022', '2022-04-06 03:56:22', '2022-04-06 03:56:22'),
-(4, 'TS04202200004', 534, 6, '2', '-', '1000000', 16, '14000000', '6 April 2022', 'April', '2022', '2022-04-06 03:56:32', '2022-04-06 03:56:32'),
-(5, 'TS04202200005', 538, 6, '1', '-', '4500000', 16, '4500000', '6 April 2022', 'April', '2022', '2022-04-06 03:57:48', '2022-04-06 03:57:48'),
-(7, 'TS04202200006', 1, 6, '1', '-', '1000000', 1, '1000000', '6 April 2022', 'April', '2022', '2022-04-06 14:38:42', '2022-04-06 14:38:42');
+(1, 'TS04202200001', 1718, 6, '1', '-', '130000', 48, '130000', '13 April 2022', 'April', '2022', '2022-04-12 17:45:44', '2022-04-12 17:45:44'),
+(2, 'TS04202200002', 558, 6, '1', '-', '125000', 16, '125000', '16 April 2022', 'April', '2022', '2022-04-16 08:17:34', '2022-04-16 08:17:34'),
+(3, 'TS04202200003', 558, 6, '1', '-', '130000', 16, '255000', '16 April 2022', 'April', '2022', '2022-04-16 08:32:58', '2022-04-16 08:32:58'),
+(4, 'TS04202200004', 558, 6, '1', '-', '1000000', 16, '1255000', '16 April 2022', 'April', '2022', '2022-04-16 10:26:37', '2022-04-16 10:26:37'),
+(5, 'TS04202200005', 558, 6, '1', '-', '10000000', 16, '11255000', '16 April 2022', 'April', '2022', '2022-04-16 14:11:26', '2022-04-16 14:11:26'),
+(6, 'TS04202200006', 558, 6, '2', '-', '130000', 16, '11125000', '16 April 2022', 'April', '2022', '2022-04-16 14:15:47', '2022-04-16 14:15:47'),
+(7, 'TS04202200007', 558, 6, '1', '-', '1500000', 16, '12625000', '16 April 2022', 'April', '2022', '2022-04-16 14:35:45', '2022-04-16 14:46:37'),
+(11, 'TS04202200008', 558, 6, '1', '-', '20000', 16, '12645000', '16 April 2022', 'April', '2022', '2022-04-16 15:16:02', '2022-04-16 15:16:02'),
+(12, 'TS04202200009', 558, 6, '1', '-', '1000000', 16, '13645000', '16 April 2022', 'April', '2022', '2022-04-16 15:17:13', '2022-04-16 15:17:13'),
+(13, 'TS04202200010', 558, 6, '1', '-', '4444', 16, '13649444', '16 April 2022', 'April', '2022', '2022-04-16 15:17:38', '2022-04-16 15:17:38'),
+(14, 'TS04202200011', 558, 6, '1', '-', '4444', 16, '13653888', '16 April 2022', 'April', '2022', '2022-04-16 15:18:00', '2022-04-16 15:18:00'),
+(15, 'TS04202200012', 558, 6, '1', '-', '250000', 16, '13903888', '16 April 2022', 'April', '2022', '2022-04-16 15:20:40', '2022-04-16 15:20:40');
 
 -- --------------------------------------------------------
 
@@ -2334,7 +2393,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `avatar`, `nama`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(5, 'upload/avatar/user.png', 'Admin', 'admin@gmail.com', '$2y$10$fHvldQ.cPo.XrWcfphub/.rbZPrKKX1IXkaCryBwWY.0i9o0BPBya', NULL, '2022-03-26 13:12:58', '2022-03-26 14:11:18'),
+(5, 'upload/avatar/user.png', 'Admin', 'admin@gmail.com', '$2y$10$CgGyqIJlq3eadrrKzCOmQObY5CkU9/oMR/mnHeFpP/9XwSaCLwc7m', NULL, '2022-03-26 13:12:58', '2022-04-11 13:18:37'),
 (6, 'upload/avatar/user.png', 'Reihan Andika AM', 'operator@gmail.com', '$2y$10$SIZ/IPZvk1W0q.5CPjbxR.TQ4xpLZ0t4DAQkCRMp0QUCEm9yepFuK', NULL, '2022-03-26 13:30:57', '2022-03-31 00:06:04');
 
 --
@@ -2469,7 +2528,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `dana_awals`
 --
 ALTER TABLE `dana_awals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -2505,13 +2564,13 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `pembayaran_siswas`
 --
 ALTER TABLE `pembayaran_siswas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -2535,7 +2594,7 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `tabungan_siswas`
 --
 ALTER TABLE `tabungan_siswas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tahun_akademiks`

@@ -18,11 +18,15 @@ class DashboardController extends Controller
         if($siswa){
             $pembayaran = PembayaranSiswa::select(['tahun_akademik_id','nominal','tanggal','bulan', 'tahun','created_at'])->where('siswa_id', $siswa->id)->get();
             $tabungan = TabunganSiswa::select(['id', 'tipe', 'nominal', 'created_at', 'bulan', 'tahun', 'siswa_id'])->where('siswa_id', $siswa->id)->get();
+            $danaawal = DanaAwal::select('id', 'nominal', 'tahun_akademik_id', 'created_at')->get();
         }else{
             $pembayaran = PembayaranSiswa::select('tahun_akademik_id','nominal','tanggal','bulan', 'tahun','created_at')->get();
             $tabungan = TabunganSiswa::select('id', 'tipe', 'nominal', 'created_at', 'bulan', 'tahun')->get();
+            $danaawal = DanaAwal::select('id', 'nominal', 'tahun_akademik_id', 'created_at')->get();
         }
-        return view('backend.dashboard', compact('pembayaran', 'tabungan'));
+        $siswadata = Siswa::select('id', 'nama', 'nis', 'kelas_id', 'tahun_akademik_id','created_at')->get();
+        $tahunakademik = TahunAkademik::select('id')->get();
+        return view('backend.dashboard', compact('pembayaran', 'tabungan', 'danaawal', 'siswadata', 'tahunakademik'));
     }
 
     public function datats(Request $request)

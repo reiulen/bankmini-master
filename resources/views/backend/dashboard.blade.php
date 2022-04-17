@@ -34,23 +34,17 @@
                 <div class="small-box bg-danger">
                   <div class="inner text-right">
                       @php
-                        $pembayaranhari = $pembayaran->whereBetween(
-                                                                'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
-                                                                )->sum('nominal');
-                        $kredithari = $tabungan->whereBetween(
-                                                            'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
-                                                            )
-                                             ->where('tipe', '2')
-                                             ->sum('nominal');
-                        $debithari = $tabungan->whereBetween(
-                                                            'created_at', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59']
-                                                            )
-                                             ->where('tipe', '1')
-                                             ->sum('nominal');
-                        $totalhari = $pembayaranhari + $debithari - $kredithari;
+                            foreach ($tahunakademik as $row) {
+                                $danasemua = $danaawal->where('tahun_akademik_id', $row->id)->sum('nominal');
+                                $siswa = $siswadata->where('tahun_akademik_id', $row->id)->count();
+                                $tunggakan[] = $danasemua * $siswa;
+                            }
+                            $totalpembayaran = $pembayaran->sum('nominal');
+                            $semuatunggakan = array_sum($tunggakan);
+                            $sisatunggakan = $semuatunggakan - $totalpembayaran;
                       @endphp
-                    <h3>{{ format_rupiah($totalhari) }}</h3>
-                    <p>Pemasukan Hari Ini</p>
+                    <h3>{{ format_rupiah($sisatunggakan) }}</h3>
+                    <p>Sisa tunggakan</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-money-check-alt"></i>
@@ -62,22 +56,8 @@
                 <!-- small box -->
                 <div class="small-box bg-secondary">
                   <div class="inner text-right">
-                    @php
-                        function format_bulan($bulan){
-                            return \Carbon\Carbon::parse($bulan)->isoFormat('MMMM');
-                        }
-
-                        $pembayaranbulan = $pembayaran->where('bulan', format_bulan(date('M')))->sum('nominal');
-                        $kreditbulan = $tabungan->where('bulan', format_bulan(date('M')))
-                                             ->where('tipe', '2')
-                                             ->sum('nominal');
-                        $debitbulan = $tabungan->where('bulan', format_bulan(date('M')))
-                                             ->where('tipe', '1')
-                                             ->sum('nominal');
-                        $totalbulan = $pembayaranbulan + $debitbulan - $kreditbulan;
-                      @endphp
-                    <h3>{{ format_rupiah($totalbulan) }}</h3>
-                    <p>Pemasukan Bulan Ini</p>
+                    <h3>{{ format_rupiah($totalpembayaran) }}</h3>
+                    <p>Pemasukan</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-credit-card"></i>
@@ -85,50 +65,18 @@
                 </div>
               </div>
               <!-- ./col -->
-              {{-- <div class="col-lg-3 col-md-6">
-                <!-- small box -->
-                <div class="small-box bg-danger">
-                  <div class="inner text-right">
-                      @php
-                        $hasil = [];
-                        foreach ($tahunakademik as $ta) {
-                            $hasil[] = $dana->where('tahun_akademik_id', $ta->id);
-                            $sw[] = $siswa->where('tahun_akademik_id', $ta->id)->count();
-                        }
-                        $no = 0;
-                        $ha = [];
-                        foreach ($hasil as $h) {
-                            $ha[] = $hasil[$no++]->sum('nominal');
-                        }
-
-                        function jumlahbayar($v1,$v2)
-                        {
-                            return $v1+v2;
-                        }
-                        $tunggakan = array_reduce($sw,"jumlahbayar");
-                      @endphp
-                    <h3>{{ $tunggakan }}</h3>
-                    <p>Tunggakan Siswa</p>
-                  </div>
-                  <div class="icon">
-                    <i class="fas fa-money-check-alt"></i>
-                  </div>
-                </div>
-              </div> --}}
-              <!-- ./col -->
               <div class="col-lg-3 col-md-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner text-right">
                     @php
-                        $pembayarantotal = $pembayaran->sum('nominal');
                         $debittotal = $tabungan->where('tipe', '1')->sum('nominal');
                         $kredittotal = $tabungan->where('tipe', '2')->sum('nominal');
 
-                        $saldo = $pembayarantotal + $debittotal - $kredittotal;
+                        $saldo = $debittotal - $kredittotal;
                     @endphp
                     <h3>{{ format_rupiah($saldo) }}</h3>
-                    <p>Total Saldo</p>
+                    <p>Total Saldo Tabungan</p>
                   </div>
                   <div class="icon">
                     <i class="fas fa-chart-bar"></i>

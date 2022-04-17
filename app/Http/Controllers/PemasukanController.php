@@ -125,22 +125,4 @@ class PemasukanController extends Controller
         return Excel::download(new LaporanTabunganExport($request), $cetak);
     }
 
-    public function cetak(Request $request, $nis)
-    {
-        $siswa = Siswa::where('nis', $nis)->firstOrFail();
-        $cetak = explode(',', $request->cetak);
-        $tabungan = TabunganSiswa::with(['siswa', 'kelas'])
-                                   ->whereIn('id', $cetak)
-                                   ->where('siswa_id', $siswa->id)
-                                   ->latest()
-                                   ->get();
-
-        $cetak = 'TabunganSiswa' . $siswa->nama . '.pdf';
-
-
-        // return view('backend.siswa.tabungan.cetak', compact('tabungan'));
-        $pdf = PDF::loadview('backend.siswa.tabungan.cetak', compact('tabungan', 'siswa'))
-                    ->setPaper('f4', 'portrait');
-        return $pdf->stream($cetak);
-    }
 }

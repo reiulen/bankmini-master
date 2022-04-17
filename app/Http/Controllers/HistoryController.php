@@ -123,6 +123,25 @@ class HistoryController extends Controller
         return Excel::download(new HistoryTabunganExport($request), $cetak);
     }
 
+    public function cetakkwitansitabungan(Request $request)
+    {
+        $siswa = Auth::guard('siswa')->user();
+        $cetak = explode(',', $request->cetak);
+        $tabungan = TabunganSiswa::with(['siswa', 'kelas'])
+                                   ->whereIn('id', $cetak)
+                                   ->where('siswa_id', $siswa->id)
+                                   ->latest()
+                                   ->get();
+
+        $cetak = 'TabunganSiswa' . $siswa->nama . '.pdf';
+
+
+        // return view('backend.siswa.tabungan.cetak', compact('tabungan'));
+        $pdf = PDF::loadview('backend.siswa.tabungan.cetak', compact('tabungan', 'siswa'))
+                    ->setPaper('f4', 'portrait');
+        return $pdf->stream($cetak);
+    }
+
 
     public function indexPembayaran()
     {
@@ -221,5 +240,24 @@ class HistoryController extends Controller
         $pembayaran = PembayaranSiswa::with(['danaawal'])->get();
         $tipe = 'tagihan';
         return view('backend.siswa.pembayaran.tagihan', compact('siswa', 'dana', 'pembayaran', 'tipe'));
+    }
+
+    public function cetakkwitansipembayaran(Request $request)
+    {
+        $siswa = Auth::guard('siswa')->user();
+        $cetak = explode(',', $request->cetak);
+        $pembayaran = PembayaranSiswa::with(['siswa', 'kelas'])
+                                   ->whereIn('id', $cetak)
+                                   ->where('siswa_id', $siswa->id)
+                                   ->latest()
+                                   ->get();
+
+        $cetak = 'PembayaranSiswa' . $siswa->nama . '.pdf';
+
+
+        // return view('backend.siswa.tabungan.cetak', compact('tabungan'));
+        $pdf = PDF::loadview('backend.siswa.pembayaran.cetak', compact('pembayaran', 'siswa'))
+                    ->setPaper('f4', 'portrait');
+        return $pdf->stream($cetak);
     }
 }

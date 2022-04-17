@@ -50,6 +50,7 @@
                                             <div class="row btn-laporan mx-auto mx-md-2">
                                                 <a href="{{ route('historytabungan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
                                                 <a href="{{ route('historytabungan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                                                <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Kwitansi</a>
                                             </div>
                                             @if(Auth::guard('siswa')->user())
                                             <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
@@ -67,6 +68,12 @@
                                         <table id="example1" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input pilih" id="pilih">
+                                                            <label class="custom-control-label" for="pilih"></label>
+                                                        </div>
+                                                    </th>
                                                     <th>Tanggal</th>
                                                     <th>Kode</th>
                                                     @if(!Auth::guard('siswa')->user())

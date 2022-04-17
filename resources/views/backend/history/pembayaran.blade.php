@@ -48,7 +48,8 @@
                   <div class="row justify-content-between">
                       <div class="row btn-laporan mx-auto mx-md-2">
                         <a href="{{ route('historytransaksi.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                        <a href="{{ route('historytransaksi.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>>&nbsp; Cetak Excel</a>
+                        <a href="{{ route('historytransaksi.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                        <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Kwitasi</a>
                       </div>
                       @php
                       $siswa = Auth::guard('siswa')->user();
@@ -65,6 +66,12 @@
                   <table id="example1" class="table table-bordered table-hover">
                     <thead>
                       <tr>
+                        <th>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input pilih" id="pilih">
+                                <label class="custom-control-label" for="pilih"></label>
+                            </div>
+                        </th>
                         <th>Tanggal</th>
                         @if(!$siswa)
                         <th>NIS</th>

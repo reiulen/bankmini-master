@@ -8,6 +8,7 @@ const domStrings = {
     inputSelect: $(".filter"),
     formFilter: $("#form-filter"),
     btnCari: $(".btn-cari"),
+    btnCetak: $(".btn-cetak"),
 };
 
 domStrings.inputSelect.select2();
@@ -51,6 +52,17 @@ var table = $("#example1").DataTable({
         },
     },
     columns: [
+        {
+            name: "checkbox",
+            data: function (data) {
+                return `<div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input pilih" value="${data.id}" id="checkbox-${data.id}">
+                            <label class="custom-control-label" for="checkbox-${data.id}"></label>
+                        </div>`;
+            },
+            orderable: false,
+            searchlable: false,
+        },
         {
             name: "tanggal",
             data: "tanggal",
@@ -152,4 +164,33 @@ domStrings.formFilter.on("submit", function (e) {
     filter = data;
     table.draw();
     $("#modalFilter").modal("hide");
+});
+
+$("#pilih").on("click", function () {
+    var checked = $(this).prop("checked");
+    $("tbody tr .pilih").prop("checked", checked);
+});
+
+table.on("click", ".pilih", function () {
+    var checked = $(this).prop("checked");
+    if (checked != true) {
+        $("#pilih").prop("checked", false);
+    }
+});
+
+domStrings.btnCetak.on("click", function () {
+    var checked = $("tbody tr .pilih:checked");
+    if (checked.length > 0) {
+        id = [];
+        checked.each(function () {
+            id.push($(this).val());
+        });
+        window.open(`${url}/historytransaksi/cetakkwitansi?cetak=${id}`);
+    } else {
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Pilih data yang akan dicetak!",
+        });
+    }
 });

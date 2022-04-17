@@ -55,6 +55,7 @@ $("#example1").DataTable({
     responsive: true,
     autoWidth: false,
     responsive: true,
+    order: [],
     lengthMenu: [
         [5, 10, 25, 100, -1],
         [5, 10, 25, 100, "All"],

@@ -53,12 +53,21 @@ ul .nav-item:hover .nav-link {
   color: #6091ba !important;
 }
 
-.banner{
-  min-height: 35vh;
+.main-content {
+  margin-top: 110px !important;
+  padding-top: 20px;
+  height: 60vh;
+  background-image: url('/assets/gambar/bg1.png');
+  background-size: cover;
 }
 
-.main-content {
-  margin-top: 150px !important;
+.main-content .row{
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.main-content .row h1.display-4{
+    font-weight: 700 !important;
 }
 
 .mt-100 {
@@ -78,6 +87,10 @@ footer {
 
 .footer-kontak {
   font-size: 16px;
+}
+
+footer ul a{
+    text-decoration: none;
 }
 
 

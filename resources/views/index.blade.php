@@ -45,17 +45,21 @@
       </div>
     </nav>
 
-    <section class="main-content banner">
+    <section class="main-content banner py-1 pb-5 py-md-3">
       <div class="container">
-        <div class="row">
-          <div class="col-md-12 rounded-3">
-            <img src="{{ asset('assets/gambar/banner.jpg') }}" class="d-block w-70" style="border-radius: 15px" />
-          </div>
+        <div class="row justify-content-center mt-5 mx-auto">
+            <div class="col-md-4">
+                <img src="{{ asset('assets/gambar/saving-money.svg') }}" />
+            </div>
+            <div class="col-md-8 my-auto">
+                <h1 class="display-4">Bank Mini</h1>
+                <h1 class="text-muted">SMK Negeri 1 Ciamis</h1>
+            </div>
         </div>
       </div>
     </section>
 
-    <footer class="mt-100 p-5">
+    <footer class="p-5">
       <div class="container">
         <div class="row">
           <div class="col-md-1 d-none d-md-block">
@@ -79,7 +83,7 @@
             </p>
           </div>
           <div class="col-md-4 ms-auto d-md-block d-none">
-            <ul style="list-style: none">
+            <ul style="list-style: none;">
               <a href="/" class="text-white"><li>Beranda</li></a>
               <a href="" class="text-white"><li class="mt-3">Tentang Kami</li></a>
               <a href="" class="text-white"><li class="mt-3">Hubungi Kami</li></a>

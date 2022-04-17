@@ -46,13 +46,18 @@
                             <div class="col-12">
                                 <div class="card card-outline">
                                     <div class="card-header">
+                                        @php
+                                            $siswa = Auth::guard('siswa')->user();
+                                        @endphp
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-auto mx-md-2">
                                                 <a href="{{ route('historytabungan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
                                                 <a href="{{ route('historytabungan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                                                @if($siswa)
                                                 <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Kwitansi</a>
+                                                @endif
                                             </div>
-                                            @if(Auth::guard('siswa')->user())
+                                            @if($siswa)
                                             <div class="ml-md-auto my-md-0 my-2 mx-auto mx-md-0">
                                                 @php
                                                     $debit = $tabungan->where('tipe', '1')->sum('nominal');
@@ -68,15 +73,17 @@
                                         <table id="example1" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
+                                                    @if($siswa)
                                                     <th>
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input pilih" id="pilih">
                                                             <label class="custom-control-label" for="pilih"></label>
                                                         </div>
                                                     </th>
+                                                    @endif
                                                     <th>Tanggal</th>
                                                     <th>Kode</th>
-                                                    @if(!Auth::guard('siswa')->user())
+                                                    @if(!$siswa)
                                                     <th>NIS</th>
                                                     <th>Nama</th>
                                                     @endif

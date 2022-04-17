@@ -20,7 +20,9 @@
                         </a>
                         <div class="dropdown-menu bg-dark border-0 shadow-lg" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="#"><i class="fa fa-user text-primary pr-1"></i> Profil</a>
+                            @can('ubahpassword')
                             <a class="dropdown-item" href="#"><i class="fa fa-lock text-success pr-1"></i> Ubah Password</a>
+                            @endcan
                             <div class="dropdown-divider"></div>
                             <a role="button" class="dropdown-item logout"><i class="fa fa-sign-out-alt text-danger pr-1"></i> Keluar</a>
                         </div>
@@ -52,8 +54,8 @@
                     @can('pengelola')
                     <li class="nav-header">PILIHAN MENU</li>
                     @canany(['pengguna.index', 'role.index', 'kenaikan.index'])
-                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
-                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index', 'setting.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index', 'setting.index']) }}">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Data Master
@@ -82,6 +84,14 @@
                                 <a href="{{ route('kenaikan.index') }}" class="nav-link {{ set_active_sub(['kenaikan.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Kenaikan Siswa') }}</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('setting.index')
+                            <li class="nav-item">
+                                <a href="{{ route('setting.index') }}" class="nav-link {{ set_active_sub(['setting.index']) }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>{{ __('Setting') }}</p>
                                 </a>
                             </li>
                             @endcan

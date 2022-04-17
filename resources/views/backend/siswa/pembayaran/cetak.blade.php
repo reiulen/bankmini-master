@@ -47,6 +47,7 @@
 <body>
     @php
         $no = 1;
+        $setting = \App\Models\Setting::first();
     @endphp
         @foreach ($pembayaran as $row)
         <table>
@@ -67,9 +68,9 @@
                 <td style="font-size: 15px;">Jumlah &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kotak5">{{ format_rupiah($row->nominal) }}</span></td>
                 <td>
                     Ciamis, {{ $row->created_at->format('d-m-Y') }}<br/><br/>
-                    <span style="font-size: 11px;">Bendahara Komite</span>
-                    <br/><br/><br/><br/><br/>
-                    Wawan Setiawan
+                    <span style="font-size: 11px;">Bendahara Komite</span><br/>
+                    <img src="{{ $setting->tanda_tangan }}" style="height: 60px; width: 130px; align-items:center; object-fit:cover;" /><br/>
+                    {{ $setting->nama }}
                 </td>
             </tr>
         </table>

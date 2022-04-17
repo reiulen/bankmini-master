@@ -21,6 +21,7 @@ Route::get('/', function () {
 
 
 Route::group(['middleware' => 'auth', 'middleware' => 'user'], function(){
+    include_once 'pages/setting.php';
     include_once 'pages/jurusan.php';
     include_once 'pages/tahunakademik.php';
     include_once 'pages/danaawal.php';

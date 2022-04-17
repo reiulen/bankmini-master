@@ -13,6 +13,21 @@
             *{
                 font-family: 'Arial', sans-serif;
             }
+
+            .header{
+                padding: 0;
+                margin: 0;
+                line-height: 2px;
+            }
+
+            .header img{
+                height: 85px;
+                display: block;
+                position: absolute;
+                top: 10;
+                left: 40;
+            }
+
             #table {
                 border-collapse: collapse;
                 width: 100%;
@@ -42,6 +57,13 @@
         </style>
     </head>
     <body>
+        @php
+        $setting = \App\Models\Setting::first();
+        @endphp
+        <div class="header">
+            <img src="{{ asset('/assets/gambar/logo-jabar.jpg') }}" />
+            {!! $setting->header !!}
+        </div>
         <div style="text-align:center">
             <h4>
                 History Tabungan Siswa

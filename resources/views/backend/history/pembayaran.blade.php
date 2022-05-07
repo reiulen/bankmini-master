@@ -50,8 +50,8 @@
                         $siswa = Auth::guard('siswa')->user();
                       @endphp
                       <div class="row btn-laporan mx-auto mx-md-2">
-                        <a href="{{ route('historytransaksi.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                        <a href="{{ route('historytransaksi.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                        <a href="{{ route('historytransaksi.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Laporan PDF</a>
+                        <a href="{{ route('historytransaksi.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel" target="_blank"><i class="fa fa-file-excel"></i>&nbsp; Cetak Laporan Excel</a>
                         @if($siswa)
                         <a class="btn btn-primary btn-cetak"><i class="fa fa-file-pdf"></i>&nbsp; Cetak Kwitasi</a>
                         @endif

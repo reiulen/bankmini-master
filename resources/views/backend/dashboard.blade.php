@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                {{-- <div class="col-lg-3 col-md-6">
                 <!-- small box -->
                     <div class="small-box bg-secondary">
                         <div class="inner text-right">
@@ -132,7 +132,7 @@
                             <i class="fas fa-credit-card"></i>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="col-lg-3 col-md-6">
                     <!-- small box -->
                     <div class="small-box bg-success">

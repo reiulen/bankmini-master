@@ -36,7 +36,7 @@
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-2">
                                                 <a href="{{ route('laptabungan.cetak-pdf') }}" target="_blank" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                                                <a href="{{ route('laptabungan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                                                <a href="{{ route('laptabungan.cetak-pdf') }}" target="_blank" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
                                             </div>
                                         </div>
                                     </div>

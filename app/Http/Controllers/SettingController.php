@@ -31,19 +31,60 @@ class SettingController extends Controller
         $setting = Setting::first();
         if ($request->signed) {
             $folderPath = 'upload/ttd/';
-            if (!File::isDirectory($folderPath)) {
-                File::makeDirectory($folderPath, 0755, true, true);
-            }
-            $image_parts = explode(";base64,", $request->signed);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $ttd = $folderPath . uniqid() . '.' . $image_type;
-            file_put_contents($ttd, $image_base64);
+            $ttd = upload_file_base64($request->signed, $folderPath);
             File::delete($setting->tanda_tangan);
+        }else{
+            $ttd = $setting->tanda_tangan;
+        }
+
+        if($request->file('favicon')){
+            $file = $request->file('favicon');
+            $folderPath = 'upload/';
+            $rename = 'favicon.' . $file->getClientOriginalExtension();
+            File::delete($setting->favicon);
+            $favicon = upload_image($file, $folderPath, $rename);
+        }else{
+            $favicon = $setting->favicon;
+        }
+
+        if($request->file('logo')){
+            $file = $request->file('logo');
+            $folderPath = 'upload/logo/';
+            $rename = 'logo.' . $file->getClientOriginalExtension();
+            File::delete($setting->logo);
+            $logo = upload_image($file, $folderPath, $rename);
+        }else{
+            $logo = $setting->logo;
+        }
+
+        if($request->file('logobrand')){
+            $file = $request->file('logobrand');
+            $folderPath = 'upload/logo/';
+            $rename = 'logo_brand.' . $file->getClientOriginalExtension();
+            File::delete($setting->logo_brand);
+            $logo_brand = upload_image($file, $folderPath, $rename);
+        }else{
+            $logo_brand = $setting->logo_brand;
+        }
+
+        if($request->file('logoheader')){
+            $file = $request->file('logoheader');
+            $folderPath = 'upload/logo/';
+            $rename = 'logo_header.' . $file->getClientOriginalExtension();
+            File::delete($setting->logo_header);
+            $logo_header = upload_image($file, $folderPath, $rename);
+        }else{
+            $logo_header = $setting->logo_header;
         }
 
         $setting->update([
+            'judul_situs' => $request->judul,
+            'sekolah' => $request->sekolah,
+            'favicon' => $favicon,
+            'logo' => $logo,
+            'logo_brand' => $logo_brand,
+            'logo_header' => $logo_header,
+            'ybtt' => $request->ybtt,
             'header' => $request->header,
             'nama' => $request->nama,
             'tanda_tangan' => $ttd,

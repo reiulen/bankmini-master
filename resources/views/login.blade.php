@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Bank Mini SMKN 1 Ciamis</title>
-  <link rel="icon" type="image/png" href="assets/gambar/logo.png" />
+  <title> Login | {{ $setting->judul_situs . ' ' . $setting->sekolah }}</title>
+  <link rel="icon" type="image/png" href="{{ asset($setting->favicon) }}" />
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -35,8 +35,8 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-        <p class="text-center"><img src="{{ asset('assets/gambar/logo.png') }}" alt="Logo SMK" style="height: 70px;" /></p>
-      <a href="{{ route('login.index') }}" class="h1"><b>Bank</b>Mini</a>
+        <p class="text-center"><img src="{{ asset($setting->logo) }}" alt="Logo SMK" style="height: 70px;" /></p>
+        <a href="{{ route('login.index') }}" class="h1">{{ $setting->judul_situs }}</a>
     </div>
     <div class="card-body" id="siswa">
         @if (session('type') == 'siswa')

@@ -93,7 +93,7 @@ function formatRupiah(angka, prefix) {
     }
 
     rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-    return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+    return prefix == undefined ? rupiah : rupiah ? rupiah : "";
 }
 
 domStrings.btnSaveCetak.click(function () {

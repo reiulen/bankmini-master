@@ -400,6 +400,116 @@ table{
     cursor: pointer !important;
 }
 
+/* 1.14 Image Preview */
+.image-preview, #callback-preview {
+  width: 250px;
+  height: 250px;
+  border: 2px dashed #ddd;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  color: #ecf0f1;
+}
+
+.image-preview input, #callback-preview input {
+  line-height: 200px;
+  font-size: 200px;
+  position: absolute;
+  opacity: 0;
+  z-index: 10;
+}
+
+.image-preview label, #callback-preview label {
+  position: absolute;
+  z-index: 5;
+  opacity: 0.8;
+  cursor: pointer;
+  background-color: #bdc3c7;
+  width: 150px;
+  height: 50px;
+  font-size: 12px;
+  line-height: 50px;
+  text-transform: uppercase;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+}
+
+
+/* 1.13 Gallery */
+.gallery {
+  display: inline-block;
+  width: 100%;
+}
+.gallery .gallery-item {
+  float: left;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 3px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  transition: all 0.5s;
+  position: relative;
+}
+.gallery .gallery-item:hover {
+  opacity: 0.8;
+}
+.gallery .gallery-hide {
+  display: none;
+}
+.gallery .gallery-more:after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+}
+.gallery .gallery-more div {
+  text-align: center;
+  line-height: 50px;
+  font-weight: 600;
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+.gallery.gallery-md .gallery-item {
+  width: 78px;
+  height: 78px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.gallery.gallery-lg .gallery-item {
+    width: 100%;
+    height: 250px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.gallery.gallery-md .gallery-more div {
+  line-height: 78px;
+}
+.gallery.gallery-fw .gallery-item {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.gallery.gallery-fw .gallery-more div {
+  font-size: 20px;
+}
+
 @media (max-width: 767.98px) {
     .card-header form.row .my-auto .btn-primary {
         margin-top: 10px;

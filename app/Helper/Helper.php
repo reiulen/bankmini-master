@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\File;
+
 
 if (!function_exists('set_active')) {
     function set_active($url, $output = 'active')
@@ -55,7 +57,7 @@ if (!function_exists('set_menu_open')) {
 
 if(!function_exists('format_rupiah')){
     function format_rupiah($angka){
-        $hasil_rupiah = "Rp. " . number_format($angka, 0,'','.');
+        $hasil_rupiah =  number_format($angka, 0,'','.') . ',-';
         return $hasil_rupiah;
     }
 
@@ -141,3 +143,28 @@ function terbilang($nilai) {
 	return $hasil;
 }
 
+if(!function_exists('upload_image')){
+    function upload_image($file, $path, $name){
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0755, true);
+        }
+        $image = Image::make($file);
+        $image->save($path . $name);
+        return $path . $name;
+    }
+}
+
+if(!function_exists('upload_file_base64')){
+    function upload_file_base64($file, $path){
+        if (!File::isDirectory($path)) {
+            File::makeDirectory($path, 0755, true, true);
+        }
+        $image_parts = explode(";base64,", $file);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $ttd = $path . uniqid() . '.' . $image_type;
+        file_put_contents($ttd, $image_base64);
+        return $ttd;
+    }
+}

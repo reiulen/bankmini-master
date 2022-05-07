@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Setting;
 use Illuminate\View\Component;
 
 class sidebar extends Component
@@ -23,6 +24,7 @@ class sidebar extends Component
      */
     public function render()
     {
-        return view('components.sidebar');
+        $setting = Setting::first();
+        return view('components.sidebar', compact('setting'));
     }
 }

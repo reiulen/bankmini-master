@@ -1,7 +1,8 @@
 $(".logout").click(function () {
+    const nama = $(this).data("nama");
     Swal.fire({
         title: "Apakah yakin?",
-        text: `Anda akan keluar dari Sistem Bank Mini`,
+        text: `Anda akan keluar dari Sistem ${nama}`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#6492b8da",

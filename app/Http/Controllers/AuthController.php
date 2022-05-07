@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Siswa;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,8 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('login');
+        $setting = Setting::first();
+        return view('login', compact('setting'));
     }
 
     public function login(Request $request)

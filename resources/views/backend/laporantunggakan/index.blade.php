@@ -31,8 +31,8 @@
                                     <div class="card-header">
                                         <div class="row justify-content-between">
                                             <div class="row btn-laporan mx-2">
-                                                <a href="{{ route('laporantunggakan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
-                                                <a href="{{ route('laporantunggakan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
+                                                <a href="{{ route('laporantunggakan.cetak-pdf') }}" class="btn btn-primary mx-1 cetak-pdf" target="_blank"><i class="fa fa-file-pdf"></i>&nbsp; Cetak PDF</a>
+                                                <a href="{{ route('laporantunggakan.cetak-excel') }}" class="btn btn-primary mx-1 cetak-excel" target="_blank"><i class="fa fa-file-excel"></i>&nbsp; Cetak Excel</a>
                                             </div>
                                             <div>
                                                 <h5 class="sisatunggakan"></h5>

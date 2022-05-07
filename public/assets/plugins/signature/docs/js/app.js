@@ -11,13 +11,12 @@ if ($(window).width() < 450) {
 }
 
 $('.btn-submit').click(function(e){
-    var data = signaturePad.toDataURL('image/png');
-    $('#signature64').append(data);
+  var data = signaturePad.toDataURL('image/png');
+  if (signaturePad.isEmpty() == false) {
+    $("#signature").append(
+        `<textarea name="signed" style="display:none">${data}</textarea>`
+    );
+  }
 });
 
-$("#save").click(function () {
-    $("#signature").append(
-        '<textarea id="signature64" name="signed" style="display:none"></textarea>'
-    );
-});
 

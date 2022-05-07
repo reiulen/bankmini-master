@@ -23,6 +23,7 @@
             .header{
                 padding: 0;
                 margin: 0;
+                /* margin-bottom: 12px; */
                 line-height: 2px;
             }
 
@@ -30,14 +31,14 @@
                 height: 85px;
                 display: block;
                 position: absolute;
-                top: 10;
+                top: 8;
                 left: 40;
             }
 
             #table {
                 border-collapse: collapse;
                 width: 100%;
-                font-size: 11px
+                font-size: 10px
             }
 
             #table td, #table th {
@@ -67,11 +68,11 @@
             $setting = \App\Models\Setting::first();
         @endphp
         <div class="header">
-            <img src="{{ asset('/assets/gambar/logo-jabar.jpg') }}" />
+            <img src="{{ $setting->logo_header }}" />
             {!! $setting->header !!}
         </div>
-        <div style="text-align:center">
-            <h3>
+        <div style="text-align:center;">
+            <h5 style="margin: 6px 0;">
                 Laporan Tungakan Siswa
                 @if($jurusan)
                     {{ $jurusan->jurusan }}
@@ -82,7 +83,7 @@
                 @if($tahunakademik)
                     TA {{ tahun($tahunakademik->awal). ' - ' .tahun($tahunakademik->akhir) }}
                 @endif
-            </h3>
+            </h5>
         </div>
         <table id="table">
             <thead>

@@ -50,9 +50,9 @@ class TunggakanController extends Controller
 
     public function cetak(Request $request)
     {
-        $dana = DanaAwal::where('tahun_akademik_id', $request->tahun_akademik)->orderBy('dana', 'asc')->get();
         $siswa = Siswa::with(['kelas', 'tahunakademik'])->FilterTable($request)->get();
-        $pembayaran = PembayaranSiswa::FilterTable($request)->where('tahun_akademik_id', $request->tahun_akademik)->get();
+        $dana = DanaAwal::whereIn('tahun_akademik_id', $siswa->pluck('tahun_akademik_id')->toArray())->orderBy('dana', 'asc')->get();
+        $pembayaran = PembayaranSiswa::FilterTable($request)->whereIn('tahun_akademik_id', $siswa->pluck('tahun_akademik_id')->toArray())->get();
 
         $kelas = [];
         $jurusan = [];

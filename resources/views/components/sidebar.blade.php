@@ -2,8 +2,8 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ route('dashboard') }}" class="brand-link">
-                <img src="{{ asset('assets/gambar/logo.png') }}" alt="SMKN 1 Ciamis Logo" class="brand-image shadow-lg" />
-                <span class="brand-text h4">BankMini</span>
+                <img src="{{ asset($setting->logo) }}" alt="{{ $setting->sekolah }} Logo" class="brand-image shadow-lg" />
+                <span class="brand-text h4">{{ $setting->judul_situs }}</span>
             </a>
 
             <!-- Sidebar -->
@@ -24,7 +24,7 @@
                             <a class="dropdown-item" href="#"><i class="fa fa-lock text-success pr-1"></i> Ubah Password</a>
                             @endcan
                             <div class="dropdown-divider"></div>
-                            <a role="button" class="dropdown-item logout"><i class="fa fa-sign-out-alt text-danger pr-1"></i> Keluar</a>
+                            <a role="button" class="dropdown-item logout" data-nama="{{ $setting->judul_situs }}"><i class="fa fa-sign-out-alt text-danger pr-1"></i> Keluar</a>
                         </div>
                     </div>
                 </div>
@@ -54,8 +54,8 @@
                     @can('pengelola')
                     <li class="nav-header">PILIHAN MENU</li>
                     @canany(['pengguna.index', 'role.index', 'kenaikan.index'])
-                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index', 'setting.index']) }}">
-                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'role.index', 'role.create', 'role.edit', 'kenaikan.index', 'setting.index']) }}">
+                    <li class="nav-item nav-item {{ set_menu_open(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'kenaikan.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['pengguna.index', 'pengguna.create', 'pengguna.edit', 'kenaikan.index']) }}">
                             <i class="nav-icon fas fa-copy"></i>
                             <p>
                                 Data Master
@@ -71,27 +71,11 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('role.index')
-                            <li class="nav-item">
-                                <a href="{{ route('role.index') }}" class="nav-link {{ set_active_sub(['role.index', 'role.create', 'role.edit']) }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ __('Role & Permission') }}</p>
-                                </a>
-                            </li>
-                            @endcan
                             @can('kenaikan.index')
                             <li class="nav-item">
                                 <a href="{{ route('kenaikan.index') }}" class="nav-link {{ set_active_sub(['kenaikan.index']) }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>{{ __('Kenaikan Siswa') }}</p>
-                                </a>
-                            </li>
-                            @endcan
-                            @can('setting.index')
-                            <li class="nav-item">
-                                <a href="{{ route('setting.index') }}" class="nav-link {{ set_active_sub(['setting.index']) }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>{{ __('Setting') }}</p>
                                 </a>
                             </li>
                             @endcan
@@ -161,7 +145,7 @@
                     @canany(['laporantabungan.index', 'laporantunggakan.index'])
                     <li class="nav-item nav-item {{ set_menu_open(['laptabungan.index', 'laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
                         <a href="#" class="nav-link {{ set_active(['laptabungan.index', 'laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
-                        <i class="fas fa-chart-bar nav-icon"></i>
+                        <i class="fas fa-book nav-icon"></i>
                           <p>
                             {{ __('Laporan') }}
                             <i class="fas fa-angle-left right"></i>
@@ -181,6 +165,35 @@
                           <a href="{{ route('laporantunggakan.index') }}" class="nav-link {{ set_active_sub(['laporantunggakan.index', 'laporantunggakan.sisatagihan']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tunggakan') }}</p>
+                          </a>
+                        </li>
+                        @endcan
+                      </ul>
+                    </li>
+                    @endcanany
+                    @canany(['statistik.tabungan', 'statistik.pembayaran'])
+                    <li class="nav-item nav-item {{ set_menu_open(['statistiktabungan.index', 'statistikpembayaran.index']) }}">
+                        <a href="#" class="nav-link {{ set_active(['statistiktabungan.index', 'statistikpembayaran.index']) }}">
+                        <i class="fas fa-chart-bar nav-icon"></i>
+                          <p>
+                            {{ __('Statistik') }}
+                            <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                        @can('statistik.tabungan')
+                        <li class="nav-item">
+                          <a href="{{ route('statistiktabungan.index') }}" class="nav-link {{ set_active_sub(['statistiktabungan.index']) }}">
+                            <i class="far fa-circle nav-icon"></i>
+                              <p>{{ __('Tabungan') }}</p>
+                          </a>
+                        </li>
+                        @endcan
+                        @can('statistik.pembayaran')
+                        <li class="nav-item">
+                          <a href="{{ route('statistikpembayaran.index') }}" class="nav-link {{ set_active_sub(['statistikpembayaran.index']) }}">
+                            <i class="far fa-circle nav-icon"></i>
+                              <p>{{ __('Pembayaran') }}</p>
                           </a>
                         </li>
                         @endcan
@@ -213,6 +226,35 @@
                         </li>
                       </ul>
                     </li>
+                    @can('pengelola')
+                    <li class="nav-item nav-item {{ set_menu_open(['setting.index', 'role.index', 'role.create', 'role.edit']) }}">
+                        <a href="#" class="nav-link {{ set_active(['setting.index', 'role.index', 'role.create', 'role.edit']) }}">
+                        <i class="fa fa-cog nav-icon"></i>
+                          <p>
+                            {{ __('Setting') }}
+                            <i class="fas fa-angle-left right"></i>
+                          </p>
+                      </a>
+                       <ul class="nav nav-treeview">
+                        @can('setting.index')
+                        <li class="nav-item">
+                            <a href="{{ route('setting.index') }}" class="nav-link {{ set_active_sub(['setting.index']) }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('Situs') }}</p>
+                            </a>
+                        </li>
+                        @endcan
+                        @can('role.index')
+                        <li class="nav-item">
+                            <a href="{{ route('role.index') }}" class="nav-link {{ set_active_sub(['role.index', 'role.create', 'role.edit']) }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('Role & Permission') }}</p>
+                            </a>
+                        </li>
+                        @endcan
+                       </ul>
+                    </li>
+                    @endcan
                   </ul>
               </nav>
                 <!-- /.sidebar-menu -->

@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="{{ asset('assets/gambar/logo.png') }}" />
+    <link rel="icon" type="image/png" href="{{ asset($setting->favicon) }}" />
 
     <!-- Font Google -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -16,12 +16,12 @@
     <!-- Front Css -->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/front.css') }}" />
 
-    <title>Bank Mini SMKN 1 Ciamis</title>
+    <title>{{ $setting->judul_situs . ' ' . $setting->sekolah }}</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#"><img src="{{ asset('assets/gambar/logo-motto.png') }}" class="d-inline-block align-top logo-smk" /></a>
+        <a class="navbar-brand" href="#"><img src="{{ asset($setting->logo_brand) }}" class="d-inline-block align-top logo-smk" /></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -52,8 +52,8 @@
                 <img src="{{ asset('assets/gambar/saving-money.svg') }}" />
             </div>
             <div class="col-md-8 my-auto">
-                <h1 class="display-4">Bank Mini</h1>
-                <h1 class="text-muted">SMK Negeri 1 Ciamis</h1>
+                <h1 class="display-4">{{ $setting->judul_situs }}</h1>
+                <h1 class="text-muted">{{ $setting->sekolah }}</h1>
             </div>
         </div>
       </div>
@@ -63,10 +63,10 @@
       <div class="container">
         <div class="row">
           <div class="col-md-1 d-none d-md-block">
-            <img src="{{ asset('assets/gambar/logo.png') }}" class="img-fluid" />
+            <img src="{{ asset($setting->logo) }}" class="img-fluid" />
           </div>
           <div class="col-md-5">
-            <p class="footer-nama">Bank Mini SMK Negeri 1 Ciamis</p>
+            <p class="footer-nama">{{ $setting->judul_situs . ' ' . $setting->sekolah }}</p>
             <hr />
             <p class="footer-kontak">
               <b>Kontak Kami</b><br />

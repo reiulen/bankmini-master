@@ -7,12 +7,11 @@
         body {
             font-family: 'Arial', sans-serif;
             font-weight: 400;
-            font-style: italic;
         }
 
         table {
             border-collapse: collapse;
-            border: 1px dashed black;
+            border-bottom: 1px dashed black;
             margin-bottom: 20px;
             width: 95%;
         }
@@ -68,7 +67,7 @@
                 <td style="font-size: 15px;">Jumlah &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kotak5">{{ format_rupiah($row->nominal) }}</span></td>
                 <td>
                     Ciamis, {{ $row->created_at->format('d-m-Y') }}<br/><br/>
-                    <span style="font-size: 11px;">Bendahara Komite</span><br/>
+                    <span style="font-size: 11px;">{{ $setting->ybtt }}</span><br/>
                     <img src="{{ $setting->tanda_tangan }}" style="height: 60px; width: 130px; align-items:center; object-fit:cover;" /><br/>
                     {{ $setting->nama }}
                 </td>

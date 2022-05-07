@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
@@ -16,7 +17,8 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $setting = Setting::first();
+    return view('index', compact('setting'));
 });
 
 
@@ -34,6 +36,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'user'], function(){
     include_once 'pages/laporantunggakan.php';
     include_once 'pages/laporanmasuk.php';
     include_once 'pages/role.php';
+    include_once 'pages/statistik.php';
 });
 
 Route::group(['middleware' => 'guest', 'middleware' => 'usersiswa'], function(){

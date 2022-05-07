@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Models\Setting;
 use Illuminate\View\Component;
 
 class layout extends Component
@@ -24,6 +25,7 @@ class layout extends Component
      */
     public function render()
     {
-        return view('components.layout');
+        $setting = Setting::first();
+        return view('components.layout', compact('setting'));
     }
 }

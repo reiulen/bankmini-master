@@ -36,7 +36,6 @@ Route::group(['middleware' => 'auth', 'middleware' => 'user'], function(){
     include_once 'pages/laporantunggakan.php';
     include_once 'pages/laporanmasuk.php';
     include_once 'pages/role.php';
-    include_once 'pages/statistik.php';
 });
 
 Route::group(['middleware' => 'guest', 'middleware' => 'usersiswa'], function(){
@@ -50,4 +49,5 @@ Route::group(['middleware' => 'bukanuser'], function(){
     Route::post('/dashboard/getDatatab', [DashboardController::class, 'datatab'])->name('datatabdashboard');
     include_once 'pages/historytabungan.php';
     include_once 'pages/historytransaksi.php';
+    include_once 'pages/statistik.php';
 });

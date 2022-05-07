@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\TabunganSiswa;
 use App\Models\PembayaranSiswa;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class StatistikController extends Controller
@@ -35,7 +36,13 @@ class StatistikController extends Controller
             break;
         }
 
-        $tabungan = TabunganSiswa::whereBetween('created_at', [$request->tgl_awal, $request->tgl_akhir])->get()->groupBy($laporan);
+        $siswa = Auth::guard('siswa')->user();
+        if($siswa){
+            $tabungan = TabunganSiswa::where('siswa_id', $siswa->id)->whereBetween('created_at', [$request->tgl_awal, $request->tgl_akhir])->get()->groupBy($laporan);
+        }else{
+            $tabungan = TabunganSiswa::whereBetween('created_at', [$request->tgl_awal, $request->tgl_akhir])->get()->groupBy($laporan);
+        }
+
         if ($tabungan->count() == 0) {
             return response()->json([
                 'kategori' => [],
@@ -80,7 +87,12 @@ class StatistikController extends Controller
         }
         $laporan = $filter['laporan'];
         $tipe = $filter['tipe'];
-        $tabungan = TabunganSiswa::whereBetween('created_at', [$filter['tgl_awal'], $filter['tgl_akhir']])->get()->groupBy($laporan);
+        $siswa = Auth::guard('siswa')->user();
+        if($siswa){
+            $tabungan = TabunganSiswa::where('siswa_id', $siswa->id)->whereBetween('created_at', [$filter['tgl_awal'], $filter['tgl_akhir']])->get()->groupBy($laporan);
+        }else{
+            $tabungan = TabunganSiswa::whereBetween('created_at', [$filter['tgl_awal'], $filter['tgl_akhir']])->get()->groupBy($laporan);
+        }
 
         return DataTables::of($tabungan)
                     ->addIndexColumn()

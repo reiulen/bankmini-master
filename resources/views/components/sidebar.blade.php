@@ -171,7 +171,7 @@
                       </ul>
                     </li>
                     @endcanany
-                    @canany(['statistik.tabungan', 'statistik.pembayaran'])
+                    @endcan
                     <li class="nav-item nav-item {{ set_menu_open(['statistiktabungan.index', 'statistikpembayaran.index']) }}">
                         <a href="#" class="nav-link {{ set_active(['statistiktabungan.index', 'statistikpembayaran.index']) }}">
                         <i class="fas fa-chart-bar nav-icon"></i>
@@ -181,14 +181,12 @@
                           </p>
                       </a>
                       <ul class="nav nav-treeview">
-                        @can('statistik.tabungan')
                         <li class="nav-item">
                           <a href="{{ route('statistiktabungan.index') }}" class="nav-link {{ set_active_sub(['statistiktabungan.index']) }}">
                             <i class="far fa-circle nav-icon"></i>
                               <p>{{ __('Tabungan') }}</p>
                           </a>
                         </li>
-                        @endcan
                         @can('statistik.pembayaran')
                         <li class="nav-item">
                           <a href="{{ route('statistikpembayaran.index') }}" class="nav-link {{ set_active_sub(['statistikpembayaran.index']) }}">
@@ -199,8 +197,6 @@
                         @endcan
                       </ul>
                     </li>
-                    @endcanany
-                    @endcan
                     <li class="nav-item nav-item {{ set_menu_open(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index', 'historytransaksi.tagihan']) }}">
                         <a href="#" class="nav-link {{ set_active(['historytabungan.index', 'tunggakan.index', 'historytransaksi.index', 'historytransaksi.tagihan']) }}">
                         <i class="fa fa-edit nav-icon"></i>

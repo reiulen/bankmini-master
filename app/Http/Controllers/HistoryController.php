@@ -58,7 +58,7 @@ class HistoryController extends Controller
             return DataTables::of($data)
                             ->addIndexColumn()
                             ->addColumn('tanggal', function($data){
-                                return tanggal($data->created_at);
+                                return tgl($data->created_at);
                             })
                             ->addColumn('tipe', function($data){
                                 if($data->tipe == 1){
@@ -119,7 +119,7 @@ class HistoryController extends Controller
             $kelas = '';
         }
 
-        $cetak = 'HistoryTabunganSiswa' . $kelas . tanggal(date('d-m-Y')) . '.xlsx';
+        $cetak = 'HistoryTabunganSiswa' . $kelas . tgl(date('d-m-Y')) . '.xlsx';
         return Excel::download(new HistoryTabunganExport($request), $cetak);
     }
 
@@ -175,7 +175,7 @@ class HistoryController extends Controller
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
-                             return tanggal($data->created_at);
+                             return tgl($data->created_at);
                          })
                          ->addColumn('nominal', function($data){
                              return format_rupiah($data->nominal);

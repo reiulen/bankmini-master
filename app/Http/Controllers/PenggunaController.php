@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Auth;
 class PenggunaController extends Controller
 {
     public function index(){
-        $user = User::with("roles:id,name")->where('id', '!=', AUth::user()->id)->latest()->get();
+        $user = User::with("roles:id,name")->whereHas('roles', function($query){
+            return $query->where('name', '<>', 'Super Admin');
+        })->latest()->get();
         return view('backend.pengguna.index', compact('user'));
     }
 

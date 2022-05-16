@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2022 at 06:43 AM
+-- Generation Time: May 16, 2022 at 10:32 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.27
 
@@ -194,7 +194,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2022_03_26_120116_create_kelas_table', 4),
 (15, '2022_03_26_162100_create_permission_tables', 5),
 (16, '2022_03_27_123624_pembayaran_siswa', 6),
-(17, '2022_03_27_123832_tabungan_siswa', 7);
+(17, '2022_03_27_123832_tabungan_siswa', 7),
+(18, '2022_04_17_203020_create_settings_table', 8),
+(19, '2022_04_17_233853_create_settings_table', 9);
 
 -- --------------------------------------------------------
 
@@ -430,7 +432,14 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (30, 'siswapembayaran.delete', 'web', '2022-04-11 13:32:46', '2022-04-11 13:32:46'),
 (31, 'siswapembayaran.tagihan', 'web', '2022-04-11 13:32:59', '2022-04-11 13:32:59'),
 (32, 'siswa.import', 'web', '2022-04-11 13:33:58', '2022-04-11 13:33:58'),
-(33, 'siswa.export', 'web', '2022-04-11 13:34:10', '2022-04-11 13:34:10');
+(33, 'siswa.export', 'web', '2022-04-11 13:34:10', '2022-04-11 13:34:10'),
+(34, 'setting.index', 'web', '2022-04-17 13:38:04', '2022-04-17 13:38:04'),
+(35, 'setting.create', 'web', '2022-04-17 13:38:15', '2022-04-17 13:38:15'),
+(36, 'setting.update', 'web', '2022-04-17 13:38:28', '2022-04-17 13:38:28'),
+(37, 'setting.delete', 'web', '2022-04-17 13:38:45', '2022-04-17 13:38:45'),
+(38, 'ubahpassword', 'web', '2022-04-17 13:44:11', '2022-04-17 13:44:11'),
+(39, 'statistik.tabungan', 'web', '2022-05-07 05:48:54', '2022-05-07 05:48:54'),
+(40, 'statistik.pembayaran', 'web', '2022-05-07 05:49:08', '2022-05-07 05:49:08');
 
 -- --------------------------------------------------------
 
@@ -470,7 +479,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
 (1, 'Admin Bank', 'web', '2022-03-26 10:22:25', '2022-03-26 10:22:25'),
-(2, 'Operator', 'web', '2022-03-26 10:25:43', '2022-03-26 12:58:39');
+(2, 'Super Admin', 'web', '2022-03-26 10:25:43', '2022-05-07 07:22:32');
 
 -- --------------------------------------------------------
 
@@ -533,7 +542,43 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (32, 1),
 (32, 2),
 (33, 1),
-(33, 2);
+(33, 2),
+(34, 2),
+(35, 2),
+(36, 2),
+(37, 2),
+(38, 2),
+(39, 2),
+(40, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `judul_situs` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sekolah` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `favicon` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo_brand` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo_header` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ybtt` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `header` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tanda_tangan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `judul_situs`, `sekolah`, `favicon`, `logo`, `logo_brand`, `logo_header`, `ybtt`, `header`, `nama`, `tanda_tangan`, `created_at`, `updated_at`) VALUES
+(1, 'Bank Mini', 'SMK Negeri 1 Ciamis', 'upload/favicon.png', 'upload/logo/logo.png', 'upload/logo/logo_brand.png', 'upload/logo/logo_header.jpg', 'Bendahara Komite', '<p class=\"a\" style=\"font-family: Arial, sans-serif; font-size: 14px; margin-bottom: 0px; color: rgb(0, 0, 0); text-align: center;\">PEMERINTAHAN DAERAH PROVINSI JAWA BARAT</p><p class=\"b\" style=\"font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(0, 0, 0); text-align: center;\">DINAS PENDIDIKAN</p><p class=\"c\" style=\"font-family: Arial, sans-serif; font-size: 13px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(0, 0, 0); text-align: center;\">CABANG DINAS PENDIDIKAN WILAYAH XIII</p><p class=\"d\" style=\"font-family: Arial, sans-serif; font-size: 17px; font-weight: bold; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(0, 0, 0); text-align: center;\">SMK NEGERI 1 CIAMIS</p><p class=\"e\" style=\"font-family: Arial, sans-serif; font-size: 11px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(0, 0, 0); text-align: center;\">Jl. Jenderal Sudirman No. 269 Ciamis 46215 Tel./Fax (0265) 771204/777719</p><p class=\"f\" style=\"font-family: Arial, sans-serif; font-size: 11px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(0, 0, 0); text-align: center;\">Website: www.smkn1ciamis.sch.id | E-mail: surat@smkn1ciamis.net</p>', 'Wawan Setiawan', 'upload/ttd/6274e591aca6b.png', '2022-04-17 17:04:21', '2022-05-06 10:37:16');
 
 -- --------------------------------------------------------
 
@@ -2494,6 +2539,12 @@ ALTER TABLE `role_has_permissions`
   ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -2552,7 +2603,7 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `pekerjaan`
@@ -2570,7 +2621,7 @@ ALTER TABLE `pembayaran_siswas`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -2583,6 +2634,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `roles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `siswa`

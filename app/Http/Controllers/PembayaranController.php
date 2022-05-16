@@ -207,7 +207,7 @@ class PembayaranController extends Controller
         return DataTables::of($data)
                          ->addIndexColumn()
                          ->addColumn('tanggal', function($data){
-                             return tanggal($data->created_at);
+                             return tgl($data->created_at);
                          })
                          ->addColumn('nominal', function($data){
                              return format_rupiah($data->nominal);

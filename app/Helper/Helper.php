@@ -63,6 +63,12 @@ if(!function_exists('format_rupiah')){
 
 }
 
+if(!function_exists('tgl')){
+    function tgl($tanggal){
+        return Carbon\Carbon::parse($tanggal)->isoFormat('D/MM/Y');
+    }
+}
+
 if(!function_exists('tanggal')){
     function tanggal($tanggal){
         return Carbon\Carbon::parse($tanggal)->isoFormat('D MMMM Y');

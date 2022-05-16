@@ -109,7 +109,7 @@
                     </tr>
                     <tr>
                         <th class="table-active">Level</th>
-                        <td><span class="badge {{ badge_level($row->level) }} rounded- py-2 px-3">{{ $row->level }}</span></td>
+                        <td><span class="badge {{ badge_level($row->roles[0]->name) }} rounded- py-2 px-3">{{ $row->roles ? $row->roles[0]->name : '' }}</span></td>
                     </tr>
                     <tr>
                         <th class="table-active">Aktifitas</th>
